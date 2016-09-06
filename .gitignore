@@ -16,7 +16,7 @@ __pycache__/
 # C extensions
 *.so
 
-staticfiles/
+static/
 media/
 
 # Distribution / packaging
