@@ -1,22 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-# Create your views here.
 def test(request):
     return render(request, 'quotations_lcl.html', {})
 
 def home(request):
     return render(request, 'quotations_lcl.html')
 
-def jobs(request):
-    if request.user.type == 'sales':
-        return render(request, 'Quotations-LCL.html')
-    elif request.user.type == 'operations':
-        return render(request, 'Quotations-LCL.html')
-    elif request.user.type == 'accounting':
-        return render(request, 'Quotations-LCL.html')
-    elif request.user.type == 'hr':
-        return render(request, 'Quotations-LCL.html')
-    elif request.user.type == 'admin':
-        return render(request, 'Quotations-LCL.html')
+def main(request):
+    if not request.user.is_authenticated():
+        return redirect('/login')
+    if request.user.role == 'SA':
+        return render(request, 'quotations_lcl.html')
+    elif request.user.role == 'OP':
+        return render(request, 'quotations_lcl.html')
+    elif request.user.role == 'AC':
+        return render(request, 'quotations_lcl.html')
+    elif request.user.role == 'HR':
+        return render(request, 'quotations_lcl.html')
+    elif request.user.role == 'AD':
+        return render(request, 'quotations_lcl.html')
     else:
         return render(request, '404.html')

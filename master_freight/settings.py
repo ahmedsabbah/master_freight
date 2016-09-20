@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentication',
     'main',
 )
 
@@ -147,4 +148,8 @@ STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = [
 #     os.path.join(PROJECT_ROOT, 'staticfiles'),
-# ] bla
+# ]
+
+AUTH_USER_MODEL = 'authentication.User'
+SOCIAL_AUTH_USER_MODEL = 'authentication.User'
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
