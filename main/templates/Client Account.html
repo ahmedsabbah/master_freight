@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Client Account</title>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body class="container">
+
+  <form class="form-horizontal" role="form">
+    <fieldset>
+
+      <br>
+      <div class="container">
+        <!-- Text input-->
+
+        <h2 align="center">Customer Identification Profile</h2>
+        <br><br>
+
+        <h4 class="text-primary">Customer Information:</h4>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="customer_name">Customer Name:</label>  
+            <div class="col-sm-2">
+              <input id="customer_name" name="customer_name" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="customer_type">Customer Type:</label>  
+            <div class="col-sm-2">
+              <select id="customer_type" name="customer_type" class="form-control">
+              <option value="1">Individual</option>
+              <option value="2">Corporation or Organisation</option>
+              <option value="3">Business Address</option>
+              <option value="4">Residence</option>
+            </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="customer_address">Customer Address: </label>
+            <div class="col-sm-4">
+              <textarea class="form-control" id="customer_address" name="customer_address"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="commodity">Comodity:</label>  
+            <div class="col-sm-2">
+              <input id="commodity" name="commodity" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>  
+            <div class="col-sm-2">
+              <input id="business_phone" name="business_phone" type="text" placeholder="" class="form-control">
+            </div>  
+            <label class="col-sm-2 control-label" for="cell_alternative_phone">Cell or Alternative Phone:</label>  
+            <div class="col-sm-2">
+              <input id="cell_alternative_phone" name="cell_alternative_phone" type="text" placeholder="" class="form-control">
+            </div>  
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="fax_number">Fax Number:</label>  
+            <div class="col-sm-2">
+              <input id="fax_number" name="fax_number" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div> 
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="email">Email:</label>  
+            <div class="col-sm-2">
+              <input id="email" name="email" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="text-primary">Contact Information:</h4>
+
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="contact_person">Contact Person(Operation):</label> 
+            <div class="col-sm-2">
+              <input id="contact_person" name="contact_person" type="text" placeholder="" class="form-control">
+            </div>
+            <label class="col-sm-2 control-label" for="job_title">Job Title:</label>  
+            <div class="col-sm-2">
+              <input id="job_title" name="job_title" type="text" placeholder="" class="form-control">
+            </div>  
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>  
+            <div class="col-sm-2">
+              <input id="business_phone" name="business_phone" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="email">E-mail:</label>  
+            <div class="col-sm-2">
+              <input id="email" name="email" type="text" placeholder="" class="form-control">
+            </div>
+            <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>  
+            <div class="col-sm-2">
+              <input id="cell_phone" name="cell_phone" type="text" placeholder="" class="form-control">
+            </div> 
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="additional_customer_info">Additional Customer Information:</label>  
+            <div class="col-sm-4">
+              <textarea class="form-control" id="special_instructions" name="special_instructions"></textarea>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <h4 class="text-primary">Account Information:</h4>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="customer_id_numbers">Customer ID Number(s):</label>  
+            <div class="col-sm-2">
+              <input id="customer_id_numbers" name="customer_id_numbers" type="text" placeholder="" class="form-control">
+            </div>
+            <label class="col-sm-2 control-label" for="credit_period">Credit Period:</label>  
+            <div class="col-sm-2">
+              <input id="credit_period" name="credit_period" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="credit_limit">Credit Limit:</label>  
+            <div class="col-sm-2">
+              <input id="credit_limit" name="credit_limit" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="text-primary">References:</h4>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="name_ref">Name:</label>  
+            <div class="col-sm-2">
+              <input id="name_ref" name="name_ref" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="phone_ref">Phone:</label>  
+            <div class="col-sm-2">
+              <input id="phone_ref" name="phone_ref" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="other_notes">Other Notes:</label>  
+            <div class="col-sm-4">
+              <textarea class="form-control" id="other_notes" name="other_notes"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="account_issued_by">Account Issued By (Sales Man):</label>  
+            <div class="col-sm-2">
+              <input id="account_issued_by" name="account_issued_by" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="account_authorise_by">Account Authorised By:</label>  
+            <div class="col-sm-2">
+              <input id="account_authorise_by" name="account_authorise_by" type="text" placeholder="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        
+
+
+      </fieldset>
+    </form>
+  </body>
+  </html>

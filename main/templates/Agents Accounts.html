@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Agents Accounts</title>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body class="container">
+
+  <form class="form-horizontal" role="form">
+    <fieldset>
+
+      <br>
+      <div class="container">
+        <!-- Text input-->
+
+        <h3 class="text-primary">Company Details</h3>  
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="company_name">Company Name:</label>  
+            <div class="col-sm-2">
+              <input id="company_name" name="company_name" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="business_type">Business Type:</label>  
+            <div class="col-sm-2">
+              <select id="business_type" name="business_type" class="form-control">
+              <option value="1">CORP</option>
+              <option value="2">LTD</option>
+              <option value="3">LLP</option>
+              <option value="4">Pvt Ltd.</option>
+              <option value="5">Partnership</option>
+              <option value="6">Single Owner</option>
+            </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="business_type_documentation">Business Type Documentation:</label>  
+            <div class="col-sm-2">
+              <input id="business_type_documentation" name="business_type_documentation" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="main_office_address">Main Office Address:</label>  
+            <div class="col-sm-2">
+              <input id="main_office_address" name="main_office_address" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="city">City:</label>  
+            <div class="col-sm-2">
+              <input id="city" name="city" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="state">State:</label>  
+            <div class="col-sm-2">
+              <input id="state" name="state" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="country">Country:</label>  
+            <div class="col-sm-2">
+              <input id="country" name="country" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="zip_code">Zip Code:</label>  
+            <div class="col-sm-2">
+              <input id="zip_code" name="zip_code" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="mailing_address">Mailing Address:</label>  
+            <div class="col-sm-4">
+              <textarea id="mailing_address" name="mailing_address" type="text" placeholder="Please complete this section if your mailing address differs from the main office address." class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="key_contact">Key Contact:</label>  
+            <div class="col-sm-2">
+              <input id="key_contact" name="key_contact" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="position">Position:</label>  
+            <div class="col-sm-2">
+              <input id="position" name="position" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="telephone">Telephone:</label>  
+            <div class="col-sm-2">
+              <input id="telephone" name="telephone" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="fax">Fax:</label>  
+            <div class="col-sm-2">
+              <input id="fax" name="fax" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="after_hours">After Hours:</label>  
+            <div class="col-sm-2">
+              <input id="after_hours" name="after_hours" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="email">Email:</label>  
+            <div class="col-sm-2">
+              <input id="email" name="email" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="website">Website:</label>  
+            <div class="col-sm-2">
+              <input id="website" name="website" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="additional_locations">Additional Locations/Branch Offices:</label>  
+            <div class="col-sm-2">
+              <input id="additional_locations" name="additional_locations" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="year_business_started">Year business was started:</label>  
+            <div class="col-sm-2">
+              <input id="year_business_started" name="year_business_started" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="number_of_employees">Number of Employees:</label>  
+            <div class="col-sm-2">
+              <input id="number_of_employees" name="number_of_employees" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+        
+        <h3 class="text-primary">Banking Information</h3>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="bank_name">Bank Name:</label>  
+            <div class="col-sm-2">
+              <input id="bank_name" name="bank_name" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="address">Address:</label>  
+            <div class="col-sm-2">
+              <input id="address" name="address" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="city_b">City:</label>  
+            <div class="col-sm-2">
+              <input id="city_b" name="city_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="state_b">State:</label>  
+            <div class="col-sm-2">
+              <input id="state_b" name="state_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="country_b">Country:</label>  
+            <div class="col-sm-2">
+              <input id="country_b" name="country_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="contact_b">Contact:</label>  
+            <div class="col-sm-2">
+              <input id="contact_b" name="contact_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="zip_code_b">Zip Code:</label>  
+            <div class="col-sm-2">
+              <input id="zip_code_b" name="zip_code_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="telephone_b">Telephone:</label>  
+            <div class="col-sm-2">
+              <input id="telephone_b" name="telephone_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="fax_b">Fax:</label>  
+            <div class="col-sm-2">
+              <input id="fax_b" name="fax_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="account_number_b">Account Number:</label>  
+            <div class="col-sm-2">
+              <input id="account_number_b" name="account_number_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="routing_b">Routing:</label>  
+            <div class="col-sm-2">
+              <input id="routing_b" name="routing_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="account_currency_b">Account Currency:</label>  
+            <div class="col-sm-2">
+              <input id="account_currency_b" name="account_currency_b" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-primary">Accounting Contact</h3>
+          
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="contact_person_billing">Contact Person for Billing:</label>  
+            <div class="col-sm-2">
+              <input id="contact_person_billing" name="contact_person_billing" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="contact_email_billing">Contact Email for Billing:</label>  
+            <div class="col-sm-2">
+              <input id="contact_email_billing" name="contact_email_billing" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="phone_c">Phone:</label>  
+            <div class="col-sm-2">
+              <input id="phone_c" name="phone_c" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="fax_c">Fax:</label>  
+            <div class="col-sm-2">
+              <input id="fax_c" name="fax_c" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="mobile_phone_c">Mobile Phone:</label>  
+            <div class="col-sm-2">
+              <input id="mobile_phone_c" name="mobile_phone_c" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-2 control-label" for="billing_address_c">Billing Address:</label>  
+            <div class="col-sm-2">
+              <input id="billing_address_c" name="billing_address_c" type="text" placeholder="Click here to enter text." class="form-control">
+            </div>
+          </div>
+        </div>
+
+        
+
+
+      </fieldset>
+    </form>
+  </body>
+  </html>
