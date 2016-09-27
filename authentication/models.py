@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import UserManager
+import uuid
 
 class AbstractUser(AbstractBaseUser):
     ROLE_CHOICES = (
@@ -51,3 +52,7 @@ class User(AbstractUser):
         swappable = 'AUTH_USER_MODEL'
     def __str__(self):
         return self.get_full_name()
+
+class Token(models.Model):
+    user = models.OneToOneField('authentication.User', related_name='token')
+    token = models.CharField(max_length=40, blank=True, unique=True, default=uuid.uuid4)
