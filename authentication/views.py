@@ -16,9 +16,13 @@ def login_user(request):
                 return redirect('/')
             else:
                 message = 'Invalid email or password'
-                return render(request, 'login.html', {'message': message})
+                return render(request, 'login.html', {'message': message, 'email': email})
         else:
             message = 'Missing email or password'
-            return render(request, 'login.html', {'message': message})
+            return render(request, 'login.html', {'message': message, 'email': email})
     else:
         return render(request, 'login.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('/login/')
