@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sales Dashboard</title>
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/datepicker3.css" rel="stylesheet">
-<link href="css/bootstrap-table.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "css/datepicker3.css" %}" rel="stylesheet">
+<link href="{% static "css/bootstrap-table.css" %}" rel="stylesheet">
+<link href="{% static "css/styles.css" %}" rel="stylesheet">
 
 <!--Icons-->
-<script src="js/lumino.glyphs.js"></script>
+<script src="{% static "js/lumino.glyphs.js" %}"></script>
 
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
@@ -33,19 +34,18 @@
 				<a class="navbar-brand" href="#"><span>Sales </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
-							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+							<li><a href="/settings/"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li><a href="/logout/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-							
+
 		</div><!-- /.container-fluid -->
 	</nav>
-		
+
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
@@ -57,42 +57,38 @@
 			<li  class="active"><a href="home_sales.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
 			<li class="parent ">
 				<a href="#">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Forms 
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						<a class="" href="/rate_request/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> AIF
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						<a class="" href="/rate_request/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> FCL
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						<a class="" href="/rate_request/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> LCL
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li role="presentation" class="divider"></li>
-			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->
-		
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
-		
-		
-		<div class="row">
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+		<!-- <div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">TASKS</h1>
 			</div>
-		</div><!--/.row-->
-				
-		
+		</div> -->
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -100,62 +96,58 @@
 					<div class="panel-body">
 						<div class="container">
 
- <table  class="table table-striped table-bordered " id="example" cellspacing="0">
+							<table  class="table table-striped table-bordered " id="example" cellspacing="0">
 
-        <thead>
+				        <thead>
 
-            <tr>
+				            <tr>
 
-                <th>Shipment Data</th>
+				                <th>Shipment Data</th>
 
-                <th>Client Name</th>
+				                <th>Client Name</th>
 
-                <th>Company Name</th>
+				                <th>Company Name</th>
 
-                <th>State</th>
+				                <th>State</th>
 
-                <th>Date</th>
+				                <th>Date</th>
 
+				            </tr>
 
-                
+				        </thead>
 
-            </tr>
+				        <tbody>
 
-        </thead>
+				        </tbody>
 
-        <tfoot>
+				        <tfoot>
 
-            <tr>
+				            <tr>
 
-                
-                <th>Shipment Data</th>
+				                <th>Shipment Data</th>
 
-                <th>Client Name</th>
+				                <th>Client Name</th>
 
-                <th>Company Name</th>
+				                <th>Company Name</th>
 
-                <th>State</th>
+				                <th>State</th>
 
-                <th>Date</th>
+				                <th>Date</th>
 
-            </tr>
+				            </tr>
 
-        </tfoot>
+				        </tfoot>
 
-        <tbody>
-
-        </tbody>
-
-    </table>
-</div>
+							</table>
+						</div>
 
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
+		</div>
 
 
-		
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -180,7 +172,7 @@
                 <th>Date</th>
 
 
-                
+
 
             </tr>
 
@@ -190,7 +182,6 @@
 
             <tr>
 
-                
                 <th>Shipment Type</th>
 
                 <th>Client Name</th>
@@ -215,14 +206,12 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
-
-
+		</div><!--/.row-->
 						<script>
 						    $(function () {
 						        $('#hover, #striped, #condensed').click(function () {
 						            var classes = 'table';
-						
+
 						            if ($('#hover').prop('checked')) {
 						                classes += ' table-hover';
 						            }
@@ -236,10 +225,10 @@
 						                });
 						        });
 						    });
-						
+
 						    function rowStyle(row, index) {
 						        var classes = ['active', 'success', 'info', 'warning', 'danger'];
-						
+
 						        if (index % 2 === 0 && index / 2 < classes.length) {
 						            return {
 						                classes: classes[index / 2]
@@ -251,24 +240,24 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
-		
-		
+		</div><!--/.row-->
+
+
 	</div><!--/.main-->
 
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/chart.min.js"></script>
-	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/bootstrap-table.js"></script>
+	<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.min.js" %}"></script>
+	<script src="{% static "js/chart.min.js" %}"></script>
+	<script src="{% static "js/chart-data.js" %}"></script>
+	<script src="{% static "js/easypiechart.js" %}"></script>
+	<script src="{% static "js/easypiechart-data.js" %}"></script>
+	<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+	<script src="{% static "js/bootstrap-table.js" %}"></script>
 	<script>
 		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
-				$(this).find('em:first').toggleClass("glyphicon-minus");	  
-			}); 
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+				$(this).find('em:first').toggleClass("glyphicon-minus");
+			});
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
 
@@ -278,7 +267,7 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
-	</script>	
+	</script>
 </body>
 
 </html>
