@@ -16,5 +16,17 @@ urlpatterns = [
     url(r'^quotation/lcl/new/$', views.getLCLQuotation, name='getLCLQuotation'),
     url(r'^quotation/new/$', views.postQuotation, name='postQuotation'),
 
+    url(r'^offer/air/new/$', views.getAirOffer, name='getAirOffer'),
+    url(r'^offer/sea/new/$', views.getSeaOffer, name='getSeaOffer'),
+    url(r'^offer/new/$', views.postOffer, name='postOffer'),
+
+    url(r'^sales/workspace/$', views.getSalesWorkspace, name='getSalesWorkspace'),
+    url(r'^operations/workspace/$', views.getOperationsWorkspace, name='getOperationsWorkspace'),
+    url(r'^admin/workspace/$', views.getAdminWorkspace, name='getAdminWorkspace'),
+
+    url(r'^admin/$', views.admin, name='admin'),
+    url(r'^admin/employees/$', views.getAdminEmployees, name='getAdminEmployees'),
+    url(r'^admin/charts/$', views.getAdminCharts, name='getAdminCharts'),
+
     url(r'^404/$', views.notFound, name='notFound'),
 ]

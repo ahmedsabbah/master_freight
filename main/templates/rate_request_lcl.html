@@ -32,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/sales/"><span>Operations </span>Dashboard</a>
+				<a class="navbar-brand" href="/sales/"><span>Sales </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -47,57 +47,81 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 
-  <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="/operations/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-			<li><a href="/operations/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+			<li><a href="/sales/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li><a href="/sales/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
 			<li class="parent active">
 				<a data-toggle="collapse" href="#sub-item-1">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
 				</a>
 				<ul class="children expand" id="sub-item-1">
 					<li>
-						<a class="" href="/quotation/aif/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> AIF Quotation
+						<a class="" href="/rate_request/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
 						</a>
 					</li>
 					<li>
-						<a class="" href="/quotation/fcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Quotation
+						<a class="" href="/rate_request/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
 						</a>
 					</li>
 					<li>
-						<a class="" href="/quotation/lcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Quotation
+						<a class="" href="/rate_request/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
+						</a>
+					</li>
+					<li>
+						<a class="" href="/rate_request/sales/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-2">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
+				</a>
+				<ul class="children collapse" id="sub-item-2">
+					<li>
+						<a class="" href="/offer/air/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
+						</a>
+					</li>
+					<li>
+						<a class="" href="/offer/sea/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
 						</a>
 					</li>
 				</ul>
 			</li>
 		</ul>
 
-	</div><!--/.sidebar-->
+		</div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 				<br/>
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">Quotations-FCL</div>
+								<div class="panel-heading">LCL Rate Request</div>
 								<div class="panel-body">
 									<div class="container">
-                    <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
-                      <fieldset>
 
+                    <form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
+                      <fieldset>
                         <br>
                         <div class="container">
                           <!-- Text input-->
                           {% csrf_token %}
-                          <input type="hidden" name="type" value="FCL">
+                          <input type="hidden" name="type" value="LCL">
+
+
 
                           <div class="form-group">
                             <div class="row">
@@ -157,19 +181,6 @@
                             </div>
                           </div>
 
-                          <br><br>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="agent_details">Agent Details</label>
-                              <div class="col-sm-2">
-                                <input id="agent_details" name="agent_details" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <br><br>
-
                           <h4 class="text-primary">Destination:</h4>
 
                           <div class="form-group">
@@ -198,28 +209,47 @@
                             </div>
                           </div>
 
-                          <br><br>
+                          <h4 class="text-primary">Final Delivery Destination:</h4>
 
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="address">Address</label>
+                              <div class="col-sm-2">
+                                <input id="address" name="address" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="contact_person">Contact Person</label>
+                              <div class="col-sm-2">
+                                <input id="contact_person" name="contact_person" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="contact_person_extra">Contact Person (extra)</label>
+                              <div class="col-sm-2">
+                                <input id="contact_person_extra" name="contact_person_extra" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+
+                          <h4 class="text-primary">Required Delivery Time:</h4>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="delivery_time">Within</label>
+                              <div class="col-sm-2">
+                                <input id="delivery_time" name="delivery_time" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
 
                           <h4 class="text-primary">Cargo Details:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
-                              <div class="col-sm-2">
-                                <input id="shipping_line" name="shipping_line" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="container_type">Container Type</label>
-                              <div class="col-sm-2">
-                                <input id="container_type" name="container_type" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
 
                           <div class="form-group">
                             <div class="row">
@@ -239,8 +269,6 @@
                             </div>
                           </div>
 
-
-
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
@@ -259,190 +287,130 @@
                             </div>
                           </div>
 
-                          <br><br>
-
-
-                          <div class ="row">
-                            <h4 class="text-primary col-sm-1">Quotation:</h4>
-                            <label class="col-sm-2 control-label" for="">Net Cost</label>
-                            <label class="col-sm-2 control-label" for="">Selling</label>
-                          </div>
-
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
+                              <label class="col-sm-2 control-label" for="pieces">Pieces</label>
                               <div class="col-sm-2">
-                                <input id="ocean_freight" name="ocean_freight_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="ocean_freight" name="ocean_freight_selling" type="text" placeholder="" class="form-control">
+                                <input id="pieces" name="pieces" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="thc">T.H.C</label>
+                              <label class="col-sm-2 control-label" for="packing">Packing</label>
                               <div class="col-sm-2">
-                                <input id="thc" name="thc_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="thc" name="thc_selling" type="text" placeholder="" class="form-control">
+                                <input id="packing" name="packing" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
+                              <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
                               <div class="col-sm-2">
-                                <input id="transportation" name="transportation_net" type="text" placeholder="" class="form-control">
+                                <input id="dimensions" name="dimensions" type="text" placeholder="" class="form-control">
                               </div>
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="any">Any</label>
                               <div class="col-sm-2">
-                                <input id="transportation" name="transportation_selling" type="text" placeholder="" class="form-control">
+                                <input id="any" name="any" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+
+                          <h4 class="text-primary">Imo Class:</h4>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="hazardous">Hazardous</label>
+                              <div class="col-sm-2">
+                                <input id="hazardous" name="hazardous" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
+                              <label class="col-sm-2 control-label" for="non_hazardous">Non-Hazardous</label>
                               <div class="col-sm-2">
-                                <input id="transfer" name="transfer_net" type="text" placeholder="" class="form-control">
+                                <input id="non_hazardous" name="non_hazardous" type="text" placeholder="" class="form-control">
                               </div>
+                            </div>
+                          </div>
+
+                          <h4 class="text-primary">Shipment Term:</h4>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="ex_work">Ex-work</label>
                               <div class="col-sm-2">
-                                <input id="transfer" name="transfer_selling" type="text" placeholder="" class="form-control">
+                                <input id="ex_work" name="ex_work" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE/P.O.L</label>
+                              <label class="col-sm-2 control-label" for="fas">F.A.S</label>
                               <div class="col-sm-2">
-                                <input id="clearance_pol" name="clearance_pol_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="clearance_pol" name="clearance_pol_selling" type="text" placeholder="" class="form-control">
+                                <input id="fas" name="fas" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pod">CLEARANCE/P.O.D</label>
+                              <label class="col-sm-2 control-label" for="fob">F.O.B</label>
                               <div class="col-sm-2">
-                                <input id="clearance_pod" name="clearance_pod_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="clearance_pod" name="clearance_pod_selling" type="text" placeholder="" class="form-control">
+                                <input id="fob" name="fob" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
+                              <label class="col-sm-2 control-label" for="cnf">C&F</label>
                               <div class="col-sm-2">
-                                <input id="bl_fees" name="bl_fees_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="bl_fees" name="bl_fees_selling" type="text" placeholder="" class="form-control">
+                                <input id="cnf" name="cnf" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
+                              <label class="col-sm-2 control-label" for="cif">C.I.F</label>
                               <div class="col-sm-2">
-                                <input id="telex_release" name="telex_release_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="telex_release" name="telex_release_selling" type="text" placeholder="" class="form-control">
+                                <input id="cif" name="cif" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="ex_work">EX-WORK</label>
+                              <label class="col-sm-2 control-label" for="others">Others</label>
                               <div class="col-sm-2">
-                                <input id="ex_work" name="ex_work_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="ex_work" name="ex_work_selling" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
-                              <div class="col-sm-2">
-                                <input id="official_receipts" name="official_receipts_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="official_receipts" name="official_receipts_selling" type="text" placeholder="" class="form-control">
+                                <input id="others" name="others" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <br><br>
 
-                          <h4 class="text-primary">Extra Notes:</h4>
-
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
+                              <label class="col-sm-2 control-label" for="payment_term">Payment Term</label>
                               <div class="col-sm-2">
-                                <input id="free_time_destination" name="free_time_destination" type="text" placeholder="" class="form-control">
+                                <input id="payment_term" name="payment_term" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="vessels_available">Vessels Available</label>
-                              <div class="col-sm-2">
-                                <input id="vessels_available" name="vessels_available" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="route">Route</label>
-                              <div class="col-sm-2">
-                                <input id="route" name="route" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="transit_time">Transit Time</label>
-                              <div class="col-sm-2">
-                                <input id="transit_time" name="transit_time" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="offer_validity">Offer Validity</label>
-                              <div class="col-sm-2">
-                                <input id="offer_validity" name="offer_validity" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-
-
-                          <br><br>
-
 
                           <div class="form-group">
                             <div class="row">
@@ -457,17 +425,16 @@
                         </fieldset>
                          <input type="submit" value="Submit">
                       </form>
-
-                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </body>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 
-  </html>
+</html>

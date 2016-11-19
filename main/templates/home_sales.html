@@ -8,10 +8,10 @@
 <title>Sales Dashboard</title>
 <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>
-<script src="{% static "js/chart.min.js" %}"></script>
+<!-- <script src="{% static "js/chart.min.js" %}"></script>
 <script src="{% static "js/chart-data.js" %}"></script>
 <script src="{% static "js/easypiechart.js" %}"></script>
-<script src="{% static "js/easypiechart-data.js" %}"></script>
+<script src="{% static "js/easypiechart-data.js" %}"></script> -->
 <script src="{% static "js/bootstrap-datepicker.js" %}"></script>
 <script src="{% static "js/bootstrap-table.js" %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -30,11 +30,6 @@
 
 <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
-
-<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
-
-<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
-
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
@@ -52,7 +47,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><span>Sales </span>Dashboard</a>
+				<a class="navbar-brand" href="/sales/"><span>Sales </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -74,216 +69,299 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="sales2.html"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li  class="active"><a href="home_sales.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li  class="active"><a href="/sales/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li><a href="/sales/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
 			<li class="parent ">
-				<a href="#">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
+				<a data-toggle="collapse" href="#sub-item-1">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
 				</a>
 				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="/rate_request/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
+						</a>
+					</li>
+					<li>
+						<a class="" href="/rate_request/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
+						</a>
+					</li>
+					<li>
+						<a class="" href="/rate_request/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
+						</a>
+					</li>
 					<li>
 						<a class="" href="sales_rate_request.html">
 							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
 						</a>
 					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-2">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
+				</a>
+				<ul class="children collapse" id="sub-item-2">
 					<li>
-						<a class="" href="offer_to_client_air.html">
+						<a class="" href="/offer/air/new/">
 							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
 						</a>
 					</li>
 					<li>
-						<a class="" href="offer_to_client_sea.html">
+						<a class="" href="/offer/sea/new/">
 							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
-						</a>
-					</li>
-					<li>
-						<a class="" href="lcl_rate_request.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="fcl_rate_request.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="aif_rate_request.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
-
 						</a>
 					</li>
 				</ul>
 			</li>
 		</ul>
 
-	</div><!--/.sidebar-->
+	</div>
 
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+						<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+							<br/>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="panel panel-default">
+											<div class="panel-heading">Rate Requests</div>
+											<div class="panel-body">
+												<div class="container">
 
-		<!-- <div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">TASKS</h1>
-			</div>
-		</div> -->
+													<table  class="table table-striped table-bordered " id="example1" cellspacing="0">
 
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Rate Requests</div>
-					<div class="panel-body">
-						<div class="container">
+										        <thead>
 
-							<table  class="table table-striped table-bordered " id="example" cellspacing="0">
+										            <tr>
 
-				        <thead>
+										                <th>Type</th>
 
-				            <tr>
+										                <th>Client Name</th>
 
-				                <th>Shipment Data</th>
+										                <th>Company Name</th>
 
-				                <th>Client Name</th>
+										                <th>Status</th>
 
-				                <th>Company Name</th>
+										                <th>Date</th>
 
-				                <th>State</th>
+										            </tr>
 
-				                <th>Date</th>
+										        </thead>
 
-				            </tr>
+										        <tbody>
+															{% for rate_request in rate_requests %}
+															<tr>
 
-				        </thead>
+																	<th>{{rate_request.type}}</th>
 
-				        <tbody>
+																	<th>{{rate_request.client.name}}</th>
 
-				        </tbody>
+																	<th>{{rate_request.client.company_name}}</th>
 
-				        <tfoot>
+																	<th>{{rate_request.status}}</th>
 
-				            <tr>
+																	<th>{{rate_request.created_date}}</th>
 
-				                <th>Shipment Data</th>
+															</tr>
 
-				                <th>Client Name</th>
+									            {% endfor %}
 
-				                <th>Company Name</th>
+										        </tbody>
 
-				                <th>State</th>
+										        <tfoot>
 
-				                <th>Date</th>
+										            <tr>
 
-				            </tr>
+																	<th>Type</th>
 
-				        </tfoot>
+																	<th>Client Name</th>
 
-							</table>
+																	<th>Company Name</th>
+
+																	<th>Status</th>
+
+																	<th>Date</th>
+
+										            </tr>
+
+										        </tfoot>
+
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="panel panel-default">
+											<div class="panel-heading">Quotations</div>
+											<div class="panel-body">
+												<div class="container">
+
+										 			<table  class="table table-striped table-bordered " id="example2" cellspacing="0">
+
+										        <thead>
+
+										            <tr>
+
+																	<th>Type</th>
+
+																	<th>Client Name</th>
+
+																	<th>Company Name</th>
+
+																	<th>Status</th>
+
+																	<th>Date</th>
+
+										            </tr>
+
+										        </thead>
+
+														<tbody>
+															{% for quotation in quotations %}
+															<tr>
+
+																	<th>{{quotation.type}}</th>
+
+																	<th>{{quotation.client.name}}</th>
+
+																	<th>{{quotation.client.company_name}}</th>
+
+																	<th>{{quotation.status}}</th>
+
+																	<th>{{quotation.created_date}}</th>
+
+															</tr>
+
+									            {% endfor %}
+										        </tbody>
+
+										        <tfoot>
+
+										            <tr>
+
+																	<th>Type</th>
+
+																	<th>Client Name</th>
+
+																	<th>Company Name</th>
+
+																	<th>Status</th>
+
+																	<th>Date</th>
+
+										            </tr>
+
+										        </tfoot>
+
+										    </table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">Offers</div>
+										<div class="panel-body">
+											<div class="container">
+
+									 			<table  class="table table-striped table-bordered " id="example3" cellspacing="0">
+
+									        <thead>
+									            <tr>
+																<th>Type</th>
+
+																<th>Client Name</th>
+
+																<th>Company Name</th>
+
+																<th>Status</th>
+
+																<th>Date</th>
+									            </tr>
+
+									        </thead>
+
+									        <tbody>
+														{% for offer in offers %}
+														<tr>
+
+																<th>{{offer.type}}</th>
+
+																<th>{{offer.client.name}}</th>
+
+																<th>{{offer.client.company_name}}</th>
+
+																<th>{{offer.status}}</th>
+
+																<th>{{offer.created_date}}</th>
+
+														</tr>
+
+														{% endfor %}
+									        </tbody>
+
+									        <tfoot>
+
+									            <tr>
+
+																<th>Type</th>
+
+																<th>Client Name</th>
+
+																<th>Company Name</th>
+
+																<th>Status</th>
+
+																<th>Date</th>
+
+									            </tr>
+
+									        </tfoot>
+
+									    </table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-
 					</div>
-				</div>
-			</div>
-		</div>
 
+	<script>
+			$(function () {
+					$('#hover, #striped, #condensed').click(function () {
+							var classes = 'table';
 
+							if ($('#hover').prop('checked')) {
+									classes += ' table-hover';
+							}
+							if ($('#condensed').prop('checked')) {
+									classes += ' table-condensed';
+							}
+							$('#table-style').bootstrapTable('destroy')
+									.bootstrapTable({
+											classes: classes,
+											striped: $('#striped').prop('checked')
+									});
+					});
+			});
+			function rowStyle(row, index) {
+					var classes = ['active', 'success', 'info', 'warning', 'danger'];
 
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Quotations</div>
-					<div class="panel-body">
-						<div class="container">
-
- <table  class="table table-striped table-bordered " id="example2" cellspacing="0">
-
-        <thead>
-
-            <tr>
-
-                <th>Shipment Type</th>
-
-                <th>Client Name</th>
-
-                <th>Company Name</th>
-
-                <th>State</th>
-
-                <th>Date</th>
-
-
-
-
-            </tr>
-
-        </thead>
-
-        <tfoot>
-
-            <tr>
-
-                <th>Shipment Type</th>
-
-                <th>Client Name</th>
-
-                <th>Company Name</th>
-
-                <th>State</th>
-
-                <th>Date</th>
-
-            </tr>
-
-        </tfoot>
-
-        <tbody>
-
-        </tbody>
-
-    </table>
-</div>
-
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
-
-						<script>
-
-						    $(function () {
-						        $('#hover, #striped, #condensed').click(function () {
-						            var classes = 'table';
-
-						            if ($('#hover').prop('checked')) {
-						                classes += ' table-hover';
-						            }
-						            if ($('#condensed').prop('checked')) {
-						                classes += ' table-condensed';
-						            }
-						            $('#table-style').bootstrapTable('destroy')
-						                .bootstrapTable({
-						                    classes: classes,
-						                    striped: $('#striped').prop('checked')
-						                });
-						        });
-						    });
-
-						    function rowStyle(row, index) {
-						        var classes = ['active', 'success', 'info', 'warning', 'danger'];
-
-						        if (index % 2 === 0 && index / 2 < classes.length) {
-						            return {
-						                classes: classes[index / 2]
-						            };
-						        }
-						        return {};
-						    }
-						</script>
-
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
-
-
-	</div><!--/.main-->
+					if (index % 2 === 0 && index / 2 < classes.length) {
+							return {
+									classes: classes[index / 2]
+							};
+					}
+					return {};
+			}
+	</script>
 
 	<script>
 		!function ($) {
@@ -303,39 +381,26 @@
 	</script>
 
 	<script>
-								$(document).ready(function() {
+		$(document).ready(function() {
+		    $('#example1').dataTable({
+		        "paging":  true,
+		        "ordering": true,
+		        "info":     true
+		    });
 
-								    $('#example').dataTable( {
+				$('#example2').dataTable({
+						"paging":  true,
+						"ordering": true,
+						"info":     true
+				});
 
-								        "paging":  true,
-
-
-								        "ordering": true,
-
-
-								        "info":     true
-
-								    } );
-
-								} );
-
-								$(document).ready(function() {
-
-								    $('#example2').dataTable( {
-
-								        "paging":  true,
-
-
-								        "ordering": true,
-
-
-								        "info":     true
-
-								    } );
-
-								} );
-
-						</script>
+				$('#example3').dataTable({
+		        "paging":  true,
+		        "ordering": true,
+		        "info":     true
+		    });
+		});
+	</script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation
+from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer
 from authentication.views import User
 
 def main(request):
@@ -26,14 +26,19 @@ def sales(request):
         return redirect('/login/')
     if request.user.role != 'SA':
         return redirect('/')
-    return render(request, 'home_sales.html')
+    rate_requests = RateRequest.objects.all()
+    quotations = Quotation.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'home_sales.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
 
 def operations(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
     if request.user.role != 'OP':
         return redirect('/')
-    return render(request, 'home_operations.html')
+    rate_requests = RateRequest.objects.all()
+    quotations = Quotation.objects.all()
+    return render(request, 'home_operations.html', {'rate_requests': rate_requests, 'quotations': quotations})
 
 def accounting(request):
     if not request.user.is_authenticated():
@@ -54,33 +59,45 @@ def admin(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'home_admin.html')
+    rate_requests = RateRequest.objects.all()
+    quotations = Quotation.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'home_admin.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
 
 def getAIFRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'SA':
+    if request.user.role == 'SA':
+        return render(request, 'rate_request_aif.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_rate_request_aif.html')
+    else:
         return redirect('/')
-    return render(request, 'aif_rate_request.html')
 
 def getFCLRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'SA':
+    if request.user.role == 'SA':
+        return render(request, 'rate_request_fcl.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_rate_request_fcl.html')
+    else:
         return redirect('/')
-    return render(request, 'fcl_rate_request.html')
 
 def getLCLRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'SA':
+    if request.user.role == 'SA':
+        return render(request, 'rate_request_lcl.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_rate_request_lcl.html')
+    else:
         return redirect('/')
-    return render(request, 'lcl_rate_request.html')
 
 def postRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'SA':
+    if request.user.role != 'SA' and request.user.role != 'AD':
         return redirect('/')
     if request.method != 'POST':
         return redirect('/404/')
@@ -94,7 +111,7 @@ def postRateRequest(request):
     phone = request.POST.get('phone', None)
     email = request.POST.get('email', None)
     extra_information = request.POST.get('extra_info', None)
-    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_info=extra_info)
+    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
     client.save()
 
     port_of_loading = request.POST.get('port_of_loading', None)
@@ -183,28 +200,37 @@ def postRateRequest(request):
 def getAIFQuotation(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'OP':
+    if request.user.role == 'SA':
+        return render(request, 'quotations_aif.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_quotations_aif.html')
+    else:
         return redirect('/')
-    return render(request, 'quotations_aif.html')
 
 def getFCLQuotation(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'OP':
+    if request.user.role == 'SA':
+        return render(request, 'quotations_fcl.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_quotations_fcl.html')
+    else:
         return redirect('/')
-    return render(request, 'quotations_fcl.html')
 
 def getLCLQuotation(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'OP':
+    if request.user.role == 'SA':
+        return render(request, 'quotations_lcl.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_quotations_lcl.html')
+    else:
         return redirect('/')
-    return render(request, 'quotations_lcl.html')
 
 def postQuotation(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'OP':
+    if request.user.role != 'OP' and request.user.role != 'AD':
         return redirect('/')
     if request.method != 'POST':
         return redirect('/404/')
@@ -218,7 +244,7 @@ def postQuotation(request):
     phone = request.POST.get('phone', None)
     email = request.POST.get('email', None)
     extra_information = request.POST.get('extra_info', None)
-    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_info=extra_info)
+    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
     client.save()
 
     port_of_loading = request.POST.get('port_of_loading', None)
@@ -371,3 +397,121 @@ def postQuotation(request):
         quotation.save()
 
     return redirect('/')
+
+def getAirOffer(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role == 'SA':
+        return render(request, 'offer_air.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_offer_air.html')
+    else:
+        return redirect('/')
+
+def getSeaOffer(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role == 'SA':
+        return render(request, 'offer_sea.html')
+    elif request.user.role == 'AD':
+        return render(request, 'admin_offer_sea.html')
+    else:
+        return redirect('/')
+
+def postOffer(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'SA' and request.user.role != 'AD':
+        return redirect('/')
+    if request.method != 'POST':
+        return redirect('/404/')
+
+    type = request.POST.get('type', None)
+    sales_person = request.user
+
+    name = request.POST.get('client_name', None)
+    company_name = request.POST.get('company_name', None)
+    contact = request.POST.get('contact', None)
+    phone = request.POST.get('phone', None)
+    email = request.POST.get('email', None)
+    extra_information = request.POST.get('extra_info', None)
+    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
+    client.save()
+
+    if type == 'A':
+        air_freight_kg = request.POST.get('air_freight_kg', None)
+        fuel_sur_charge_kg = request.POST.get('fuel_sur_charge_kg', None)
+        security_fees_kg = request.POST.get('security_fees_kg', None)
+        exw_charges = request.POST.get('exw_charges', None)
+        screening_fees = request.POST.get('screening_fees', None)
+        storage = request.POST.get('storage', None)
+        inland = request.POST.get('inland', None)
+        packing = request.POST.get('packing', None)
+        taxes_duties = request.POST.get('taxes_duties', None)
+        handling_fees = request.POST.get('handling_fees', None)
+        official_receipts = request.POST.get('official_receipts', None)
+        p_share = request.POST.get('p_share', None)
+        other_notes = request.POST.get('other_notes', None)
+        offer_validity = request.POST.get('offer_validity', None)
+        air_quotation = AirQuotation(air_freight_kg=air_freight_kg, fuel_sur_charge_kg=fuel_sur_charge_kg, security_fees_kg=security_fees_kg, exw_charges=exw_charges, screening_fees=screening_fees, storage=storage, inland=inland, packing=packing, taxes_duties=taxes_duties, handling_fees=handling_fees, official_receipts=official_receipts, p_share=p_share, other_notes=other_notes, offer_validity=offer_validity)
+        air_quotation.save()
+
+        offer = Offer(type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
+        offer.save()
+    else:
+        shipping_line = request.POST.get('shipping_line', None)
+        ocean_freight = request.POST.get('ocean_freight', None)
+        thc = request.POST.get('thc', None)
+        transporation = request.POST.get('transporation', None)
+        transfer = request.POST.get('transfer', None)
+        clearance = request.POST.get('clearance', None)
+        bl_fees = request.POST.get('bl_fees', None)
+        telex_release = request.POST.get('telex_release', None)
+        free_time_at_destination = request.POST.get('free_time_at_destination', None)
+        vessels = request.POST.get('vessels', None)
+        payment_credit = request.POST.get('payment_credit', None)
+        official_receipts = request.POST.get('official_receipts', None)
+        other_notes = request.POST.get('other_notes', None)
+        offer_validity = request.POST.get('offer_validity', None)
+        sea_quotation = SeaQuotation(shipping_line=shipping_line, ocean_freight=ocean_freight, thc=thc, transporation=transporation, transfer=transfer, clearance=clearance, bl_fees=bl_fees, telex_release=telex_release, free_time_at_destination=free_time_at_destination, vessels=vessels, payment_credit=payment_credit, official_receipts=official_receipts, other_notes=other_notes, offer_validity=offer_validity)
+        sea_quotation.save()
+
+        offer = Offer(type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
+        offer.save()
+
+    return redirect('/')
+
+def getSalesWorkspace(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'SA':
+        return redirect('/')
+    return render(request, 'workspace_sales.html')
+
+def getOperationsWorkspace(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'OP':
+        return redirect('/')
+    return render(request, 'workspace_operation.html')
+
+def getAdminWorkspace(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'AD':
+        return redirect('/')
+    return render(request, 'workspace_admin.html')
+
+def getAdminEmployees(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'AD':
+        return redirect('/')
+    return render(request, 'employeesmanagement.html')
+
+def getAdminCharts(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'AD':
+        return redirect('/')
+    return render(request, 'charts.html')

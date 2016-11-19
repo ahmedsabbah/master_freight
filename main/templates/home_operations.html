@@ -1,40 +1,37 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Opeartion Dashboard</title>
 
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/chart.min.js"></script>
-	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/bootstrap-table.js"></script>
+	<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.min.js" %}"></script>
+	<script src="{% static "js/chart.min.js" %}"></script>
+	<script src="{% static "js/chart-data.js" %}"></script>
+	<script src="{% static "js/easypiechart.js" %}"></script>
+	<script src="{% static "js/easypiechart-data.js" %}"></script>
+	<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+	<script src="{% static "js/bootstrap-table.js" %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 
 
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/datepicker3.css" rel="stylesheet">
-<link href="css/bootstrap-table.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "css/datepicker3.css" %}" rel="stylesheet">
+<link href="{% static "css/bootstrap-table.css" %}" rel="stylesheet">
+<link href="{% static "css/styles.css" %}" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylsheet">
 
 <!--Icons-->
-<script src="js/lumino.glyphs.js"></script>
+<script src="{% static "js/lumino.glyphs.js" %}"></script>
 
 <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
- 
-<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
 
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
@@ -53,22 +50,21 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><span>Operation </span>Dashboard</a>
+				<a class="navbar-brand" href="/operations/"><span>Operations </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
-							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+							<li><a href="/settings/"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li><a href="/logout/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-							
+
 		</div><!-- /.container-fluid -->
 	</nav>
-		
+
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
@@ -76,175 +72,186 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="operation2.html"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li  class="active"><a href="home_operations.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li  class="active"><a href="/operations/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li><a href="/operations/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
 			<li class="parent ">
-				<a href="#">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Forms 
+				<a data-toggle="collapse" href="#sub-item-1">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="quotations_aif.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> quotations AIR
+						<a class="" href="/quotation/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> AIF Quotation
 						</a>
 					</li>
 					<li>
-						<a class="" href="quotations_fcl.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations FCL
+						<a class="" href="/quotation/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Quotation
 						</a>
 					</li>
 					<li>
-						<a class="" href="quotations_lcl.html">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations LCL
+						<a class="" href="/quotation/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Quotation
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li role="presentation" class="divider"></li>
-			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->
-		
-	<div  class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
-		
-		
-		<div class="row">
-			<div class="col-lg-14">
-				<h1 class="page-header">TASKS</h1>
-			</div>
-		</div><!--/.row-->
-				
-		
-		<div class="row">
-			<div class="col-lg-14">
-				<div width="90%" class="panel panel-default">
-					<div class="panel-heading"></div>
-					<div width="90%" class="panel-body">
-						<div width="90%" class="container">
 
-  
-<table  class="table table-striped table-bordered " id="example" cellspacing="0">
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<br/>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Rate Requests</div>
+						<div class="panel-body">
+							<div class="container">
 
-        <thead>
+								<table  class="table table-striped table-bordered " id="example1" cellspacing="0">
 
-            <tr>
+									<thead>
 
-                <th>Shipment Data</th>
+											<tr>
 
-                <th>Client Name</th>
+													<th>Type</th>
 
-                <th>Company Name</th>
+													<th>Client Name</th>
 
-                <th>State</th>
+													<th>Company Name</th>
 
-                <th>Date</th>
+													<th>Status</th>
 
+													<th>Date</th>
 
-                
+											</tr>
 
-            </tr>
+									</thead>
 
-        </thead>
+									<tbody>
+										{% for rate_request in rate_requests %}
+										<tr>
 
-        <tfoot>
+												<th>{{rate_request.type}}</th>
 
-            <tr>
+												<th>{{rate_request.client.name}}</th>
 
-                
-                <th>Shipment Data</th>
+												<th>{{rate_request.client.company_name}}</th>
 
-                <th>Client Name</th>
+												<th>{{rate_request.status}}</th>
 
-                <th>Company Name</th>
+												<th>{{rate_request.created_date}}</th>
 
-                <th>State</th>
+										</tr>
 
-                <th>Date</th>
+										{% endfor %}
 
-            </tr>
+									</tbody>
 
-        </tfoot>
+									<tfoot>
 
-        <tbody>
+											<tr>
 
-        </tbody>
+												<th>Type</th>
 
-    </table>
-</div>
+												<th>Client Name</th>
 
+												<th>Company Name</th>
+
+												<th>Status</th>
+
+												<th>Date</th>
+
+											</tr>
+
+									</tfoot>
+
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
 
-<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Quotations</div>
-					<div class="panel-body">
-						<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Quotations</div>
+						<div class="panel-body">
+							<div class="container">
 
- <table  class="table table-striped table-bordered " id="example2" cellspacing="0">
+								<table  class="table table-striped table-bordered " id="example2" cellspacing="0">
 
-        <thead>
+									<thead>
 
-            <tr>
+											<tr>
 
-                <th>Shipment Type</th>
+												<th>Type</th>
 
-                <th>Client Name</th>
+												<th>Client Name</th>
 
-                <th>Company Name</th>
+												<th>Company Name</th>
 
-                <th>State</th>
+												<th>Status</th>
 
-                <th>Date</th>
+												<th>Date</th>
 
+											</tr>
 
-                
+									</thead>
 
-            </tr>
+									<tbody>
+										{% for quotation in quotations %}
+										<tr>
 
-        </thead>
+												<th>{{quotation.type}}</th>
 
-        <tfoot>
+												<th>{{quotation.client.name}}</th>
 
-            <tr>
+												<th>{{quotation.client.company_name}}</th>
 
-                
-                <th>Shipment Type</th>
+												<th>{{quotation.status}}</th>
 
-                <th>Client Name</th>
+												<th>{{quotation.created_date}}</th>
 
-                <th>Company Name</th>
+										</tr>
 
-                <th>State</th>
+										{% endfor %}
+									</tbody>
 
-                <th>Date</th>
+									<tfoot>
 
-            </tr>
+											<tr>
 
-        </tfoot>
+												<th>Type</th>
 
-        <tbody>
+												<th>Client Name</th>
 
-        </tbody>
+												<th>Company Name</th>
 
-    </table>
-</div>
+												<th>Status</th>
 
+												<th>Date</th>
+
+											</tr>
+
+									</tfoot>
+
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
+		</div>
+</div>
 
 
 						<script>
 						    $(function () {
 						        $('#hover, #striped, #condensed').click(function () {
 						            var classes = 'table';
-						
+
 						            if ($('#hover').prop('checked')) {
 						                classes += ' table-hover';
 						            }
@@ -258,10 +265,10 @@
 						                });
 						        });
 						    });
-						
+
 						    function rowStyle(row, index) {
 						        var classes = ['active', 'success', 'info', 'warning', 'danger'];
-						
+
 						        if (index % 2 === 0 && index / 2 < classes.length) {
 						            return {
 						                classes: classes[index / 2]
@@ -273,50 +280,38 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->	
-		
-		
+		</div><!--/.row-->
+
+
 	</div><!--/.main-->
 
 
-		<script>
-$(document).ready(function() {
+	<script>
+		$(document).ready(function() {
+				$('#example1').dataTable({
+						"paging":  true,
+						"ordering": true,
+						"info":     true
+				});
 
-    $('#example').dataTable( {
+				$('#example2').dataTable({
+						"paging":  true,
+						"ordering": true,
+						"info":     true
+				});
 
-        "paging":  true,
-
-
-        "ordering": true,
-
-
-        "info":     true
-
-    } );
-
-} );
-
-$(document).ready(function() {
-
-    $('#example2').dataTable( {
-
-        "paging":  true,
-
-
-        "ordering": true,
-
-
-        "info":     true
-
-    } );
-
-} );
-</script>
+				$('#example3').dataTable({
+						"paging":  true,
+						"ordering": true,
+						"info":     true
+				});
+		});
+	</script>
 	<script>
 		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
-				$(this).find('em:first').toggleClass("glyphicon-minus");	  
-			}); 
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+				$(this).find('em:first').toggleClass("glyphicon-minus");
+			});
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
 
@@ -326,7 +321,7 @@ $(document).ready(function() {
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
-	</script>	
+	</script>
 </body>
 
 </html>

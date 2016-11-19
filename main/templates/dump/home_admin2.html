@@ -41,10 +41,10 @@
 					</li>
 				</ul>
 			</div>
-							
+
 		</div><!-- /.container-fluid -->
 	</nav>
-		
+
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
@@ -52,12 +52,14 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			
-			<li class="active"><a href="operation2.html"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li><a href="home_operations.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+
+			<li class="active"><a href="home_admin2.html"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+			<li><a href="home_admin.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Employees Management</a></li>
+				<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
 			<li class="parent ">
 				<a href="#">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Forms 
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Forms
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
@@ -80,24 +82,24 @@
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
 		</ul>
-		
+
 	</div><!--/.sidebar-->
-		
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">		
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
 				<li class="active">Icons</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Work Space</h1>
 			</div>
 		</div><!--/.row-->
-									
-		
+
+
 		<div class="row">
 			<div class="col-md-8">
 				<div class="panel panel-default">
@@ -112,7 +114,7 @@
 									<input id="name" name="name" type="text" placeholder="Your name" class="form-control">
 									</div>
 								</div>
-							
+
 								<!-- Email input-->
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="email">Your E-mail</label>
@@ -120,7 +122,7 @@
 										<input id="email" name="email" type="text" placeholder="Your email" class="form-control">
 									</div>
 								</div>
-								
+
 								<!-- Message body -->
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="message">Your message</label>
@@ -128,7 +130,7 @@
 										<textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
 									</div>
 								</div>
-								
+
 								<!-- Form actions -->
 								<div class="form-group">
 									<div class="col-md-12 widget-right">
@@ -139,20 +141,20 @@
 						</form>
 					</div>
 				</div>
-				
-				
-				
+
+
+
 			</div><!--/.col-->
-			
+
 			<div class="col-md-4">
-			
+
 				<div class="panel panel-red">
 					<div class="panel-heading dark-overlay"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg>Calendar</div>
 					<div class="panel-body">
 						<div id="calendar"></div>
 					</div>
 				</div>
-				
+
 				<div class="panel panel-blue">
 					<div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>To-do List</div>
 					<div class="panel-body">
@@ -234,11 +236,11 @@
 						</div>
 					</div>
 				</div>
-								
+
 			</div><!--/.col-->
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		  
+
 
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -252,9 +254,9 @@
 		});
 
 		!function ($) {
-		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
-		        $(this).find('em:first').toggleClass("glyphicon-minus");      
-		    }); 
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+		        $(this).find('em:first').toggleClass("glyphicon-minus");
+		    });
 		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
 
@@ -264,7 +266,7 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
-	</script>	
+	</script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+import uuid
 
 class Client(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
@@ -71,6 +72,12 @@ class RateRequest(models.Model):
         ('FCL', 'FCL'),
         ('LCL', 'LCL')
     )
+    STATUS_CHOICES = (
+        ('SO', 'Sent To Operations'),
+        ('QR', 'Quotation Received'),
+        ('OS', 'Offer Sent'),
+        ('OA', 'Offer Accepted')
+    )
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
     sales_person = models.ForeignKey('authentication.User', related_name='rate_requests', blank=True, null=True)
@@ -86,6 +93,7 @@ class RateRequest(models.Model):
     shipment_term = models.OneToOneField('main.ShipmentTerm', related_name='rate_request', blank=True, null=True)
     payment_term = models.CharField(max_length=200, blank=True, null=True)
     special_instructions = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SO')
     class Meta:
         verbose_name = 'Rate Request'
         verbose_name_plural = 'Rate Requests'
@@ -204,6 +212,10 @@ class Quotation(models.Model):
         ('FCL', 'FCL'),
         ('LCL', 'LCL')
     )
+    STATUS_CHOICES = (
+        ('SS', 'Sent To Sales'),
+        ('OA', 'Offer Accepted')
+    )
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
     operations_person = models.ForeignKey('authentication.User', related_name='quotations', blank=True, null=True)
@@ -219,8 +231,65 @@ class Quotation(models.Model):
     lcl_quotation = models.OneToOneField('main.LCLQuotation', related_name='quotation', blank=True, null=True)
     extra_notes = models.OneToOneField('main.ExtraNotes', related_name='quotation', blank=True, null=True)
     special_instructions = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SS')
     class Meta:
         verbose_name = 'Quotation'
         verbose_name_plural = 'Quotations'
+    def __str__(self):
+        return self.client.name
+
+
+class AirQuotation(models.Model):
+    air_freight_kg = models.CharField(max_length=200, blank=True, null=True)
+    fuel_sur_charge_kg = models.CharField(max_length=200, blank=True, null=True)
+    security_fees_kg = models.CharField(max_length=200, blank=True, null=True)
+    exw_charges = models.CharField(max_length=200, blank=True, null=True)
+    screening_fees = models.CharField(max_length=200, blank=True, null=True)
+    storage = models.CharField(max_length=200, blank=True, null=True)
+    inland = models.CharField(max_length=200, blank=True, null=True)
+    packing = models.CharField(max_length=200, blank=True, null=True)
+    taxes_duties = models.CharField(max_length=200, blank=True, null=True)
+    handling_fees = models.CharField(max_length=200, blank=True, null=True)
+    official_receipts = models.CharField(max_length=200, blank=True, null=True)
+    p_share = models.CharField(max_length=200, blank=True, null=True)
+    other_notes = models.CharField(max_length=200, blank=True, null=True)
+    offer_validity = models.CharField(max_length=200, blank=True, null=True)
+
+class SeaQuotation(models.Model):
+    shipping_line = models.CharField(max_length=200, blank=True, null=True)
+    ocean_freight = models.CharField(max_length=200, blank=True, null=True)
+    thc = models.CharField(max_length=200, blank=True, null=True)
+    transporation = models.CharField(max_length=200, blank=True, null=True)
+    transfer = models.CharField(max_length=200, blank=True, null=True)
+    clearance = models.CharField(max_length=200, blank=True, null=True)
+    bl_fees = models.CharField(max_length=200, blank=True, null=True)
+    telex_release = models.CharField(max_length=200, blank=True, null=True)
+    free_time_at_destination = models.CharField(max_length=200, blank=True, null=True)
+    vessels = models.CharField(max_length=200, blank=True, null=True)
+    payment_credit = models.CharField(max_length=200, blank=True, null=True)
+    official_receipts = models.CharField(max_length=200, blank=True, null=True)
+    other_notes = models.CharField(max_length=200, blank=True, null=True)
+    offer_validity = models.CharField(max_length=200, blank=True, null=True)
+
+class Offer(models.Model):
+    TYPE_CHOICES = (
+        ('A', 'AIR'),
+        ('S', 'SEA')
+    )
+    STATUS_CHOICES = (
+        ('S', 'Sent To Client'),
+        ('A', 'Accepted')
+    )
+    reference = models.CharField(max_length=6, default=uuid.uuid4().hex[:6].upper())
+    sales_person = models.ForeignKey('authentication.User', related_name='offers', blank=True, null=True)
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
+    client = models.ForeignKey('main.Client', related_name='offers', blank=True, null=True)
+    air_quotation = models.OneToOneField('main.AirQuotation', related_name='offer', blank=True, null=True)
+    sea_quotation = models.OneToOneField('main.SeaQuotation', related_name='offer', blank=True, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='S')
+    created_date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name = 'Offer'
+        verbose_name_plural = 'Offers'
     def __str__(self):
         return self.client.name
