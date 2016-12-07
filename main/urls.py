@@ -4,6 +4,8 @@ import views
 urlpatterns = [
     url(r'^$', views.main, name='main'),
 
+    url(r'^contact/$', views.contact, name='contact'),
+
     url(r'^sales/$', views.sales, name='sales'),
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
     url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),

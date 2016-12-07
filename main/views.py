@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer
 from authentication.views import User
+from django.core.mail import send_mail
 
 def main(request):
     if not request.user.is_authenticated():
@@ -515,3 +516,37 @@ def getAdminCharts(request):
     if request.user.role != 'AD':
         return redirect('/')
     return render(request, 'charts.html')
+
+def contact(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method == 'POST':
+        name = request.POST.get('name', None)
+        title = request.POST.get('title', None)
+        message = request.POST.get('message', None)
+        if name and title and message:
+            emails = []
+            if request.user.role == 'AD':
+                users = User.objects.all()
+                for user in users:
+                    emails.append(user.email)
+            else:
+                users = User.objects.filter(role="AD")
+                for user in users:
+                    emails.append(user.email)
+            send_mail(
+                title,
+                message,
+                request.user.email,
+                emails,
+                fail_silently=False,
+            )
+        if request.user.role == 'AD':
+            return redirect('/admin/workspace/')
+        if request.user.role == 'SA':
+            return redirect('/sales/workspace/')
+        if request.user.role == 'OP':
+            return redirect('/operations/workspace/')
+        return redirect('/')
+    else:
+        return redirect('/')

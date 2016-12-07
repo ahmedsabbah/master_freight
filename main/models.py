@@ -2,6 +2,18 @@ from __future__ import unicode_literals
 from django.db import models
 import uuid
 
+class Todo(models.Model):
+    user = models.ForeignKey('authentication.User', related_name='todos')
+    text = models.CharField(max_length=400)
+    flagged = models.BooleanField(default=False)
+    done = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name = 'Todo'
+        verbose_name_plural = 'Todos'
+    def _str__(self):
+        return self.text
+
 class Client(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     company_name = models.CharField(max_length=200, blank=True, null=True)
