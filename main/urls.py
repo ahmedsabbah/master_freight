@@ -24,9 +24,9 @@ urlpatterns = [
 
     url(r'^sales/workspace/$', views.getSalesWorkspace, name='getSalesWorkspace'),
     url(r'^operations/workspace/$', views.getOperationsWorkspace, name='getOperationsWorkspace'),
-    url(r'^admin/workspace/$', views.getAdminWorkspace, name='getAdminWorkspace'),
 
-    url(r'^admin/$', views.admin, name='admin'),
+    url(r'^admin/$', views.getAdminWorkspace, name='getAdminWorkspace'),
+    url(r'^admin/tasks/$', views.getAdminTasks, name='getAdminTasks'),
     url(r'^admin/employees/$', views.getAdminEmployees, name='getAdminEmployees'),
     url(r'^admin/charts/$', views.getAdminCharts, name='getAdminCharts'),
 

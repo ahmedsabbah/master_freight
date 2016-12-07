@@ -32,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/sales/"><span>Sales </span>Dashboard</a>
+				<a class="navbar-brand" href="/admin/"><span>Admin </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -48,18 +48,13 @@
 	</nav>
 
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form>
 		<ul class="nav menu">
-			 <li><a href="/admin/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-      <li><a href="/admin/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-      <li><a href="/admin/employees/"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Employees Management</a></li>
-      <li><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+			<li><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+			<li><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li><a href="/admin/employees/"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Employees Management</a></li>
+			<li><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
 			<li class="parent active">
-				<a data-toggle="collapse" href="#sub-item-1">
+				<a data-toggle="expand" href="#sub-item-1">
 					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
 				</a>
 				<ul class="children expand" id="sub-item-1">
@@ -87,9 +82,31 @@
 			</li>
 			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-item-2">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
 				</a>
 				<ul class="children collapse" id="sub-item-2">
+					<li>
+						<a class="" href="/quotation/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations AIR
+						</a>
+					</li>
+					<li>
+						<a class="" href="/quotation/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations FCL
+						</a>
+					</li>
+					<li>
+						<a class="" href="/quotation/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations LCL
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-3">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
+				</a>
+				<ul class="children collapse" id="sub-item-3">
 					<li>
 						<a class="" href="/offer/air/new/">
 							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
@@ -104,7 +121,7 @@
 			</li>
 		</ul>
 
-		</div>
+	</div><!--/.sidebar-->
 
 			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 				<br/>

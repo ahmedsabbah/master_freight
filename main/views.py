@@ -55,15 +55,6 @@ def hr(request):
         return redirect('/')
     return render(request, 'home_hr.html')
 
-def admin(request):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
-    if request.user.role != 'AD':
-        return redirect('/')
-    rate_requests = RateRequest.objects.all()
-    quotations = Quotation.objects.all()
-    offers = Offer.objects.all()
-    return render(request, 'home_admin.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
 
 def getAIFRateRequest(request):
     if not request.user.is_authenticated():
@@ -496,12 +487,24 @@ def getOperationsWorkspace(request):
         return redirect('/')
     return render(request, 'workspace_operation.html')
 
+######## ADMIN #########
+
+def getAdminTasks(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role != 'AD':
+        return redirect('/')
+    rate_requests = RateRequest.objects.all()
+    quotations = Quotation.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'admin_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
+
 def getAdminWorkspace(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'workspace_admin.html')
+    return render(request, 'admin_workspace.html')
 
 def getAdminEmployees(request):
     if not request.user.is_authenticated():
@@ -515,7 +518,7 @@ def getAdminCharts(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'charts.html')
+    return render(request, 'admin_charts.html')
 
 def contact(request):
     if not request.user.is_authenticated():
