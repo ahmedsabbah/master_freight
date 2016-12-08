@@ -48,14 +48,9 @@
 	</nav>
 
   <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form>
 		<ul class="nav menu">
-			<li><a href="/operations/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-			<li><a href="/operations/workspace/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+			<li><a href="/operations/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+			<li><a href="/operations/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
 			<li class="parent active">
 				<a data-toggle="collapse" href="#sub-item-1">
 					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
@@ -87,16 +82,17 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">Quotation-LCL</div>
+								<div class="panel-heading">Quotations-FCL</div>
 								<div class="panel-body">
 									<div class="container">
                     <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
                       <fieldset>
+
                         <br>
                         <div class="container">
                           <!-- Text input-->
                           {% csrf_token %}
-                          <input type="hidden" name="type" value="LCL">
+                          <input type="hidden" name="type" value="FCL">
 
                           <div class="form-group">
                             <div class="row">
@@ -151,38 +147,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
                               <div class="col-sm-2">
-                                <input id="extra_information" name="extra_information" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <br><br>
-
-
-                          <h4 class="text-primary">Destination:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2">
-                                <input id="port_of_loading" name="port_of_loading" type="text" placeholder="" class="form-control">
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2">
-                                <input id="loading_location_type" name="loading_location_type" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2">
-                                <input id="port_of_discharge" name="port_of_discharge" type="text" placeholder="" class="form-control">
-                              </div>
-                              <label class="col-sm-2 control-label" for="discharge_location_type">Location Type</label>
-                              <div class="col-sm-2">
-                                <input id="discharge_location_type" name="location_type_discharge" type="text" placeholder="" class="form-control">
+                                <input id="extra_info" name="extra_info" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -198,11 +163,32 @@
                             </div>
                           </div>
 
+                          <br><br>
+
+                          <h4 class="text-primary">Destination:</h4>
+
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="co_loader">Co-Loader</label>
+                              <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
                               <div class="col-sm-2">
-                                <input id="coloader" name="co_loader" type="text" placeholder="" class="form-control">
+                                <input id="port_of_loading" name="port_of_loading" type="text" placeholder="" class="form-control">
+                              </div>
+                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
+                              <div class="col-sm-2">
+                                <input id="location_type_loading" name="location_type_loading" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
+                              <div class="col-sm-2">
+                                <input id="port_of_discharge" name="port_of_discharge" type="text" placeholder="" class="form-control">
+                              </div>
+                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
+                              <div class="col-sm-2">
+                                <input id="location_type_discharge" name="location_type_discharge" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -232,9 +218,9 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="no_of_packages">Number of Packages</label>
+                              <label class="col-sm-2 control-label" for="quantity">Quantity</label>
                               <div class="col-sm-2">
-                                <input id="number_of_packages" name="number_of_packages" type="text" placeholder="" class="form-control">
+                                <input id="quantity" name="quantity" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -264,15 +250,6 @@
                               <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
                               <div class="col-sm-2">
                                 <input id="net_weight" name="net_weight" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="dimensions_cbm">Dimensions/CBM</label>
-                              <div class="col-sm-2">
-                                <input id="dimensions_cbm" name="dimensions_cbm" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -386,7 +363,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="ex_work">EX-WORK</label>
                               <div class="col-sm-2">
-                                <input id="exwork" name="exwork_net" type="text" placeholder="" class="form-control">
+                                <input id="ex_work" name="ex_work_net" type="text" placeholder="" class="form-control">
                               </div>
                               <div class="col-sm-2">
                                 <input id="ex_work" name="ex_work_selling" type="text" placeholder="" class="form-control">
@@ -414,7 +391,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
                               <div class="col-sm-2">
-                                <input id="free_time_at_destination" name="free_time_at_destination" type="text" placeholder="" class="form-control">
+                                <input id="free_time_destination" name="free_time_destination" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
