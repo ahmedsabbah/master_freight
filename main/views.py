@@ -4,6 +4,7 @@ from authentication.views import User
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http.response import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def main(request):
     if not request.user.is_authenticated():
@@ -590,6 +591,7 @@ def deleteTodo(request, pk):
     data = serializers.serialize("json", todos)
     return HttpResponse(data, content_type='application/json')
 
+@csrf_exempt
 def todos(request):
     if not request.user.is_authenticated():
         response = HttpResponse(content_type='application/json')

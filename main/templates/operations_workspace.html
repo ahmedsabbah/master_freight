@@ -215,7 +215,7 @@
 						<div class="input-group">
 							<input id="btn-input" type="text" class="form-control input-md" placeholder="Add new task" />
 							<span class="input-group-btn">
-								<button class="btn btn-primary btn-md" id="btn-todo">Add</button>
+								<button id="add" class="btn btn-primary btn-md" id="btn-todo">Add</button>
 							</span>
 						</div>
 					</div>
@@ -234,6 +234,30 @@
 	<script src="{% static "js/easypiechart-data.js" %}"></script>
 	<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
 	<script>
+
+
+	$("#add").click(function(){
+	$.ajax({
+        type: "POST",
+        url: "/todos/",
+        data:{text:$("#btn-input").val()},
+        success: function (results) {
+          console.log('true');
+          
+          alert('done');
+        },
+        error: function(err) {
+          console.log(err);
+        }
+    });
+
+
+});
+	
+	
+</script>
+	<script>
+
 		$('#calendar').datepicker({
 		});
 
