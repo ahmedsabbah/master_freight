@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer
+from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer, Todo
 from authentication.views import User
 from django.core.mail import send_mail
+from django.core import serializers
+from django.http.response import HttpResponse
 
 def main(request):
     if not request.user.is_authenticated():
@@ -577,5 +579,41 @@ def contact(request):
 
 def notFound(request):
     return render(request, '404.html')
+
+def deleteTodo(request, pk):
+    if not request.user.is_authenticated():
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 401
+        return response
+    Todo.objects.filter(pk=pk).delete()
+    todos = Todo.objects.filter(user=request.user)
+    data = serializers.serialize("json", todos)
+    return HttpResponse(data, content_type='application/json')
+
+def todos(request):
+    if not request.user.is_authenticated():
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 401
+        return response
+    if request.method == 'POST':
+        text = request.POST.get('text', None)
+        if text:
+            todo = Todo(user=request.user, text=text)
+            todo.save();
+            todos = Todo.objects.filter(user=request.user)
+            data = serializers.serialize("json", todos)
+            return HttpResponse(data, content_type='application/json')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 400
+            return response
+    elif request.method == 'GET':
+        todos = Todo.objects.filter(user=request.user)
+        data = serializers.serialize("json", todos)
+        return HttpResponse(data, content_type='application/json')
+    else:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
 
 ####################################

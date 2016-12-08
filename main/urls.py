@@ -4,15 +4,6 @@ import views
 urlpatterns = [
     url(r'^$', views.main, name='main'),
 
-    url(r'^contact/$', views.contact, name='contact'),
-
-
-
-
-
-
-
-
     url(r'^admin/$', views.getAdminWorkspace, name='getAdminWorkspace'),
     url(r'^admin/tasks/$', views.getAdminTasks, name='getAdminTasks'),
     url(r'^admin/employees/$', views.getAdminEmployees, name='getAdminEmployees'),
@@ -23,7 +14,6 @@ urlpatterns = [
 
     url(r'^operations/$', views.getOperationsWorkspace, name='getOperationsWorkspace'),
     url(r'^operations/tasks/$', views.getOperationsTasks, name='getOperationsTasks'),
-    
 
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
     url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),
@@ -40,4 +30,10 @@ urlpatterns = [
     url(r'^offer/new/$', views.postOffer, name='postOffer'),
 
     url(r'^404/$', views.notFound, name='notFound'),
+
+    url(r'^contact/$', views.contact, name='contact'),
+
+    url(r'^todos/$', views.todos, name='todos'),
+    url(r'^todo/(?P<pk>[0-9]+)/$', views.deleteTodo, name='deleteTodo'),
+
 ]

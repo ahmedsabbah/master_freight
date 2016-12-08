@@ -5,8 +5,6 @@ import uuid
 class Todo(models.Model):
     user = models.ForeignKey('authentication.User', related_name='todos')
     text = models.CharField(max_length=400)
-    flagged = models.BooleanField(default=False)
-    done = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name = 'Todo'
