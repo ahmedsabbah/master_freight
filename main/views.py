@@ -50,7 +50,7 @@ def getAdminEmployees(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'employeesmanagement.html')
+    return render(request, 'admin_employees.html')
 
 def getAdminCharts(request):
     if not request.user.is_authenticated():
