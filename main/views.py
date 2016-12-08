@@ -335,7 +335,6 @@ def postOffer(request):
     else:
         return redirect('/')
 
-
 ##################################
 
 ######### Quotation ##############
