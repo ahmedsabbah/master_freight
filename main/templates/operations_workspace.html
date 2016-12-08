@@ -237,13 +237,13 @@
 
 
 	$("#add").click(function(){
-	$.ajax({
+		$.ajax({
         type: "POST",
         url: "/todos/",
-        data:{text:$("#btn-input").val()},
+        data: {text:$("#btn-input").val()},
         success: function (results) {
           console.log('true');
-          
+
           alert('done');
         },
         error: function(err) {
@@ -253,8 +253,8 @@
 
 
 });
-	
-	
+
+
 </script>
 	<script>
 
