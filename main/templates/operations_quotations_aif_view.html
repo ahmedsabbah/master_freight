@@ -32,64 +32,75 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/sales/"><span>Operations</span>Dashboard</a>
+				<a class="navbar-brand" href="/sales/"><span>Operations </span>Dashboard</a>
 				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/settings/"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li><a href="/logout/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+  <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<ul class="nav menu">
 			<li><a href="/operations/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-      <li><a href="/operations/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-      <li class="parent active">
-        <a data-toggle="collapse" href="#sub-item-1">
-          <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
-        </a>
-        <ul class="children expand" id="sub-item-1">
-          <li>
-            <a class="" href="/quotation/aif/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> AIF Quotation
-            </a>
-          </li>
-          <li>
-            <a class="" href="/quotation/fcl/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Quotation
-            </a>
-          </li>
-          <li>
-            <a class="" href="/quotation/lcl/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Quotation
-            </a>
-          </li>
-        </ul>
-      </li>
+			<li><a href="/operations/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+			<li class="parent active">
+				<a data-toggle="collapse" href="#sub-item-1">
+					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
+				</a>
+				<ul class="children expand" id="sub-item-1">
+					<li>
+						<a class="" href="/quotation/aif/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> AIF Quotation
+						</a>
+					</li>
+					<li>
+						<a class="" href="/quotation/fcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Quotation
+						</a>
+					</li>
+					<li>
+						<a class="" href="/quotation/lcl/new/">
+							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Quotation
+						</a>
+					</li>
+				</ul>
+			</li>
 		</ul>
 
-		</div>
+	</div><!--/.sidebar-->
 
 			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 				<br/>
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">LCL Rate Request</div>
+								<div class="panel-heading">Quotation-Air</div>
 								<div class="panel-body">
 									<div class="container">
-
-                    <form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
+                    <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
                       <fieldset>
                         <br>
                         <div class="container">
                           <!-- Text input-->
                           {% csrf_token %}
-                          <input type="hidden" name="type" value="LCL">
-
-
+                          <input type="hidden" name="type" value="AIF">
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
                               <div class="col-sm-2">
-                            <p></p>
+                                <p></p>
                               </div>
                             </div>
                           </div>
-
 
                           <h4 class="text-primary">Details:</h4>
 
@@ -107,7 +118,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
                               <div class="col-sm-2">
-                               <p></p>
+                                <p></p>
                               </div>
                             </div>
                           </div>
@@ -116,7 +127,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
                               <div class="col-sm-2">
-                         <p></p>
+                                <p></p>
                               </div>
                             </div>
                           </div>
@@ -125,7 +136,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
                               <div class="col-sm-2">
-                             <p></p>
+                                <p></p>
                               </div>
                             </div>
                           </div>
@@ -139,6 +150,8 @@
                             </div>
                           </div>
 
+                          <br><br>
+
                           <h4 class="text-primary">Destination:</h4>
 
                           <div class="form-group">
@@ -149,8 +162,8 @@
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
                               <div class="col-sm-2">
-                               <p></p>
-                                                             </div>
+                                <p></p>
+                              </div>
                             </div>
                           </div>
 
@@ -158,60 +171,41 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
                               <div class="col-sm-2">
-                             <p></p>
+                                <p></p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
                               <div class="col-sm-2">
-                            <p></p>
+                          <p></p>
                               </div>
                             </div>
                           </div>
 
-                          <h4 class="text-primary">Final Delivery Destination:</h4>
+                          <br><br>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="address">Address</label>
-                              <div class="col-sm-2">
-                            <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="contact_person">Contact Person</label>
-                              <div class="col-sm-2">
-                               <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="contact_person_extra">Contact Person (extra)</label>
-                              <div class="col-sm-2">
-                              <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <h4 class="text-primary">Required Delivery Time:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="delivery_time">Within</label>
-                              <div class="col-sm-2">
-                              <p></p>
-                              </div>
-                            </div>
-                          </div>
 
                           <h4 class="text-primary">Cargo Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="quantity">Quantity</label>
+                              <label class="col-sm-2 control-label" for="commodity">Commodity</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="no_of_packages">Number of Packages</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="actual_weight">Actual Weight</label>
                               <div class="col-sm-2">
                                <p></p>
                               </div>
@@ -220,43 +214,7 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2">
-                              <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
-                              <div class="col-sm-2">
-                             <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
-                              <div class="col-sm-2">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="pieces">Pieces</label>
-                              <div class="col-sm-2">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="packing">Packing</label>
+                              <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
                               <div class="col-sm-2">
                                 <p></p>
                               </div>
@@ -267,7 +225,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
                               <div class="col-sm-2">
-                                <p></p>
+                              <p></p>
                               </div>
                             </div>
                           </div>
@@ -276,18 +234,7 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="any">Any</label>
-                              <div class="col-sm-2">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <h4 class="text-primary">Imo Class:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="hazardous">Hazardous</label>
+                              <label class="col-sm-2 control-label" for="air_line">Air-Line</label>
                               <div class="col-sm-2">
                                <p></p>
                               </div>
@@ -296,18 +243,7 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="non_hazardous">Non-Hazardous</label>
-                              <div class="col-sm-2">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <h4 class="text-primary">Shipment Term:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="ex_work">Ex-work</label>
+                              <label class="col-sm-2 control-label" for="transit_date">Transit Time</label>
                               <div class="col-sm-2">
                                 <p></p>
                               </div>
@@ -316,7 +252,16 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="fas">F.A.S</label>
+                              <label class="col-sm-2 control-label" for="route">Route</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
                               <div class="col-sm-2">
                             <p></p>
                               </div>
@@ -325,16 +270,7 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="fob">F.O.B</label>
-                              <div class="col-sm-2">
-                              <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="cnf">C&F</label>
+                              <label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
                               <div class="col-sm-2">
                                 <p></p>
                               </div>
@@ -343,16 +279,16 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="cif">C.I.F</label>
+                              <label class="col-sm-2 control-label" for="mawb">MAWB - Number</label>
                               <div class="col-sm-2">
-                               <p></p>
+                   <p></p>
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="others">Others</label>
+                              <label class="col-sm-2 control-label" for="hawb">HAWB - Number</label>
                               <div class="col-sm-2">
                                <p></p>
                               </div>
@@ -361,14 +297,146 @@
 
                           <br><br>
 
+
+                          <div class ="row">
+                            <h4 class="text-primary col-sm-1">Quotation:</h4>
+                            <label class="col-sm-2 control-label" for="">Net Cost</label>
+                            <label class="col-sm-2 control-label" for="">Selling</label>
+                          </div>
+
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="payment_term">Payment Term</label>
+                              <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
                               <div class="col-sm-2">
                                 <p></p>
                               </div>
                             </div>
                           </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="fuel_suercharge">FUEL SURCHARGE/KG</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="exw_charges">EXW - CHARGES</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="storage">STORAGE</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="inland">INLAND</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="packing">PACKING</label>
+                              <div class="col-sm-2">
+                              <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="handling_fees">HANDLING FEES</label>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                                <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
+                              <div class="col-sm-2">
+                       <p></p>
+                              </div>
+                              <div class="col-sm-2">
+                               <p></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <br><br>
 
                           <div class="form-group">
                             <div class="row">
@@ -381,18 +449,19 @@
 
 
                         </fieldset>
-                         <p></p>
+                
                       </form>
-                  </div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
 
-</html>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+
+  </html>

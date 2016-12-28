@@ -32,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/sales/"><span>Sales </span>Dashboard</a>
+				<a class="navbar-brand" href="/sales/"><span>Operations </span>Dashboard</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -49,52 +49,30 @@
 
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
-			<li><a href="/sales/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li><a href="/sales/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-			<li class="parent active">
-				<a data-toggle="collapse" href="#sub-item-1">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
-				</a>
-				<ul class="children expand" id="sub-item-1">
-					<li>
-						<a class="" href="/rate_request/aif/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/lcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/fcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/sales/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-2">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
-				</a>
-				<ul class="children collapse" id="sub-item-2">
-					<li>
-						<a class="" href="/offer/air/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
-						</a>
-					</li>
-					<li>
-						<a class="" href="/offer/sea/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
-						</a>
-					</li>
-				</ul>
-			</li>
+			<li><a href="/operations/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
+      <li><a href="/operations/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+      <li class="parent active">
+        <a data-toggle="collapse" href="#sub-item-1">
+          <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
+        </a>
+        <ul class="children expand" id="sub-item-1">
+          <li>
+            <a class="" href="/quotation/aif/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> AIF Quotation
+            </a>
+          </li>
+          <li>
+            <a class="" href="/quotation/fcl/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Quotation
+            </a>
+          </li>
+          <li>
+            <a class="" href="/quotation/lcl/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Quotation
+            </a>
+          </li>
+        </ul>
+      </li>
 		</ul>
 
 		</div>
