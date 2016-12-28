@@ -86,7 +86,8 @@ class RateRequest(models.Model):
         ('SO', 'Sent To Operations'),
         ('QR', 'Quotation Received'),
         ('OS', 'Offer Sent'),
-        ('OA', 'Offer Accepted')
+        ('OA', 'Offer Accepted'),
+        ('DO', 'Done')
     )
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -224,7 +225,8 @@ class Quotation(models.Model):
     )
     STATUS_CHOICES = (
         ('SS', 'Sent To Sales'),
-        ('OA', 'Offer Accepted')
+        ('OA', 'Offer Accepted'),
+        ('DO', 'Done')
     )
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -288,7 +290,8 @@ class Offer(models.Model):
     )
     STATUS_CHOICES = (
         ('S', 'Sent To Client'),
-        ('A', 'Accepted')
+        ('A', 'Accepted'),
+        ('D', 'Done')
     )
     reference = models.CharField(max_length=6, default=uuid.uuid4().hex[:6].upper())
     sales_person = models.ForeignKey('authentication.User', related_name='offers', blank=True, null=True)
