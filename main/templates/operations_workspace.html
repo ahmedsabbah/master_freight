@@ -149,66 +149,10 @@
 									<label for="checkbox">Make a plan for today</label>
 								</div>
 								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
 								</div>
 							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Update Basecamp</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Send email to Jane</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Drink coffee</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Do some work</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Tidy up workspace</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
+							
 						</ul>
 					</div>
 					<div class="panel-footer">
@@ -237,14 +181,14 @@
 
 
 	$("#add").click(function(){
-		$.ajax({
+	$.ajax({
+
         type: "POST",
         url: "/todos/",
-        data: {text:$("#btn-input").val()},
+        data:{text:$("#btn-input").val()},
         success: function (results) {
           console.log('true');
-
-          alert('done');
+        
         },
         error: function(err) {
           console.log(err);
@@ -253,8 +197,8 @@
 
 
 });
-
-
+	
+	
 </script>
 	<script>
 
