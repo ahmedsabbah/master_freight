@@ -116,7 +116,7 @@
 										<div class="panel panel-default">
 											<div class="panel-heading">Rate Requests</div>
 											<div class="panel-body">
-												
+
 												<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example2">
 
 											</table>
@@ -131,12 +131,12 @@
 										<div class="panel panel-default">
 											<div class="panel-heading">Quotations</div>
 											<div class="panel-body">
-											
+
 
 							 			<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example3">
 
 											</table>
-										
+
 										</div>
 									</div>
 								</div>
@@ -147,11 +147,11 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">Offers</div>
 										<div class="panel-body">
-											
-<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example">
+
+											<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example">
 
 											</table>
-										
+
 									</div>
 								</div>
 							</div>
@@ -185,46 +185,37 @@
 
 	<script>
 		$(document).ready(function() {
-
-			var dataSet = [
-				["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-				["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
-				["Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"],
-				["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060"],
-				["Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700"],
-				["Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000"],
-				["Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500"],
-				["Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900"],
-				["Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500"],
-				["Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600"],
-				["Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560"],
-				["Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000"],
-				["Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600"],
-				["Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500"],
-				["Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750"],
-				["Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500"]
+			// Offers
+			var dataSet0 = [
+				{% for offer in offers %}
+				["{{offer.id}}", "{{offer.type}}", "{{offer.client.company_name}}", "{{offer.client.name}}", "{{offer.sales_person.first_name}} {{offer.sales_person.last_name}}", "{{offer.status}}", "{{offer.created_date}}", "<a href='/offer/{{offer.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				{% endfor %}
 			];
 
-			var columnDefs = [{
-				title: "Name"
+			var columnDefs0 = [{
+				title: "ID"
 			}, {
-				title: "Position"
+				title: "Type"
 			}, {
-				title: "Office"
+				title: "Company"
 			}, {
-				title: "Extn."
+				title: "Client"
 			}, {
-				title: "Start date"
+				title: "Assignee"
 			}, {
-				title: "Salary"
+				title: "Status"
+			}, {
+				title: "Date"
+			}, {
+				title: "View"
 			}];
 
 			var myTable;
 
 			myTable = $('#example').DataTable({
 				"sPaginationType": "full_numbers",
-				data: dataSet,
-				columns: columnDefs,
+				data: dataSet0,
+				columns: columnDefs0,
 				dom: 'Bfrtip',        // Needs button container
 				select: 'single',
 				responsive: true,
@@ -250,46 +241,37 @@
 	</script>
 	<script>
 		$(document).ready(function() {
-
-			var dataSet = [
-				["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-				["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
-				["Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"],
-				["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060"],
-				["Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700"],
-				["Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000"],
-				["Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500"],
-				["Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900"],
-				["Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500"],
-				["Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600"],
-				["Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560"],
-				["Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000"],
-				["Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600"],
-				["Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500"],
-				["Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750"],
-				["Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500"]
+			// Rate Requests
+			var dataSet1 = [
+				{% for rate_request in rate_requests %}
+				["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.company_name}}", "{{rate_request.client.name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.status}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				{% endfor %}
 			];
 
-			var columnDefs = [{
-				title: "Name"
+			var columnDefs1 = [{
+				title: "ID"
 			}, {
-				title: "Position"
+				title: "Type"
 			}, {
-				title: "Office"
+				title: "Company"
 			}, {
-				title: "Extn."
+				title: "Client"
 			}, {
-				title: "Start date"
+				title: "Assignee"
 			}, {
-				title: "Salary"
+				title: "Status"
+			}, {
+				title: "Date"
+			}, {
+				title: "View"
 			}];
 
 			var myTable;
 
 			myTable = $('#example2').DataTable({
 				"sPaginationType": "full_numbers",
-				data: dataSet,
-				columns: columnDefs,
+				data: dataSet1,
+				columns: columnDefs1,
 				dom: 'Bfrtip',        // Needs button container
 				select: 'single',
 				responsive: true,
@@ -316,46 +298,39 @@
 
 <script>
 		$(document).ready(function() {
-
-			var dataSet = [
-				["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-				["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
-				["Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"],
-				["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060"],
-				["Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700"],
-				["Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000"],
-				["Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500"],
-				["Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900"],
-				["Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500"],
-				["Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600"],
-				["Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560"],
-				["Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000"],
-				["Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600"],
-				["Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500"],
-				["Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750"],
-				["Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500"]
+			// Quotations
+			var dataSet2 = [
+				{% for quotation in quotations %}
+				["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.company_name}}", "{{quotation.client.name}}", "{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}", "{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}", "{{quotation.status}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				{% endfor %}
 			];
 
-			var columnDefs = [{
-				title: "Name"
+			var columnDefs2 = [{
+				title: "ID"
 			}, {
-				title: "Position"
+				title: "Type"
 			}, {
-				title: "Office"
+				title: "Company"
 			}, {
-				title: "Extn."
+				title: "Client"
 			}, {
-				title: "Start date"
+				title: "Sales"
 			}, {
-				title: "Salary"
+				title: "Operations"
+			}, {
+				title: "Status"
+			}, {
+				title: "Date"
+			}, {
+				title: "View"
 			}];
 
 			var myTable;
 
 			myTable = $('#example3').DataTable({
 				"sPaginationType": "full_numbers",
-				data: dataSet,
-				columns: columnDefs,
+				data: dataSet2,
+				columns: columnDefs2,
 				dom: 'Bfrtip',        // Needs button container
 				select: 'single',
 				responsive: true,

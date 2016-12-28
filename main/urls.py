@@ -21,8 +21,8 @@ urlpatterns = [
     url(r'^rate_request/new/$', views.postRateRequest, name='postRateRequest'),
 
     url(r'^rate_request/(?P<pk>[0-9]+)/edit/$', views.editRateRequest, name='editRateRequest'),
-    url(r'^rate_request/(?P<pk>[0-9]+)/delete/$', views.editRateRequest, name='deleteRateRequest'),
-    url(r'^rate_request/(?P<pk>[0-9]+)/view/$', views.editRateRequest, name='viewRateRequest'),
+    url(r'^rate_request/(?P<pk>[0-9]+)/delete/$', views.deleteRateRequest, name='deleteRateRequest'),
+    url(r'^rate_request/(?P<pk>[0-9]+)/view/$', views.viewRateRequest, name='viewRateRequest'),
 
     url(r'^quotation/aif/new/$', views.getAIFQuotation, name='getAIFQuotation'),
     url(r'^quotation/fcl/new/$', views.getFCLQuotation, name='getFCLQuotation'),

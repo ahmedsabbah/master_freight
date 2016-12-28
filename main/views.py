@@ -295,7 +295,7 @@ def viewRateRequest(request, pk):
                 return render(request, 'operations_rate_request_lcl_view.html')
         return redirect('/')
     except RateRequest.DoesNotExist:
-        return redirect('/404/')
+        return redirect('/405/')
 
 def deleteRateRequest(request, id):
     if not request.user.is_authenticated():
