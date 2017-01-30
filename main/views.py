@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer, Todo
-from authentication.views import User
+from authentication.models import User
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http.response import HttpResponse
@@ -43,9 +43,9 @@ def getAdminTasks(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    rate_requests = RateRequest.objects.all()
-    quotations = Quotation.objects.all()
-    offers = Offer.objects.all()
+    rate_requests = RateRequest.objects.all().exclude(status='DO')
+    quotations = Quotation.objects.all().exclude(status='DO')
+    offers = Offer.objects.all().exclude(status='DO')
     return render(request, 'admin_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
 
 def getAdminEmployees(request):
@@ -53,7 +53,20 @@ def getAdminEmployees(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'admin_employees.html')
+    if request.method == 'POST':
+        email = request.POST.get('email', None)
+        role = request.POST.get('role', None)
+        first_name = request.POST.get('first_name', None)
+        last_name = request.POST.get('last_name', None)
+        if email and role and first_name and last_name:
+            user = User(email=email, role=role, first_name=first_name, last_name=last_name)
+            user.save()
+        # else:
+        #     response = HttpResponse(content_type='application/json')
+        #     response.status_code = 400
+        #     return response
+    users = User.objects.all().exclude(role='AD')
+    return render(request, 'admin_employees.html', {'users': users})
 
 def getAdminCharts(request):
     if not request.user.is_authenticated():
@@ -62,6 +75,7 @@ def getAdminCharts(request):
         return redirect('/')
     return render(request, 'admin_charts.html')
 
+# def getRateRequest
 ################################
 
 ######## SALES ###############
@@ -99,8 +113,8 @@ def getOperationsTasks(request):
         return redirect('/login/')
     if request.user.role != 'OP':
         return redirect('/')
-    rate_requests = RateRequest.objects.all()
-    quotations = Quotation.objects.all()
+    rate_requests = RateRequest.objects.all().exclude(status='DO')
+    quotations = Quotation.objects.all().exclude(status='DO')
     return render(request, 'operations_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations})
 
 ############################
