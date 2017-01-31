@@ -757,8 +757,8 @@ def todos(request):
         if text:
             todo = Todo(user=request.user, text=text)
             todo.save();
-            todos = Todo.objects.filter(user=request.user)
-            data = serializers.serialize("json", todos)
+            # todos = Todo.objects.filter(user=request.user)
+            data = serializers.serialize("json", todo)
             return HttpResponse(data, content_type='application/json')
         else:
             response = HttpResponse(content_type='application/json')
