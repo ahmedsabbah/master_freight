@@ -29,6 +29,11 @@ urlpatterns = [
     url(r'^quotation/lcl/new/$', views.getLCLQuotation, name='getLCLQuotation'),
     url(r'^quotation/new/$', views.postQuotation, name='postQuotation'),
 
+    url(r'^quotation/(?P<pk>[0-9]+)/edit/$', views.editQuotation, name='editQuotation'),
+    url(r'^quotation/(?P<pk>[0-9]+)/delete/$', views.deleteQuotation, name='deleteQuotation'),
+    url(r'^quotation/(?P<pk>[0-9]+)/view/$', views.viewQuotation, name='viewQuotation'),
+
+
     url(r'^offer/air/new/$', views.getAirOffer, name='getAirOffer'),
     url(r'^offer/sea/new/$', views.getSeaOffer, name='getSeaOffer'),
     url(r'^offer/new/$', views.postOffer, name='postOffer'),

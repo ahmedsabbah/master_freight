@@ -75,7 +75,6 @@ def getAdminCharts(request):
         return redirect('/')
     return render(request, 'admin_charts.html')
 
-# def getRateRequest
 ################################
 
 ######## SALES ###############
@@ -632,6 +631,77 @@ def postQuotation(request):
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
+
+def editQuotation(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method != 'POST':
+        return redirect('/404/')
+    try:
+        quotation = Quotation.objects.get(pk=pk)
+        if request.user.role == 'AD' or (request.user.role == 'OP' and quotation.operations_person.id == request.user.id):
+            quotation.status = request.POST.get('status', quotation.status)
+            quotation.operations_person = request.POST.get('operations_person', quotation.operations_person)
+            quotation.save()
+            return HttpResponse(content_type='application/json')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except Quotation.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
+
+def viewQuotation(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        rate_request = RateRequest.objects.get(pk=pk)
+        if request.user.role == 'AD':
+            if rate_request.type == 'AIF':
+                return render(request, 'admin_rate_request_aif_view.html')
+            elif rate_request.type == 'FCL':
+                return render(request, 'admin_rate_request_fcl_view.html')
+            elif rate_request.type == 'LCL':
+                return render(request, 'admin_rate_request_lcl_view.html')
+        if  request.user.role == 'SA':
+            if rate_request.sales_person.id == request.user.id:
+                if rate_request.type == 'AIF':
+                    return render(request, 'sales_rate_request_aif_view.html')
+                elif rate_request.type == 'FCL':
+                    return render(request, 'sales_rate_request_fcl_view.html')
+                elif rate_request.type == 'LCL':
+                    return render(request, 'sales_rate_request_lcl_view.html')
+        if request.user.role == 'OP':
+            if rate_request.type == 'AIF':
+                return render(request, 'operations_rate_request_aif_view.html')
+            elif rate_request.type == 'FCL':
+                return render(request, 'operations_rate_request_fcl_view.html')
+            elif rate_request.type == 'LCL':
+                return render(request, 'operations_rate_request_lcl_view.html')
+        return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/405/')
+
+def deleteQuotation(request, id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method != 'POST':
+        return redirect('/404/')
+    try:
+        if request.user.role == 'AD' or (request.user.role == 'SA' and rate_request.sales_person.id == request.user.id):
+            rate_request = RateRequest.objects.get(pk=pk)
+            rate_request.delete()
+            return HttpResponse(content_type='application/json')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except RateRequest.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
 
 ####################################
 
