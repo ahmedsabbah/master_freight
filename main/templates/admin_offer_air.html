@@ -1,3 +1,4 @@
+<input type="hidden" name="rate_request" value="{{rate_request.id}}">
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load static %}
@@ -141,6 +142,7 @@
                         <!-- Text input-->
                         {% csrf_token %}
                         <input type="hidden" name="type" value="A">
+												<input type="hidden" name="quotation" value="{{quotation.id}}">
 
                         <div class="form-group">
                           <div class="row">

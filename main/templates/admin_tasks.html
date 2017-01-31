@@ -215,7 +215,7 @@
 
 			var dataSet = [
 				{% for rate_request in rate_requests %}
-				["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.company_name}}", "{{rate_request.client.name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.status}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.company_name}}", "{{rate_request.client.name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.get_status_display}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
 
@@ -243,7 +243,6 @@
 				"sPaginationType": "full_numbers",
 				data: dataSet,
 				columns: columnDefs,
-				select: 'single',
 				responsive: true
 			});
 
@@ -254,7 +253,7 @@
 
 			var dataSet = [
 				{% for quotation in quotations %}
-				["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.company_name}}", "{{quotation.client.name}}", "{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}", "{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}", "{{quotation.status}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.company_name}}", "{{quotation.client.name}}", "{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}", "{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}", "{{quotation.get_status_display}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
 
@@ -284,7 +283,6 @@
 				"sPaginationType": "full_numbers",
 				data: dataSet,
 				columns: columnDefs,
-				select: 'single',
 				responsive: true
 			});
 
@@ -296,7 +294,7 @@
 
 			var dataSet = [
 				{% for offer in offers %}
-				["{{ offer.id}}", "{{ offer.type}}", "{{ offer.client.company_name}}", "{{ offer.client.name}}", "{{ offer.sales_person.first_name}} {{ offer.sales_person.last_name}}", "{{ offer.status}}", "{{ offer.created_date}}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
+				["{{ offer.id }}", "{{ offer.type }}", "{{ offer.client.company_name }}", "{{ offer.client.name }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
 				{% endfor %}
 			];
 
@@ -324,7 +322,6 @@
 				"sPaginationType": "full_numbers",
 				data: dataSet,
 				columns: columnDefs,
-				select: 'single',
 				responsive: true
 			});
 

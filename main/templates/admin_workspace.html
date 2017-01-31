@@ -191,7 +191,7 @@
           <div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>To-do List</div>
           <div class="panel-body">
             <ul id="todolist" class="todo-list">
-            
+
             </ul>
           </div>
           <div class="panel-footer">
@@ -218,60 +218,44 @@
 	<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
 	<script>
 
-  function deleteTodo (id){
-    $.ajax({
-        type:"GET",
-        url:"/todo/"+id+"/",
-        success: function(data){
+    function deleteTodo (id) {
+      $.ajax({
+          type:"GET",
+          url:"/todo/"+id+"/",
+          success: function(data){
             $('#todo_'+id).remove();
-
-        }
-    });
-  }
+          }
+      });
+    }
 
     $('#btn-todo').click(function(){
-      alert('gebt akhry men kosoom dh project');
-      var x= {
+      var data = {
         text: $('#btn-input').val()
       };
       $.ajax({
           type:"POST",
           url:"/todos/",
-          data: x,
-          success: function(data){
-            console.log('true');
-            var string = '<li id="todo_'+data[i].id+'" class="todo-list-item"> <div class="checkbox"> <p>'+data[i].text+'</p></div><div class="pull-right action-buttons"><a onclick="deleteTodo('+data[i].id+')" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a></div></li>';
-              $('#todolist').append(string);
-
+          data: data,
+          success: function(result) {
+            console.log(result);
+            var string = '<li id="todo_'+result[0].pk+'" class="todo-list-item"> <div class="checkbox"> <a>'+result[0].fields.text+'</a></div><div class="pull-right action-buttons"><a onclick="deleteTodo('+result[0].pk+')" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a></div></li>';
+            $('#todolist').append(string);
+            $('#btn-input').val("");
           }
       });
-
     });
-      
-    
+
     $.ajax({
         type: "GET",
         url: "/todos/",
         success: function (data) {
-          console.log('true');
           for(var i = 0; i<data.length; i++){
-
-              var string = '<li id="todo_'+data[i].id+'" class="todo-list-item"> <div class="checkbox"> <p>'+data[i].text+'</p></div><div class="pull-right action-buttons"><a onclick="deleteTodo('+data[i].id+')" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a></div></li>';
-              $('#todolist').append(string);
-
-
+              console.log(data);
+            var string = '<li id="todo_'+data[i].pk+'" class="todo-list-item"> <div class="checkbox"> <a>'+data[i].fields.text+'</a></div><div class="pull-right action-buttons"><a onclick="deleteTodo('+data[i].pk+')" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a></div></li>';
+            $('#todolist').append(string);
           }
-         
-        },
-        error: function(err) {
-          console.log(err);
         }
     });
-    
-  
-   
-		
-
 
 	</script>
 </body>

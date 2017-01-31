@@ -138,24 +138,26 @@
                           <!-- Text input-->
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
+													<input type="hidden" name="rate_request" value="{{rate_request.id}}">
 
-                          <div class="form-group">
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                              <div class="col-sm-2">
-                                <input id="client_name" name="client_name" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                            		<p>{{ rate_request.client.name }}</p>
                               </div>
                             </div>
                           </div>
 
+													<hr/>
 
                           <h4 class="text-primary">Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                              <div class="col-sm-2">
-                                <input id="company_name" name="company_name" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.client.company_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -164,8 +166,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
-                              <div class="col-sm-2">
-                                <input id="contact" name="contact" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                               <p>{{ rate_request.client.contact }}</p>
                               </div>
                             </div>
                           </div>
@@ -173,8 +175,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
-                              <div class="col-sm-2">
-                                <input id="phone" name="phone" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                         				<p>{{ rate_request.client.phone }}</p>
                               </div>
                             </div>
                           </div>
@@ -182,8 +184,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
-                              <div class="col-sm-2">
-                                <input id="email" name="email" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                             		<p>{{ rate_request.client.email }}</p>
                               </div>
                             </div>
                           </div>
@@ -191,26 +193,23 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2">
-                                <input id="extra_information" name="extra_information" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.client.extra_information }}</p>
                               </div>
                             </div>
                           </div>
-
-                          <br><br>
-
-
+													<hr/>
                           <h4 class="text-primary">Destination:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2">
-                                <input id="port_of_loading" name="port_of_loading" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.destination.port_of_loading }}</p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2">
-                                <input id="loading_location_type" name="loading_location_type" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                               	<p>{{ rate_request.destination.loading_location_type }}</p>
                               </div>
                             </div>
                           </div>
@@ -218,17 +217,17 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2">
-                                <input id="port_of_discharge" name="port_of_discharge" type="text" placeholder="" class="form-control">
+                              <div class="col-sm-2 control-label">
+                             		<p>{{ rate_request.destination.port_of_discharge }}</p>
                               </div>
-                              <label class="col-sm-2 control-label" for="discharge_location_type">Location Type</label>
-                              <div class="col-sm-2">
-                                <input id="discharge_location_type" name="location_type_discharge" type="text" placeholder="" class="form-control">
+                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
+                              <div class="col-sm-2 control-label">
+	                            	<p>{{ rate_request.destination.discharge_location_type }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
+                          <hr/><br/>
 
                           <div class="form-group">
                             <div class="row">
@@ -248,7 +247,7 @@
                             </div>
                           </div>
 
-                          <br><br>
+                          <br/><hr/>
 
 
                           <h4 class="text-primary">Cargo Details:</h4>
@@ -289,8 +288,6 @@
                             </div>
                           </div>
 
-
-
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
@@ -318,8 +315,7 @@
                             </div>
                           </div>
 
-                          <br><br>
-
+                          <hr/>
 
                           <div class ="row">
                             <h4 class="text-primary col-sm-1">Quotation:</h4>
@@ -447,7 +443,7 @@
                             </div>
                           </div>
 
-                          <br><br>
+                          <hr/>
 
                           <h4 class="text-primary">Extra Notes:</h4>
 

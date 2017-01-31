@@ -228,6 +228,7 @@ class Quotation(models.Model):
         ('OA', 'Offer Accepted'),
         ('DO', 'Done')
     )
+    rate_request = models.ForeignKey('main.RateRequest', related_name='quotations', blank=True, null=True)
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
     sales_person = models.ForeignKey('authentication.User', related_name='quotations_sales', blank=True, null=True)
@@ -250,7 +251,6 @@ class Quotation(models.Model):
         verbose_name_plural = 'Quotations'
     def __str__(self):
         return self.client.name
-
 
 class AirQuotation(models.Model):
     air_freight_kg = models.CharField(max_length=200, blank=True, null=True)
@@ -294,6 +294,7 @@ class Offer(models.Model):
         ('A', 'Accepted'),
         ('D', 'Done')
     )
+    quotation = models.ForeignKey('main.Quotation', related_name='offers', blank=True, null=True)
     reference = models.CharField(max_length=6, default=uuid.uuid4().hex[:6].upper())
     sales_person = models.ForeignKey('authentication.User', related_name='offers', blank=True, null=True)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)

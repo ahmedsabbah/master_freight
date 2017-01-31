@@ -251,9 +251,9 @@ def postRateRequest(request):
         rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, shipment_term=shipment_term, lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions)
         rate_request.save()
 
-    if request.user.role != 'SA':
+    if request.user.role == 'SA':
         return redirect('/sales/tasks/')
-    elif request.user.role != 'AD':
+    elif request.user.role == 'AD':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
@@ -286,36 +286,37 @@ def viewRateRequest(request, pk):
         rate_request = RateRequest.objects.get(pk=pk)
         if request.user.role == 'AD':
             if rate_request.type == 'AIF':
-                return render(request, 'admin_rate_request_aif_view.html')
+                return render(request, 'admin_rate_request_aif_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'FCL':
-                return render(request, 'admin_rate_request_fcl_view.html')
+                return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'LCL':
-                return render(request, 'admin_rate_request_lcl_view.html')
+                return render(request, 'admin_rate_request_lcl_view.html', { 'rate_request': rate_request })
         if  request.user.role == 'SA':
             if rate_request.sales_person.id == request.user.id:
                 if rate_request.type == 'AIF':
-                    return render(request, 'sales_rate_request_aif_view.html')
+                    return render(request, 'sales_rate_request_aif_view.html', { 'rate_request': rate_request })
                 elif rate_request.type == 'FCL':
-                    return render(request, 'sales_rate_request_fcl_view.html')
+                    return render(request, 'sales_rate_request_fcl_view.html', { 'rate_request': rate_request })
                 elif rate_request.type == 'LCL':
-                    return render(request, 'sales_rate_request_lcl_view.html')
+                    return render(request, 'sales_rate_request_lcl_view.html', { 'rate_request': rate_request })
         if request.user.role == 'OP':
             if rate_request.type == 'AIF':
-                return render(request, 'operations_rate_request_aif_view.html')
+                return render(request, 'operations_rate_request_aif_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'FCL':
-                return render(request, 'operations_rate_request_fcl_view.html')
+                return render(request, 'operations_rate_request_fcl_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'LCL':
-                return render(request, 'operations_rate_request_lcl_view.html')
+                return render(request, 'operations_rate_request_lcl_view.html', { 'rate_request': rate_request })
         return redirect('/')
     except RateRequest.DoesNotExist:
-        return redirect('/405/')
+        return redirect('/404/')
 
-def deleteRateRequest(request, id):
+def deleteRateRequest(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
     if request.method != 'POST':
         return redirect('/404/')
     try:
+        rate_request = RateRequest.objects.get(pk=pk)
         if request.user.role == 'AD' or (request.user.role == 'SA' and rate_request.sales_person.id == request.user.id):
             rate_request = RateRequest.objects.get(pk=pk)
             rate_request.delete()
@@ -334,7 +335,7 @@ def deleteRateRequest(request, id):
 
 ######## OFFER #############
 
-def getAirOffer(request):
+def getAirOffer(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
     if request.user.role == 'SA':
@@ -344,15 +345,20 @@ def getAirOffer(request):
     else:
         return redirect('/')
 
-def getSeaOffer(request):
+def getSeaOffer(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'SA':
-        return render(request, 'sales_offer_sea.html')
-    elif request.user.role == 'AD':
-        return render(request, 'admin_offer_sea.html')
-    else:
-        return redirect('/')
+    try:
+        quotation = Quotation.objects.get(pk=pk)
+        if request.user.role == 'SA':
+            return render(request, 'sales_offer_sea.html', { 'quotation': quotation })
+        elif request.user.role == 'AD':
+            return render(request, 'admin_offer_sea.html', { 'quotation': quotation })
+        else:
+            return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
+
 
 def postOffer(request):
     if not request.user.is_authenticated():
@@ -364,6 +370,14 @@ def postOffer(request):
 
     type = request.POST.get('type', None)
     sales_person = request.user
+
+    quotation_id = request.POST.get('quotation', None)
+    if quotation_id == None:
+        return redirect('/400/')
+    try:
+        quotation = Quotation.objects.get(pk=quotation_id)
+    except Quotation.DoesNotExist:
+        return redirect('/404/')
 
     name = request.POST.get('client_name', None)
     company_name = request.POST.get('company_name', None)
@@ -392,7 +406,7 @@ def postOffer(request):
         air_quotation = AirQuotation(air_freight_kg=air_freight_kg, fuel_sur_charge_kg=fuel_sur_charge_kg, security_fees_kg=security_fees_kg, exw_charges=exw_charges, screening_fees=screening_fees, storage=storage, inland=inland, packing=packing, taxes_duties=taxes_duties, handling_fees=handling_fees, official_receipts=official_receipts, p_share=p_share, other_notes=other_notes, offer_validity=offer_validity)
         air_quotation.save()
 
-        offer = Offer(type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
+        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
         offer.save()
     else:
         shipping_line = request.POST.get('shipping_line', None)
@@ -412,49 +426,122 @@ def postOffer(request):
         sea_quotation = SeaQuotation(shipping_line=shipping_line, ocean_freight=ocean_freight, thc=thc, transporation=transporation, transfer=transfer, clearance=clearance, bl_fees=bl_fees, telex_release=telex_release, free_time_at_destination=free_time_at_destination, vessels=vessels, payment_credit=payment_credit, official_receipts=official_receipts, other_notes=other_notes, offer_validity=offer_validity)
         sea_quotation.save()
 
-        offer = Offer(type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
+        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
         offer.save()
 
-    if request.user.role != 'SA':
+    if request.user.role == 'SA':
         return redirect('/sales/tasks/')
-    elif request.user.role != 'AD':
+    elif request.user.role == 'AD':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
+
+def editOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method != 'POST':
+        return redirect('/404/')
+    try:
+        offer = Offer.objects.get(pk=pk)
+        if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
+            offer.status = request.POST.get('status', offer.status)
+            offer.sales_person = request.POST.get('sales_person', offer.sales_person)
+            offer.save()
+            return HttpResponse(content_type='application/json')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except Offer.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
+
+def viewOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        offer = Offer.objects.get(pk=pk)
+        if request.user.role == 'AD':
+            if offer.type == 'A':
+                return render(request, 'admin_offer_air_view.html', { 'offer': offer })
+            elif offer.type == 'S':
+                return render(request, 'admin_offer_sea_view.html', { 'offer': offer })
+        if  request.user.role == 'SA':
+            if offer.sales_person.id == request.user.id:
+                if quotation.type == 'A':
+                    return render(request, 'sales_offer_air_view.html', { 'offer': offer })
+                elif quotation.type == 'S':
+                    return render(request, 'sales_offer_air_view.html', { 'offer': offer })
+        return redirect('/')
+    except Offer.DoesNotExist:
+        return redirect('/404/')
+
+def deleteOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method != 'POST':
+        return redirect('/404/')
+    try:
+        offer = Offer.objects.get(pk=pk)
+        if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
+            offer = Offer.objects.get(pk=pk)
+            offer.delete()
+            return HttpResponse(content_type='application/json')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except Offer.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
 
 ##################################
 
 ######### Quotation ##############
 
-def getAIFQuotation(request):
+def getAIFQuotation(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'OP':
-        return render(request, 'operations_quotations_aif.html')
-    elif request.user.role == 'AD':
-        return render(request, 'admin_quotations_aif.html')
-    else:
-        return redirect('/')
+    try:
+        rate_request = RateRequest.objects.get(pk=pk)
+        if request.user.role == 'OP':
+            return render(request, 'operations_quotations_aif.html', { 'rate_request': rate_request })
+        elif request.user.role == 'AD':
+            return render(request, 'admin_quotations_aif.html', { 'rate_request': rate_request })
+        else:
+            return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
 
-def getFCLQuotation(request):
+def getFCLQuotation(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'OP':
-        return render(request, 'operations_quotations_fcl.html')
-    elif request.user.role == 'AD':
-        return render(request, 'admin_quotations_fcl.html')
-    else:
-        return redirect('/')
+    try:
+        rate_request = RateRequest.objects.get(pk=pk)
+        if request.user.role == 'OP':
+            return render(request, 'operations_quotations_fcl.html', { 'rate_request': rate_request })
+        elif request.user.role == 'AD':
+            return render(request, 'admin_quotations_fcl.html', { 'rate_request': rate_request })
+        else:
+            return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
 
-def getLCLQuotation(request):
+def getLCLQuotation(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'OP':
-        return render(request, 'operations_quotations_lcl.html')
-    elif request.user.role == 'AD':
-        return render(request, 'admin_quotations_lcl.html')
-    else:
-        return redirect('/')
+    try:
+        rate_request = RateRequest.objects.get(pk=pk)
+        if request.user.role == 'OP':
+            return render(request, 'operations_quotations_lcl.html', { 'rate_request': rate_request })
+        elif request.user.role == 'AD':
+            return render(request, 'admin_quotations_lcl.html', { 'rate_request': rate_request })
+        else:
+            return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
 
 def postQuotation(request):
     if not request.user.is_authenticated():
@@ -467,21 +554,33 @@ def postQuotation(request):
     operations_person = request.user
     type = request.POST.get('type', None)
 
-    name = request.POST.get('client_name', None)
-    company_name = request.POST.get('company_name', None)
-    contact = request.POST.get('contact', None)
-    phone = request.POST.get('phone', None)
-    email = request.POST.get('email', None)
-    extra_information = request.POST.get('extra_info', None)
-    client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
-    client.save()
+    rate_request_id = request.POST.get('rate_request', None)
+    if rate_request_id == None:
+        return redirect('/400/')
+    try:
+        rate_request = RateRequest.objects.get(pk=rate_request_id)
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
 
-    port_of_loading = request.POST.get('port_of_loading', None)
-    loading_location_type = request.POST.get('location_type_loading', None)
-    port_of_discharge = request.POST.get('port_of_discharge', None)
-    discharge_location_type = request.POST.get('location_type_discharge', None)
-    destination = Destination(port_of_loading=port_of_loading, loading_location_type=loading_location_type, port_of_discharge=port_of_discharge, discharge_location_type=discharge_location_type)
-    destination.save()
+    # name = request.POST.get('client_name', None)
+    # company_name = request.POST.get('company_name', None)
+    # contact = request.POST.get('contact', None)
+    # phone = request.POST.get('phone', None)
+    # email = request.POST.get('email', None)
+    # extra_information = request.POST.get('extra_info', None)
+    # client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
+    # client.save()
+
+    client = rate_request.client
+
+    # port_of_loading = request.POST.get('port_of_loading', None)
+    # loading_location_type = request.POST.get('location_type_loading', None)
+    # port_of_discharge = request.POST.get('port_of_discharge', None)
+    # discharge_location_type = request.POST.get('location_type_discharge', None)
+    # destination = Destination(port_of_loading=port_of_loading, loading_location_type=loading_location_type, port_of_discharge=port_of_discharge, discharge_location_type=discharge_location_type)
+    # destination.save()
+
+    destination = rate_request.destination
 
     special_instructions = request.POST.get('special_instructions', None)
 
@@ -528,7 +627,7 @@ def postQuotation(request):
         aif_quotation = AIFQuotation(air_freight_kg_net=air_freight_kg_net, air_freight_kg_selling=air_freight_kg_selling, fuel_sur_charge_kg_net=fuel_sur_charge_kg_net, fuel_sur_charge_kg_selling=fuel_sur_charge_kg_selling, security_fees_kg_net=security_fees_kg_net, security_fees_kg_selling=security_fees_kg_selling, exw_charges_net=exw_charges_net, exw_charges_selling=exw_charges_selling, screening_fees_net=screening_fees_net, screening_fees_selling=screening_fees_selling, storage_net=storage_net, storage_selling=storage_selling, inland_net=inland_net, inland_selling=inland_selling, packing_net=packing_net, packing_selling=packing_selling, taxes_duties_net=taxes_duties_net, taxes_duties_selling=taxes_duties_selling, handling_fees_net=handling_fees_net, handling_fees_selling=handling_fees_selling, p_share_net=p_share_net, p_share_selling=p_share_selling)
         aif_quotation.save()
 
-        quotation = Quotation(operations_person=operations_person, type=type, client=client, destination=destination, aif_cargo_details=aif_cargo_details, aif_quotation=aif_quotation, special_instructions=special_instructions)
+        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, aif_cargo_details=aif_cargo_details, aif_quotation=aif_quotation, special_instructions=special_instructions)
         quotation.save()
 
     elif type == 'FCL':
@@ -574,7 +673,7 @@ def postQuotation(request):
         extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessel_available=vessel_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
-        quotation = Quotation(operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
+        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
         quotation.save()
 
     else:
@@ -622,12 +721,12 @@ def postQuotation(request):
         extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessel_available=vessel_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
-        quotation = Quotation(operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
+        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
         quotation.save()
 
-    if request.user.role != 'OP':
+    if request.user.role == 'OP':
         return redirect('/operations/tasks/')
-    elif request.user.role != 'AD':
+    elif request.user.role == 'AD':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
@@ -657,48 +756,48 @@ def viewQuotation(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
     try:
-        rate_request = RateRequest.objects.get(pk=pk)
+        quotation = Quotation.objects.get(pk=pk)
         if request.user.role == 'AD':
-            if rate_request.type == 'AIF':
-                return render(request, 'admin_rate_request_aif_view.html')
-            elif rate_request.type == 'FCL':
-                return render(request, 'admin_rate_request_fcl_view.html')
-            elif rate_request.type == 'LCL':
-                return render(request, 'admin_rate_request_lcl_view.html')
+            if quotation.type == 'AIF':
+                return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation })
+            elif quotation.type == 'FCL':
+                return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation })
+            elif quotation.type == 'LCL':
+                return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation })
         if  request.user.role == 'SA':
-            if rate_request.sales_person.id == request.user.id:
-                if rate_request.type == 'AIF':
-                    return render(request, 'sales_rate_request_aif_view.html')
-                elif rate_request.type == 'FCL':
-                    return render(request, 'sales_rate_request_fcl_view.html')
-                elif rate_request.type == 'LCL':
-                    return render(request, 'sales_rate_request_lcl_view.html')
+            if quotation.sales_person.id == request.user.id:
+                if quotation.type == 'AIF':
+                    return render(request, 'sales_quotations_aif_view.html', { 'quotation': quotation })
+                elif quotation.type == 'FCL':
+                    return render(request, 'sales_quotations_fcl_view.html', { 'quotation': quotation })
+                elif quotation.type == 'LCL':
+                    return render(request, 'sales_quotations_lcl_view.html', { 'quotation': quotation })
         if request.user.role == 'OP':
-            if rate_request.type == 'AIF':
-                return render(request, 'operations_rate_request_aif_view.html')
-            elif rate_request.type == 'FCL':
-                return render(request, 'operations_rate_request_fcl_view.html')
-            elif rate_request.type == 'LCL':
-                return render(request, 'operations_rate_request_lcl_view.html')
+            if quotation.operations_person.id == request.user.id:
+                if quotation.type == 'AIF':
+                    return render(request, 'operations_quotations_aif_view.html', { 'quotation': quotation })
+                elif quotation.type == 'FCL':
+                    return render(request, 'operations_quotations_fcl_view.html', { 'quotation': quotation })
+                elif quotation.type == 'LCL':
+                    return render(request, 'operations_quotations_lcl_view.html', { 'quotation': quotation })
         return redirect('/')
-    except RateRequest.DoesNotExist:
-        return redirect('/405/')
+    except Quotation.DoesNotExist:
+        return redirect('/404/')
 
-def deleteQuotation(request, id):
+def deleteQuotation(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.method != 'POST':
-        return redirect('/404/')
     try:
-        if request.user.role == 'AD' or (request.user.role == 'SA' and rate_request.sales_person.id == request.user.id):
-            rate_request = RateRequest.objects.get(pk=pk)
-            rate_request.delete()
+        quotation = Quotation.objects.get(pk=pk)
+        if request.user.role == 'AD' or (request.user.role == 'OP' and quotation.operations_person.id == request.user.id):
+            quotation = Quotation.objects.get(pk=pk)
+            quotation.delete()
             return HttpResponse(content_type='application/json')
         else:
             response = HttpResponse(content_type='application/json')
             response.status_code = 401
             return response
-    except RateRequest.DoesNotExist:
+    except Quotation.DoesNotExist:
         response = HttpResponse(content_type='application/json')
         response.status_code = 404
         return response
@@ -758,7 +857,7 @@ def todos(request):
             todo = Todo(user=request.user, text=text)
             todo.save();
             # todos = Todo.objects.filter(user=request.user)
-            data = serializers.serialize("json", todo)
+            data = serializers.serialize("json", [ todo, ])
             return HttpResponse(data, content_type='application/json')
         else:
             response = HttpResponse(content_type='application/json')

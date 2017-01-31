@@ -128,7 +128,10 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">Quotation-Air</div>
+								<div class="panel-heading">
+									Quotation-Air
+									<a href="/quotation/{{quotation.id}}/offer/air/new/">Create Offer</a>
+								</div>
 								<div class="panel-body">
 									<div class="container">
                     <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
@@ -142,19 +145,21 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.name }}</p>
                               </div>
                             </div>
                           </div>
+
+													<hr/>
 
                           <h4 class="text-primary">Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.company_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -163,8 +168,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.contact }}</p>
                               </div>
                             </div>
                           </div>
@@ -172,8 +177,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.phone }}</p>
                               </div>
                             </div>
                           </div>
@@ -181,8 +186,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.email }}</p>
                               </div>
                             </div>
                           </div>
@@ -190,25 +195,25 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.client.extra_information }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
+													<hr/>
 
                           <h4 class="text-primary">Destination:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.destination.port_of_loading }}</p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.destination.loading_location_type }}</p>
                               </div>
                             </div>
                           </div>
@@ -216,26 +221,25 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.destination.port_of_discharge }}</p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2">
-                          <p></p>
+                              <div class="col-sm-2 control-label">
+                          			<p>{{ quotation.destination.discharge_location_type }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
-
+													<hr/>
 
                           <h4 class="text-primary">Cargo Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.commodity }}</p>
                               </div>
                             </div>
                           </div>
@@ -243,8 +247,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="no_of_packages">Number of Packages</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.num_of_packages }}</p>
                               </div>
                             </div>
                           </div>
@@ -252,8 +256,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="actual_weight">Actual Weight</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ quotation.aif_cargo_details.actual_weight }}</p>
                               </div>
                             </div>
                           </div>
@@ -261,8 +265,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.chargeable_weight }}</p>
                               </div>
                             </div>
                           </div>
@@ -270,19 +274,17 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ quotation.aif_cargo_details.dimensions }}</p>
                               </div>
                             </div>
                           </div>
 
-
-
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="air_line">Air-Line</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ quotation.aif_cargo_details.air_line }}</p>
                               </div>
                             </div>
                           </div>
@@ -290,8 +292,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="transit_date">Transit Time</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.transit_time }}</p>
                               </div>
                             </div>
                           </div>
@@ -299,8 +301,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="route">Route</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.route }}</p>
                               </div>
                             </div>
                           </div>
@@ -308,8 +310,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
-                              <div class="col-sm-2">
-                            <p></p>
+                              <div class="col-sm-2 control-label">
+                            		<p>{{ quotation.aif_cargo_details.departure_date }}</p>
                               </div>
                             </div>
                           </div>
@@ -317,8 +319,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_cargo_details.arrival_date }}</p>
                               </div>
                             </div>
                           </div>
@@ -326,8 +328,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="mawb">MAWB - Number</label>
-                              <div class="col-sm-2">
-                   <p></p>
+                              <div class="col-sm-2 control-label">
+                   							<p>{{ quotation.aif_cargo_details.mawb_number }}</p>
                               </div>
                             </div>
                           </div>
@@ -335,14 +337,13 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="hawb">HAWB - Number</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ quotation.aif_cargo_details.hawb_number }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
-
+													<hr/>
 
                           <div class ="row">
                             <h4 class="text-primary col-sm-1">Quotation:</h4>
@@ -353,11 +354,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.air_freight_kg_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.air_freight_kg_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -365,11 +366,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="fuel_suercharge">FUEL SURCHARGE/KG</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.fuel_sur_charge_kg_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.fuel_sur_charge_kg_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -377,11 +378,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.security_fees_kg_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.security_fees_kg_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -389,11 +390,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="exw_charges">EXW - CHARGES</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.exw_charges_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.exw_charges_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -401,11 +402,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.screening_fees_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.screening_fees_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -413,11 +414,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="storage">STORAGE</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.storage_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.storage_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -425,11 +426,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="inland">INLAND</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.inland_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.inland_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -437,11 +438,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="packing">PACKING</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ quotation.aif_quotation.packing_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.packing_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -449,11 +450,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.taxes_duties_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.taxes_duties_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -461,11 +462,11 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="handling_fees">HANDLING FEES</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.handling_fees_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.aif_quotation.handling_fees_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -473,26 +474,27 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
-                              <div class="col-sm-2">
-                       <p></p>
+                              <div class="col-sm-2 control-label">
+                       					<p>{{ quotation.aif_quotation.p_share_net }}</p>
                               </div>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               	<p>{{ quotation.aif_quotation.p_share_selling }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
+													<hr/>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
-                              <div class="col-sm-4">
-                                <p></p>
+                              <div class="col-sm-4 control-label">
+                                <p>{{ quotation.special_instructions }}</p>
                               </div>
                             </div>
                           </div>
 
+													<hr/>
 
                         </fieldset>
 

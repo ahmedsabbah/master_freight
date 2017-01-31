@@ -81,10 +81,10 @@
         </ul>
       </li>
       <li class="parent">
-        <a data-toggle="expand" href="#sub-item-2">
+        <a data-toggle="collapse" href="#sub-item-2">
           <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
         </a>
-        <ul class="children expand" id="sub-item-2">
+        <ul class="children collapse" id="sub-item-2">
           <li>
             <a class="" href="/quotation/aif/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations AIR
@@ -130,7 +130,10 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">LCL Rate Request</div>
+								<div class="panel-heading">
+									LCL Rate Request
+									<a href="/rate_request/{{rate_request.id}}/quotation/lcl/new/">Create Quotation</a>
+								</div>
 								<div class="panel-body">
 									<div class="container">
 
@@ -142,25 +145,24 @@
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
 
-
-
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                              <div class="col-sm-2">
-                            <p></p>
+                              <div class="col-sm-2 control-label">
+                            		<p>{{ rate_request.client.name }}</p>
                               </div>
                             </div>
                           </div>
 
+													<hr/>
 
                           <h4 class="text-primary">Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.client.company_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -169,8 +171,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ rate_request.client.contact }}</p>
                               </div>
                             </div>
                           </div>
@@ -178,8 +180,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
-                              <div class="col-sm-2">
-                         <p></p>
+                              <div class="col-sm-2 control-label">
+                         				<p>{{ rate_request.client.phone }}</p>
                               </div>
                             </div>
                           </div>
@@ -187,8 +189,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
-                              <div class="col-sm-2">
-                             <p></p>
+                              <div class="col-sm-2 control-label">
+                             		<p>{{ rate_request.client.email }}</p>
                               </div>
                             </div>
                           </div>
@@ -196,47 +198,49 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.client.extra_information }}</p>
                               </div>
                             </div>
                           </div>
-
+													<hr/>
                           <h4 class="text-primary">Destination:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.destination.port_of_loading }}</p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2">
-                               <p></p>
-                                                             </div>
+                              <div class="col-sm-2 control-label">
+                               	<p>{{ rate_request.destination.loading_location_type }}</p>
+                              </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2">
-                             <p></p>
+                              <div class="col-sm-2 control-label">
+                             		<p>{{ rate_request.destination.port_of_discharge }}</p>
                               </div>
                               <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2">
-                            <p></p>
+                              <div class="col-sm-2 control-label">
+	                            	<p>{{ rate_request.destination.discharge_location_type }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <h4 class="text-primary">Final Delivery Destination:</h4>
+													<hr/>
+
+													<h4 class="text-primary">Final Delivery Destination:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="address">Address</label>
-                              <div class="col-sm-2">
-                            <p></p>
+                              <div class="col-sm-2 control-label">
+                            		<p>{{ rate_request.final_delivery_destination.address }}</p>
                               </div>
                             </div>
                           </div>
@@ -244,8 +248,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact_person">Contact Person</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ rate_request.final_delivery_destination.contact_person }}</p>
                               </div>
                             </div>
                           </div>
@@ -253,30 +257,34 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact_person_extra">Contact Person (extra)</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ rate_request.final_delivery_destination.contact_person_extra }}</p>
                               </div>
                             </div>
                           </div>
+
+													<hr/>
 
                           <h4 class="text-primary">Required Delivery Time:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="delivery_time">Within</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ rate_request.required_delivery_time_within }}</p>
                               </div>
                             </div>
                           </div>
+
+													<hr/>
 
                           <h4 class="text-primary">Cargo Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="quantity">Quantity</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ rate_request.lcl_cargo_details.quantity }}</p>
                               </div>
                             </div>
                           </div>
@@ -284,8 +292,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              <p>{{ rate_request.lcl_cargo_details.commodity }}</p>
                               </div>
                             </div>
                           </div>
@@ -293,8 +301,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
-                              <div class="col-sm-2">
-                             <p></p>
+                              <div class="col-sm-2 control-label">
+                             		<p>{{ rate_request.lcl_cargo_details.gross_weight }}</p>
                               </div>
                             </div>
                           </div>
@@ -302,8 +310,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.lcl_cargo_details.net_weight }}</p>
                               </div>
                             </div>
                           </div>
@@ -311,8 +319,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="pieces">Pieces</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.lcl_cargo_details.pieces }}</p>
                               </div>
                             </div>
                           </div>
@@ -320,8 +328,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="packing">Packing</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.lcl_cargo_details.packing }}</p>
                               </div>
                             </div>
                           </div>
@@ -329,30 +337,30 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2">
+                              <div class="col-sm-2 control-label">
                                 <p></p>
                               </div>
                             </div>
                           </div>
-
-
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="any">Any</label>
-                              <div class="col-sm-2">
+                              <div class="col-sm-2 control-label">
                                 <p></p>
                               </div>
                             </div>
                           </div>
+
+													<hr/>
 
                           <h4 class="text-primary">Imo Class:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="hazardous">Hazardous</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                               <p>{{ rate_request.imo_class.hazardous }}</p>
                               </div>
                             </div>
                           </div>
@@ -360,19 +368,21 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="non_hazardous">Non-Hazardous</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.imo_class.non_hazardous }}</p>
                               </div>
                             </div>
                           </div>
+
+													<hr/>
 
                           <h4 class="text-primary">Shipment Term:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="ex_work">Ex-work</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.shipment_term.ex_work }}</p>
                               </div>
                             </div>
                           </div>
@@ -380,8 +390,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="fas">F.A.S</label>
-                              <div class="col-sm-2">
-                            <p></p>
+                              <div class="col-sm-2 control-label">
+                            		<p>{{ rate_request.shipment_term.fas }}</p>
                               </div>
                             </div>
                           </div>
@@ -389,8 +399,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="fob">F.O.B</label>
-                              <div class="col-sm-2">
-                              <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ rate_request.shipment_term.fob }}</p>
                               </div>
                             </div>
                           </div>
@@ -398,8 +408,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="cnf">C&F</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.shipment_term.cf }}</p>
                               </div>
                             </div>
                           </div>
@@ -407,8 +417,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="cif">C.I.F</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                              	<p>{{ rate_request.shipment_term.cif }}</p>
                               </div>
                             </div>
                           </div>
@@ -416,19 +426,19 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="others">Others</label>
-                              <div class="col-sm-2">
-                               <p></p>
+                              <div class="col-sm-2 control-label">
+                              <p>{{ rate_request.shipment_term.others }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <br><br>
+                          <hr/>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="payment_term">Payment Term</label>
-                              <div class="col-sm-2">
-                                <p></p>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.payment_term }}</p>
                               </div>
                             </div>
                           </div>
@@ -436,8 +446,8 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
-                              <div class="col-sm-4">
-                                <p></p>
+                              <div class="col-sm-4 control-label">
+                                <p>{{ rate_request.special_instructions }}</p>
                               </div>
                             </div>
                           </div>
