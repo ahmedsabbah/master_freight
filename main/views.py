@@ -126,7 +126,8 @@ def getAIFRateRequest(request):
     if request.user.role == 'SA':
         return render(request, 'sales_rate_request_aif.html')
     elif request.user.role == 'AD':
-        return render(request, 'admin_rate_request_aif.html')
+        clients = Client.objects.all()
+        return render(request, 'admin_rate_request_aif.html', {'clients': clients})
     else:
         return redirect('/')
 
