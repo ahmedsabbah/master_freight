@@ -117,7 +117,14 @@ def getOperationsTasks(request):
     return render(request, 'operations_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations})
 
 ############################
-
+########## clients #########
+# def getClient(request):
+#
+#     if not request.user.is_authenticated():
+#         return redirect('/login/')
+#     else:
+#         client = Client.objects.get(pk=pk)
+#         return HttpResponse(client, content_type='application/json')
 ######## Rate Request #########
 
 def getAIFRateRequest(request):
