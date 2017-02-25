@@ -17,6 +17,8 @@ urlpatterns = [
 
     ########################################################################
 
+    url(r'^client/new/$', views.createClient, name='createClient'),
+
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
     url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),
     url(r'^rate_request/lcl/new/$', views.getLCLRateRequest, name='getLCLRateRequest'),

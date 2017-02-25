@@ -117,15 +117,29 @@ def getOperationsTasks(request):
     return render(request, 'operations_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations})
 
 ############################
-########## clients #########
-# def getClient(request):
-#
+######### clients #########
+def createClient(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method == 'POST':
+        name = request.POST.get('client_name', None)
+        company_name = request.POST.get('company_name', None)
+        contact = request.POST.get('contact', None)
+        phone = request.POST.get('phone', None)
+        email = request.POST.get('email', None)
+        extra_information = request.POST.get('extra_info', None)
+        print request.POST.get('customer_name', None)
+        client = Client(name=name, company_name=company_name, contact=contact, phone=phone, email=email, extra_information=extra_information)
+        client.save()
+    return render(request, 'client_account.html')
+
+# def getClientForm(request, pk):
 #     if not request.user.is_authenticated():
 #         return redirect('/login/')
-#     else:
-#         client = Client.objects.get(pk=pk)
-#         return HttpResponse(client, content_type='application/json')
-######## Rate Request #########
+#     if request.method != 'POST':
+#         return render(request, 'client_account.html')
+#     return redirect('/')
+####### Rate Request #########
 
 def getAIFRateRequest(request):
     if not request.user.is_authenticated():
