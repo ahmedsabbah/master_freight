@@ -321,7 +321,7 @@ class Offer(models.Model):
         ('A', 'Accepted'),
         ('D', 'Done')
     )
-    quotation = models.ForeignKey('main.Quotation', related_name='offers', blank=True, null=True)
+    quotation = models.ForeignKey('main.Quotation', related_name='offers', blank=False, null=False)
     reference = models.CharField(max_length=6, default=uuid.uuid4().hex[:6].upper())
     sales_person = models.ForeignKey('authentication.User', related_name='offers', blank=True, null=True)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
