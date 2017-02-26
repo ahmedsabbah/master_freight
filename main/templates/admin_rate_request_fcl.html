@@ -9,13 +9,11 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">FCL Rate Request</div>
 								<div class="panel-body">
-									<div class="container">
 
                     <form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
                       <fieldset>
                         {% csrf_token %}
                         <br>
-                        <div class="container">
                           <!-- Text input-->
                           <input type="hidden" name="type" value="FCL">
 
@@ -323,8 +321,6 @@
                          <input type="submit" value="Submit">
                       </form>
                   </div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -13,11 +13,9 @@
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
 								</div>
 								<div class="panel-body">
-									<div class="container">
                     <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
                       <fieldset>
                         <br>
-                        <div class="container">
                           <!-- Text input-->
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
@@ -391,8 +389,6 @@
 
                       </form>
 
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

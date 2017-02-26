@@ -3,229 +3,235 @@
 {% block content %}
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-      <br>
-      <div class="container">
-        <!-- Text input-->
+  <br/>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Client Account
+          <!-- <a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Client </a> -->
+        </div>
+        <div class="panel-body">
+          <h4 class="text-primary">Client Information:</h4>
 
-        <h2 align="center">Client Profile</h2>
-        <br><br>
-
-        <h4 class="text-primary">Client Information:</h4>
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="client_name">Client Name:</label>
-            <div class="col-sm-2">
-              <p id = "client_name" >{{client.client_name}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="client_name">Client Name:</label>
+              <div class="col-sm-2">
+                <p id = "client_name" >{{client.client_name}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="client_type">Client Type:</label>
-            <div class="col-sm-2">
-              <p>
-                {{client.client_type}}
-              </p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="client_type">Client Type:</label>
+              <div class="col-sm-2">
+                <p>
+                  {{client.client_type}}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="client_address">Client Address: </label>
-            <div class="col-sm-4">
-              <p id = "client_address">{{client_address}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="client_address">Client Address: </label>
+              <div class="col-sm-4">
+                <p id = "client_address">{{client_address}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="commodity">Comodity:</label>
-            <div class="col-sm-2">
-              <p id = "commodity">{{client.commodity}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="commodity">Comodity:</label>
+              <div class="col-sm-2">
+                <p id = "commodity">{{client.commodity}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
 
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
-            <div class="col-sm-2">
-             <p id ="client_business_phone">{{client.business_phone}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="cell_alternative_phone">Cell or Alternative Phone:</label>
-            <div class="col-sm-2">
-              <p id ="Alternative_phone">{{client.alt_phone}}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="fax_number">Fax Number:</label>
-            <div class="col-sm-2">
-              <p id="fax_number">{{client.fax}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
+              <div class="col-sm-2">
+                <p id ="client_business_phone">{{client.business_phone}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="cell_alternative_phone">Cell or Alternative Phone:</label>
+              <div class="col-sm-2">
+                <p id ="Alternative_phone">{{client.alt_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="email">Email:</label>
-            <div class="col-sm-2">
-            <p id ="client_email">{{client.email}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="fax_number">Fax Number:</label>
+              <div class="col-sm-2">
+                <p id="fax_number">{{client.fax}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <h4 class="text-primary">Contact Information:</h4>
-
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="contact_person">Contact Person(Operation):</label>
-            <div class="col-sm-2">
-              <p id="Contact_person_operation">{{client.op_contact}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="job_title">Job Title:</label>
-            <div class="col-sm-2">
-                  <p id="job_title_operation">{{client.op_job_title}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="email">Email:</label>
+              <div class="col-sm-2">
+                <p id ="client_email">{{client.email}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
-            <div class="col-sm-2">
-                 <p id="business_phone_operation">{{client.op_business_phone}}</p>
+          <h4 class="text-primary">Contact Information:</h4>
+
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="contact_person">Contact Person(Operation):</label>
+              <div class="col-sm-2">
+                <p id="Contact_person_operation">{{client.op_contact}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="job_title">Job Title:</label>
+              <div class="col-sm-2">
+                <p id="job_title_operation">{{client.op_job_title}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="email">E-mail:</label>
-            <div class="col-sm-2">
-                  <p id="Email_operation">{{client.op_email}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
-            <div class="col-sm-2">
-                  <p id="phone_operation">{{client.op_phone}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
+              <div class="col-sm-2">
+                <p id="business_phone_operation">{{client.op_business_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <hr>
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="contact_person">Contact Person(Finance):</label>
-            <div class="col-sm-2">
-              <p id="Contact_person_finance">{{client.finance_contact}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="job_title">Job Title:</label>
-            <div class="col-sm-2">
-                  <p id="job_title_finance">{{client.finance_job_title}}</p>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="email">E-mail:</label>
+              <div class="col-sm-2">
+                <p id="Email_operation">{{client.op_email}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
+              <div class="col-sm-2">
+                <p id="phone_operation">{{client.op_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
-            <div class="col-sm-2">
-                 <p id="business_phone_finance">{{client.finance_business_phone}}</p>
+          <hr>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="contact_person">Contact Person(Finance):</label>
+              <div class="col-sm-2">
+                <p id="Contact_person_finance">{{client.finance_contact}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="job_title">Job Title:</label>
+              <div class="col-sm-2">
+                <p id="job_title_finance">{{client.finance_job_title}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="email">E-mail:</label>
-            <div class="col-sm-2">
-                  <p id="Email_finance">{{client.finance_email}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
-            <div class="col-sm-2">
-                  <p id="phone_finance">{{client.finance_phone}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
+              <div class="col-sm-2">
+                <p id="business_phone_finance">{{client.finance_business_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <h4 class="text-primary">Account Information:</h4>
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="client_id_numbers">Client ID Number(s):</label>
-            <div class="col-sm-2">
-              <p id="client_id_notification">{{client.client_id_number}}</p>
-            </div>
-            <label class="col-sm-2 control-label" for="credit_period">Credit Period:</label>
-            <div class="col-sm-2">
-              <p id ="credit_period">{{client.credit_period}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="email">E-mail:</label>
+              <div class="col-sm-2">
+                <p id="Email_finance">{{client.finance_email}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
+              <div class="col-sm-2">
+                <p id="phone_finance">{{client.finance_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="credit_limit">Credit Limit:</label>
-            <div class="col-sm-2">
-              <p id="credit_limit">{{client.credit_limit}}</p>
+          <h4 class="text-primary">Account Information:</h4>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="client_id_numbers">Client ID Number(s):</label>
+              <div class="col-sm-2">
+                <p id="client_id_notification">{{client.client_id_number}}</p>
+              </div>
+              <label class="col-sm-2 control-label" for="credit_period">Credit Period:</label>
+              <div class="col-sm-2">
+                <p id ="credit_period">{{client.credit_period}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <h4 class="text-primary">References:</h4>
-
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="name_ref">Name:</label>
-            <div class="col-sm-2">
-              <p id = "reference_name">{{client.reference_name}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="credit_limit">Credit Limit:</label>
+              <div class="col-sm-2">
+                <p id="credit_limit">{{client.credit_limit}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="phone_ref">Phone:</label>
-            <div class="col-sm-2">
-              <p id ="reference_phone">{{client.reference_phone}}</p>
+          <h4 class="text-primary">References:</h4>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="name_ref">Name:</label>
+              <div class="col-sm-2">
+                <p id = "reference_name">{{client.reference_name}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="other_notes">Notes:</label>
-            <div class="col-sm-4">
-              <p id="other_notes">{{client.notes}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="phone_ref">Phone:</label>
+              <div class="col-sm-2">
+                <p id ="reference_phone">{{client.reference_phone}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="account_issued_by">Account Issued By (Sales Man):</label>
-            <div class="col-sm-2">
-              <p id="issued_by">{{client.issued_by}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="other_notes">Notes:</label>
+              <div class="col-sm-4">
+                <p id="other_notes">{{client.notes}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-2 control-label" for="account_authorise_by">Account Authorised By:</label>
-            <div class="col-sm-2">
-              <p id="account_authorised">{{client.authorized_by}}</p>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="account_issued_by">Account Issued By (Sales Man):</label>
+              <div class="col-sm-2">
+                <p id="issued_by">{{client.issued_by}}</p>
+              </div>
             </div>
           </div>
-        </div>
 
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-2 control-label" for="account_authorise_by">Account Authorised By:</label>
+              <div class="col-sm-2">
+                <p id="account_authorised">{{client.authorized_by}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
-{% endblock %}
+</div>
+        {% endblock %}

@@ -7,14 +7,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Air-Freight Rate Request</div>
 				<div class="panel-body">
-					<div class="container">
 
 						<form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
 							<fieldset>
 								{% csrf_token %}
 								<!-- <h1 style="color:orange">Air-Freight Rate Request</h1> -->
 								<br>
-								<div class="container">
 									<!-- Text input-->
 									<input type="hidden" name="type" value="AIF">
 
@@ -350,8 +348,6 @@
 								</fieldset>
 								<input type="submit" value="Submit">
 							</form>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -13,12 +13,10 @@
 									<a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Rate Request </a>
 								</div>
 								<div class="panel-body">
-									<div class="container">
 
                     <form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
                       <fieldset>
                         <br>
-                        <div class="container">
                           <!-- Text input-->
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
@@ -308,8 +306,6 @@
                         </fieldset>
                          <p></p>
                       </form>
-                  </div>
-								</div>
 							</div>
 						</div>
 					</div>

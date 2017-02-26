@@ -38,7 +38,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/admin/"><span>Admin </span>Dashboard</a>
+        <a class="navbar-brand" href="/admin/"><span>Master Freight </span> <span class="small" style="color:white"> ADMIN DASHBOARD</span></a>
         <ul class="user-menu">
           <li class="dropdown pull-right">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -55,31 +55,32 @@
 
   <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
     <ul class="nav menu">
-      <li><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-      <li><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-      <li><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
-      <li><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
-      <li class="parent active">
+      <li {% if request.path == '/admin/' %}class="active"{% endif %}><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg>Work Space</a></li>
+      <li {% if request.path == '/admin/tasks/' %}class="active"{% endif %}><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+      <li {% if request.path == '/admin/employees/' %}class="active"{% endif %}><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
+      <li {% if request.path == '/admin/charts/' %}class="active"{% endif %}><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+      <li class="parent">
         <a data-toggle="expand" href="#sub-item-1">
-         <svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> New Rate Request  <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
+         <svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> New Rate Request
+         <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
         <ul class="children expand" id="sub-item-1">
-          <li>
+          <li {% if request.path == '/rate_request/aif/new/' %}class="active"{% endif %}>
             <a class="" href="/rate_request/aif/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
             </a>
           </li>
-          <li>
+          <li {% if request.path == '/rate_request/lcl/new/' %}class="active"{% endif %}>
             <a class="" href="/rate_request/lcl/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
             </a>
           </li>
-          <li>
+          <li {% if request.path == '/rate_request/fcl/new/' %}class="active"{% endif %}>
             <a class="" href="/rate_request/fcl/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
             </a>
           </li>
-          <li>
+          <li {% if request.path == '/rate_request/sales/new/' %}class="active"{% endif %}>
             <a class="" href="/rate_request/sales/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
             </a>
@@ -87,17 +88,17 @@
         </ul>
       </li>
       <li class="parent">
-        <a data-toggle="collapse" href="#sub-item-2">
+        <a data-toggle="expand" href="#sub-item-2">
         <svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"></use></svg> Clients <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
-        <ul class="children collapse" id="sub-item-2">
+        <ul class="children expand" id="sub-item-2">
 
-          <li>
+          <li {% if request.path == '/client/new/' %}class="active"{% endif %}>
             <a class="" href="/client/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Client
             </a>
           </li>
-          <li>
+          <li {% if request.path == '/client/list/' %}class="active"{% endif %}>
             <a class="" href="/client/list/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Client
             </a>

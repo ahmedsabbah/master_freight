@@ -13,14 +13,12 @@
 									<a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Rate Request </a>
 								</div>
 								<div class="panel-body">
-									<div class="container">
 
                   <form class="form-horizontal" role="form" method="post" action="/rate_request/new/">
                     <fieldset>
                       {% csrf_token %}
                       <!-- <h1 style="color:orange">Air-Freight Rate Request</h1> -->
                       <br>
-                      <div class="container">
                         <!-- Text input-->
                         <input type="hidden" name="type" value="AIF">
 
@@ -327,8 +325,7 @@
                       </fieldset>
 
                     </form>
-                  </div>
-								</div>
+
 							</div>
 						</div>
 					</div>
