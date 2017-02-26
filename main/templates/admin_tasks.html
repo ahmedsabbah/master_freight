@@ -1,23 +1,12 @@
-<!DOCTYPE html>
+{% extends './base.html' %}
 {% load staticfiles %}
 {% load static %}
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Dashboard</title>
 
-<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+{% block extra_styling %}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"/>
-
-<!-- <link href="{% static "css/datepicker3.css" %}" rel="stylesheet"> -->
-<link href="{% static "css/styles.css" %}" rel="stylesheet">
-
-<!--Icons-->
-<script src="{% static "js/lumino.glyphs.js" %}"></script>
 
 <style>
 	table.dataTable tbody>tr.selected,
@@ -25,106 +14,9 @@
 		background-color: #A2D3F6;
 	}
 </style>
+{% endblock %}
 
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<script src="{% static "js/respond.min.js" %}"></script>
-<![endif]-->
-
-</head>
-
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/admin/"><span>Admin </span>Dashboard</a>
-				<ul class="user-menu">
-					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="/settings/"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="/logout/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-
-		</div><!-- /.container-fluid -->
-	</nav>
-
-	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<ul class="nav menu">
-			<li><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li class="active"><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-			<li><a href="/admin/employees/"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Employees Management</a></li>
-			<li><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-1">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
-				</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li>
-						<a class="" href="/rate_request/aif/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/lcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/fcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/sales/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
-						</a>
-					</li>
-				</ul>
-			</li>
-			   <li class="parent">
-        <a data-toggle="collapse" href="#sub-item-2">
-          <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Account
-        </a>
-        <ul class="children collapse" id="sub-item-2">
-          
-          <li>
-            <a class="" href="/client/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Client Account
-            </a>
-          </li>
-          
-        </ul>
-      </li>
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-3">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
-				</a>
-				<ul class="children collapse" id="sub-item-3">
-					<li>
-						<a class="" href="/offer/air/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
-						</a>
-					</li>
-					<li>
-						<a class="" href="/offer/sea/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
-						</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-
-	</div><!--/.sidebar-->
+{% block content %}
 
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<br/>
@@ -134,6 +26,9 @@
 						<div class="panel-heading">Rate Requests</div>
 						<div class="panel-body">
 							<!-- <div class="container"> -->
+							<p style="color:red">
+								does the client have a client_name and company_name?
+							</p>
 
 							<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example">
 
@@ -149,7 +44,12 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Quotations</div>
 						<div class="panel-body">
-
+							<p style="color:red">
+								what will be added in the sales field??
+									</p>
+								<p style="color:red">
+								can there be more than one quotation for the same request???
+							</p>
 
 							<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example2">
 
@@ -165,7 +65,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Offers</div>
 					<div class="panel-body">
-
+						<p style="color:red">
+							should the client get notified via email when an offer is complete?
+						</p>
 						<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example3">
 
 						</table>
@@ -175,8 +77,8 @@
 		</div>
 	</div>
 </div>
-
-
+{% endblock %}
+{% block extra_script %}
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 	<script src="{% static "js/bootstrap.min.js" %}"></script>
 	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
@@ -207,7 +109,7 @@
 
 			var dataSet = [
 				{% for rate_request in rate_requests %}
-				["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.company_name}}", "{{rate_request.client.name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.get_status_display}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.client_name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.get_status_display}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
 
@@ -215,9 +117,7 @@
 				title: "ID"
 			}, {
 				title: "Type"
-			}, {
-				title: "Company"
-			}, {
+			},  {
 				title: "Client"
 			}, {
 				title: "Assignee"
@@ -245,7 +145,10 @@
 
 			var dataSet = [
 				{% for quotation in quotations %}
-				["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.company_name}}", "{{quotation.client.name}}", "{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}", "{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}", "{{quotation.get_status_display}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+				["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.client_name}}",
+				 "{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}",
+				 "{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}",
+				 "{{quotation.get_status_display}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
 
@@ -253,8 +156,6 @@
 				title: "ID"
 			}, {
 				title: "Type"
-			}, {
-				title: "Company"
 			}, {
 				title: "Client"
 			}, {
@@ -286,7 +187,7 @@
 
 			var dataSet = [
 				{% for offer in offers %}
-				["{{ offer.id }}", "{{ offer.type }}", "{{ offer.client.company_name }}", "{{ offer.client.name }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
+				["{{ offer.id }}", "{{ offer.type }}",  "{{ offer.client.client_name }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
 				{% endfor %}
 			];
 
@@ -294,8 +195,6 @@
 				title: "ID"
 			}, {
 				title: "Type"
-			}, {
-				title: "Company"
 			}, {
 				title: "Client"
 			}, {
@@ -320,6 +219,4 @@
 		});
 	</script>
 
-</body>
-
-</html>
+	{% endblock %}

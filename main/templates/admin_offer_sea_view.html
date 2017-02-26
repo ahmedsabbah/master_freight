@@ -7,7 +7,9 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel panel-default">
-            <div class="panel-heading">Offer to Client Sea</div>
+            <div class="panel-heading">Offer to Client Sea
+              <a href="/offer/{{offer.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Offer </a>
+            </div>
             <div class="panel-body">
               <div class="container">
 
@@ -24,7 +26,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="client_name">Client Name</label>
                           <div class="col-sm-2">
-                          <p></p>
+                          <p>{{ offer.quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
@@ -33,7 +35,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="company_name">Company Name</label>
                           <div class="col-sm-2">
-                           <p></p>
+                           <p>{{ offer.quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
@@ -43,7 +45,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="contact">Contact</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
@@ -52,7 +54,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="phone">Phone</label>
                           <div class="col-sm-2">
-                            <p></p>
+                            <p>{{ offer.quotation.rate_request.client.business_phone }}</p>
                           </div>
                         </div>
                       </div>
@@ -61,7 +63,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="email">E-mail</label>
                           <div class="col-sm-2">
-                             <p></p>
+                             <p>{{ offer.quotation.rate_request.client.email }}</p>
                           </div>
                         </div>
                       </div>
@@ -70,7 +72,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.quotation.rate_request.client.extra_info }}</p>
                           </div>
                         </div>
                       </div>
@@ -82,9 +84,9 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="ocean_freight">SHIPPING LINE/AIR LINE</label>
+                          <label class="col-sm-2 control-label" for="shipping_line">SHIPPING LINE/AIR LINE</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.shipping_line }}</p>
                           </div>
 
                         </div>
@@ -94,7 +96,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.ocean_freight }}</p>
                           </div>
 
                         </div>
@@ -104,7 +106,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="thc">T.H.C</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.thc }}</p>
                           </div>
                         </div>
                       </div>
@@ -113,7 +115,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.transporation }}</p>
                           </div>
                         </div>
                       </div>
@@ -122,7 +124,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.transfer }}</p>
                           </div>
                         </div>
                       </div>
@@ -131,7 +133,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.clearance }}</p>
                           </div>
                         </div>
                       </div>
@@ -142,7 +144,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.bl_fees }}</p>
                           </div>
                         </div>
                       </div>
@@ -151,7 +153,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.telex_release }}</p>
                           </div>
                         </div>
                       </div>
@@ -160,7 +162,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="free_time_destination">FREE TIME AT DESTINATION</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.free_time_at_destination }}</p>
                           </div>
                         </div>
                       </div>
@@ -169,7 +171,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="vessels">VESSELS</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.vessels }}</p>
                           </div>
                         </div>
                       </div>
@@ -178,7 +180,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="payment_credit">PAYMENT CREDIT</label>
                           <div class="col-sm-2">
-                             <p></p>
+                             <p>{{ offer.sea_quotation.payment_credit }}</p>
                           </div>
                         </div>
                       </div>
@@ -187,7 +189,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
                           <div class="col-sm-2">
-                              <p></p>
+                              <p>{{ offer.sea_quotation.official_receipts }}</p>
                           </div>
                         </div>
                       </div>
@@ -196,7 +198,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
                           <div class="col-sm-2">
-                            <p></p>
+                            <p>{{ offer.sea_quotation.other_notes }}</p>
                           </div>
                         </div>
                       </div>
@@ -205,7 +207,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
                           <div class="col-sm-2">
-                             <p></p>
+                             <p>{{ offer.sea_quotation.offer_validity }}</p>
                           </div>
                         </div>
                       </div>
@@ -237,7 +239,6 @@
               Hope the above meets your requirement and waiting for your positive reply.
                  </p>
                     </fieldset>
-                     <input type="submit" value="Submit">
                   </form>
               </div>
             </div>

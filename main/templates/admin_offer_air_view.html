@@ -7,7 +7,9 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
-							<div class="panel-heading">Offer to Client Air</div>
+							<div class="panel-heading">Offer to Client Air
+							<a href="/offer/{{offer.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Offer </a>
+							</div>
 							<div class="panel-body">
 								<div class="container">
 
@@ -21,62 +23,65 @@
                         {% csrf_token %}
                         <input type="hidden" name="type" value="A">
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                            <div class="col-sm-2">
-                               <p></p>
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="client_name">Client Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ offer.quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                            <div class="col-sm-2">
-                                <p></p>
-                            </div>
-                          </div>
-                        </div>
+												<hr/>
+
+												<h4 class="text-primary">Details:</h4>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="company_name">Company Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ offer.quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="contact">Contact</label>
-                            <div class="col-sm-2">
-                                <p></p>
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="contact">Contact</label>
+														<div class="col-sm-2 control-label">
+														 <p>{{ offer.quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="phone">Phone</label>
-                            <div class="col-sm-2">
-                                <p></p>
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="phone">Phone</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ offer.quotation.rate_request.client.business_phone }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="email">E-mail</label>
-                            <div class="col-sm-2">
-                                <p></p>
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="email">E-mail</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ offer.quotation.rate_request.client.email }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                            <div class="col-sm-2">
-                                <p></p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <br><br>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
+														<div class="col-sm-2 control-label">
+															<p style="color:red">{{ offer.quotation.rate_request.client.extra_information }} does the client have extra contact info?</p>
+														</div>
+													</div>
+												</div>
+												<hr/>
 
                         <h4 class="text-primary">Offer Details:</h4>
 
@@ -84,7 +89,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
                             <div class="col-sm-2">
-                              <p></p>
+                              <p>{{offer.air_quotation.air_freight_kg}}</p>
                             </div>
                           </div>
                         </div>
@@ -93,7 +98,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="fuel_suercharge">FUEL SUERCHARGE/KG</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.fuel_sur_charge_kg}}</p>
                             </div>
                           </div>
                         </div>
@@ -102,7 +107,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.security_fees_kg}}</p>
                             </div>
                           </div>
                         </div>
@@ -111,7 +116,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="exw_charges">EXW - CHARGES</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.exw_charges}}</p>
                             </div>
                           </div>
                         </div>
@@ -120,7 +125,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.screening_fees}}</p>
                             </div>
                           </div>
                         </div>
@@ -129,7 +134,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="storage">STORAGE</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.storage}}</p>
                             </div>
                           </div>
                         </div>
@@ -138,7 +143,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="inland">INLAND</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.inland}}</p>
                             </div>
                           </div>
                         </div>
@@ -147,7 +152,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="packing">PACKING</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.packing}}</p>
                             </div>
                           </div>
                         </div>
@@ -156,7 +161,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.taxes_duties}}</p>
                             </div>
                           </div>
                         </div>
@@ -165,7 +170,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="handling_fees">HANDLING FEES</label>
                             <div class="col-sm-2">
-                               <p></p>
+                               <p>{{offer.air_quotation.handling_fees}}</p>
                             </div>
                           </div>
                         </div>
@@ -174,16 +179,16 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.official_receipts}}</p>
                             </div>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
+                            <label class="col-sm-2 control-label" for="p_share">P SHARE</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.p_share}}</p>
                             </div>
                           </div>
                         </div>
@@ -192,7 +197,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.other_notes}}</p>
                             </div>
                           </div>
                         </div>
@@ -201,7 +206,7 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
                             <div class="col-sm-2">
-                                <p></p>
+                                <p>{{offer.air_quotation.offer_validity}}</p>
                             </div>
                           </div>
                         </div>
@@ -232,8 +237,7 @@
                 * PAYMENT TERMS:    As per agreement if any <br><br>
                 Hope the above meets your requirement and waiting for your positive reply.
                    </p>
-                      </fieldset>
-                       <input type="submit" value="Submit">
+								 </fieldset>
                     </form>
                 </div>
 							</div>

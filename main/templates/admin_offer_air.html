@@ -22,88 +22,90 @@
                         <input type="hidden" name="type" value="A">
 												<input type="hidden" name="quotation" value="{{quotation.id}}">
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                            <div class="col-sm-2">
-                              <input id="client_name" name="client_name" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="client_name">Client Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                            <div class="col-sm-2">
-                              <input id="company_name" name="company_name" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<hr/>
+
+												<h4 class="text-primary">Details:</h4>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="company_name">Company Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="contact">Contact</label>
-                            <div class="col-sm-2">
-                              <input id="contact" name="contact" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="contact">Contact</label>
+														<div class="col-sm-2 control-label">
+														 <p>{{ quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="phone">Phone</label>
-                            <div class="col-sm-2">
-                              <input id="phone" name="phone" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="phone">Phone</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.business_phone }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="email">E-mail</label>
-                            <div class="col-sm-2">
-                              <input id="email" name="email" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="email">E-mail</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.email }}</p>
+														</div>
+													</div>
+												</div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                            <div class="col-sm-2">
-                              <input id="extra_info" name="extra_info" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
-
-                        <br><br>
-
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
+														<div class="col-sm-2 control-label">
+															<p style="color:red">{{ quotation.rate_request.client.extra_information }} does the client have extra contact info?</p>
+														</div>
+													</div>
+												</div>
+												<hr/>
                         <h4 class="text-primary">Offer Details:</h4>
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
+                            <label class="col-sm-2 control-label" for="air_freight_kg">AIRFREIGHT/KG</label>
                             <div class="col-sm-2">
-                              <input id="airfreight" name="airfreight" type="text" placeholder="" class="form-control">
+                              <input id="airfreight" name="air_freight_kg" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="fuel_suercharge">FUEL SUERCHARGE/KG</label>
+                            <label class="col-sm-2 control-label" for="fuel_sur_charge_kg">FUEL SUERCHARGE/KG</label>
                             <div class="col-sm-2">
-                              <input id="fuel_suercharge" name="fuel_suercharge" type="text" placeholder="" class="form-control">
+                              <input id="fuel_suercharge" name="fuel_sur_charge_kg" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
+                            <label class="col-sm-2 control-label" for="security_fees_kg">SECURITY FEES/KG</label>
                             <div class="col-sm-2">
-                              <input id="security_fees" name="security_fees" type="text" placeholder="" class="form-control">
+                              <input id="security_fees" name="security_fees_kg" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
@@ -155,9 +157,9 @@
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
+                            <label class="col-sm-2 control-label" for="taxes_duties">TAXES & DUTIES</label>
                             <div class="col-sm-2">
-                              <input id="taxes_n_duties" name="taxes_n_duties" type="text" placeholder="" class="form-control">
+                              <input id="taxes_n_duties" name="taxes_duties" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>

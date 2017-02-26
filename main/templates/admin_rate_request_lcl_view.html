@@ -10,6 +10,7 @@
 								<div class="panel-heading">
 									LCL Rate Request
 									<a href="/rate_request/{{rate_request.id}}/quotation/lcl/new/">Create Quotation</a>
+									<a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Rate Request </a>
 								</div>
 								<div class="panel-body">
 									<div class="container">
@@ -26,7 +27,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
                               <div class="col-sm-2 control-label">
-                            		<p>{{ rate_request.client.name }}</p>
+                            		<p>{{ rate_request.client.client_name}}</p>
                               </div>
                             </div>
                           </div>
@@ -39,7 +40,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.client.company_name }}</p>
+                                <p>{{ rate_request.client.client_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -49,7 +50,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
                               <div class="col-sm-2 control-label">
-                               <p>{{ rate_request.client.contact }}</p>
+                               <p>{{ rate_request.client.client_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -58,7 +59,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
                               <div class="col-sm-2 control-label">
-                         				<p>{{ rate_request.client.phone }}</p>
+                         				<p>{{ rate_request.client.business_phone }}</p>
                               </div>
                             </div>
                           </div>
@@ -68,15 +69,6 @@
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
                               <div class="col-sm-2 control-label">
                              		<p>{{ rate_request.client.email }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.client.extra_information }}</p>
                               </div>
                             </div>
                           </div>
@@ -211,23 +203,6 @@
                             </div>
                           </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2 control-label">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="any">Any</label>
-                              <div class="col-sm-2 control-label">
-                                <p></p>
-                              </div>
-                            </div>
-                          </div>
 
 													<hr/>
 

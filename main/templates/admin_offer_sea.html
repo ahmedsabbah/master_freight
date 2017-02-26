@@ -19,21 +19,24 @@
                       {% csrf_token %}
                       <input type="hidden" name="type" value="S">
 											<input type="hidden" name="quotation" value="{{quotation.id}}">
-
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                          <div class="col-sm-2">
-                            <input id="client_name" name="client_name" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
 
+                      <hr/>
+
+                      <h4 class="text-primary">Details:</h4>
+
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                          <div class="col-sm-2">
-                            <input id="company_name" name="company_name" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
@@ -42,8 +45,8 @@
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="contact">Contact</label>
-                          <div class="col-sm-2">
-                            <input id="contact" name="contact" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                           <p>{{ quotation.rate_request.client.client_name }}</p>
                           </div>
                         </div>
                       </div>
@@ -51,8 +54,8 @@
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="phone">Phone</label>
-                          <div class="col-sm-2">
-                            <input id="phone" name="phone" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.rate_request.client.business_phone }}</p>
                           </div>
                         </div>
                       </div>
@@ -60,8 +63,8 @@
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="email">E-mail</label>
-                          <div class="col-sm-2">
-                            <input id="email" name="email" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.rate_request.client.email }}</p>
                           </div>
                         </div>
                       </div>
@@ -69,14 +72,12 @@
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                          <div class="col-sm-2">
-                            <input id="extra_info" name="extra_info" type="text" placeholder="" class="form-control">
+                          <div class="col-sm-2 control-label">
+                            <p style="color:red">{{ quotation.rate_request.client.extra_information }} does the client have extra contact info?</p>
                           </div>
                         </div>
                       </div>
-
-                      <br><br>
-
+                      <hr/>
 
                       <h4 class="text-primary">Offer Details:</h4>
 
@@ -84,7 +85,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="ocean_freight">SHIPPING LINE/AIR LINE</label>
                           <div class="col-sm-2">
-                            <input id="ocean_freight" name="ocean_freight" type="text" placeholder="" class="form-control">
+                            <input id="ocean_freight" name="shipping_line" type="text" placeholder="" class="form-control">
                           </div>
 
                         </div>
@@ -129,9 +130,9 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE</label>
+                          <label class="col-sm-2 control-label" for="clearance">CLEARANCE</label>
                           <div class="col-sm-2">
-                            <input id="clearance_pol" name="clearance_pol" type="text" placeholder="" class="form-control">
+                            <input id="clearance_pol" name="clearance" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -158,9 +159,9 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="free_time_destination">FREE TIME AT DESTINATION</label>
+                          <label class="col-sm-2 control-label" for="free_time_at_destination">FREE TIME AT DESTINATION</label>
                           <div class="col-sm-2">
-                            <input id="free_time_destination" name="free_time_destination" type="text" placeholder="" class="form-control">
+                            <input id="free_time_destination" name="free_time_at_destination" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
                       </div>

@@ -16,27 +16,26 @@
 								<div class="container">
 									<!-- Text input-->
 									{% csrf_token %}
-									<input type="hidden" name="type" value="LCL">
 
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="customer_name">Customer Name:</label>
+											<label class="col-sm-2 control-label" for="client_name">Client Name:</label>
 											<div class="col-sm-2">
-												<input id="customer_name" name="customer_name" type="text" placeholder="" class="form-control">
+												<input id="client_name" name="client_name" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="customer_type">Customer Type:</label>
+											<label class="col-sm-2 control-label" for="client_type">Client Type:</label>
 											<div class="col-sm-2">
-												<select id="customer_type" name="customer_type" class="form-control">
-													<option value="1">Individual</option>
-													<option value="2">Corporation or Organisation</option>
-													<option value="3">Business Address</option>
-													<option value="4">Residence</option>
+												<select id="client_type" name="client_type" class="form-control">
+													<option value="IN">Individual</option>
+													<option value="CO">Corporation or Organisation</option>
+													<option value="BA">Business Address</option>
+													<option value="RS">Residence</option>
 												</select>
 											</div>
 										</div>
@@ -44,9 +43,9 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="customer_address">Customer Address: </label>
+											<label class="col-sm-2 control-label" for="client_address">Client Address: </label>
 											<div class="col-sm-4">
-												<textarea class="form-control" id="customer_address" name="customer_address"></textarea>
+												<textarea class="form-control" id="client_address" name="client_address"></textarea>
 											</div>
 										</div>
 									</div>
@@ -68,18 +67,18 @@
 											<div class="col-sm-2">
 												<input id="business_phone" name="business_phone" type="text" placeholder="" class="form-control">
 											</div>
-											<label class="col-sm-2 control-label" for="cell_alternative_phone">Cell or Alternative Phone:</label>
+											<label class="col-sm-2 control-label" for="alt_phone">Cell or Alternative Phone:</label>
 											<div class="col-sm-2">
-												<input id="cell_alternative_phone" name="cell_alternative_phone" type="text" placeholder="" class="form-control">
+												<input id="alt_phone" name="alt_phone" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="fax_number">Fax Number:</label>
+											<label class="col-sm-2 control-label" for="fax">Fax Number:</label>
 											<div class="col-sm-2">
-												<input id="fax_number" name="fax_number" type="text" placeholder="" class="form-control">
+												<input id="fax" name="fax" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
@@ -98,91 +97,82 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="contact_person">Contact Person(Operation):</label>
+											<label class="col-sm-2 control-label" for="op_contact">Contact Person(Operation):</label>
 											<div class="col-sm-2">
-												<input id="contact_person" name="contact_person" type="text" placeholder="" class="form-control">
+												<input id="op_contact" name="op_contact" type="text" placeholder="" class="form-control">
 											</div>
-											<label class="col-sm-2 control-label" for="job_title">Job Title:</label>
+											<label class="col-sm-2 control-label" for="op_job_title">Job Title:</label>
 											<div class="col-sm-2">
-												<input id="job_title" name="job_title" type="text" placeholder="" class="form-control">
-											</div>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="row">
-											<label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
-											<div class="col-sm-2">
-												<input id="business_phone" name="business_phone" type="text" placeholder="" class="form-control">
+												<input id="op_job_title" name="op_job_title" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="email">E-mail:</label>
+											<label class="col-sm-2 control-label" for="op_phone">Business Phone:</label>
 											<div class="col-sm-2">
-												<input id="email" name="email" type="text" placeholder="" class="form-control">
+												<input id="op_business_phone" name="op_business_phone" type="text" placeholder="" class="form-control">
 											</div>
-											<label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-2 control-label" for="op_email">E-mail:</label>
 											<div class="col-sm-2">
-												<input id="cell_phone" name="cell_phone" type="text" placeholder="" class="form-control">
+												<input id="op_email" name="op_email" type="text" placeholder="" class="form-control">
+											</div>
+											<label class="col-sm-2 control-label" for="op_phone">Cell Phone:</label>
+											<div class="col-sm-2">
+												<input id="op_phone" name="op_phone" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
                   <hr>
                       <div class="form-group">
                     <div class="row">
-                      <label class="col-sm-2 control-label" for="contact_person">Contact Person(Finance):</label>
+                      <label class="col-sm-2 control-label" for="finance_contact">Contact Person(Finance):</label>
                       <div class="col-sm-2">
-                        <input id="contact_person_finance" name="contact_person" type="text" placeholder="" class="form-control">
+                        <input id="finance_contact" name="finance_contact" type="text" placeholder="" class="form-control">
                       </div>
-                      <label class="col-sm-2 control-label" for="job_title">Job Title:</label>
+                      <label class="col-sm-2 control-label" for="finance_job_title">Job Title:</label>
                       <div class="col-sm-2">
-                        <input id="job_title_finance" name="job_title" type="text" placeholder="" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="row">
-                      <label class="col-sm-2 control-label" for="business_phone">Business Phone:</label>
-                      <div class="col-sm-2">
-                        <input id="business_phone_finance" name="business_phone" type="text" placeholder="" class="form-control">
+                        <input id="finance_job_title" name="finance_job_title" type="text" placeholder="" class="form-control">
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <div class="row">
-                      <label class="col-sm-2 control-label" for="email">E-mail:</label>
+                      <label class="col-sm-2 control-label" for="finance_business_phone">Business Phone:</label>
                       <div class="col-sm-2">
-                        <input id="email_finance" name="email" type="text" placeholder="" class="form-control">
-                      </div>
-                      <label class="col-sm-2 control-label" for="cell_phone">Cell Phone:</label>
-                      <div class="col-sm-2">
-                        <input id="cell_phone_finance" name="cell_phone" type="text" placeholder="" class="form-control">
+                        <input id="finance_business_phone" name="finance_business_phone" type="text" placeholder="" class="form-control">
                       </div>
                     </div>
                   </div>
-									<div class="form-group">
-										<div class="row">
-											<label class="col-sm-2 control-label" for="additional_customer_info">Additional Customer Information:</label>
-											<div class="col-sm-4">
-												<textarea class="form-control" id="special_instructions" name="special_instructions"></textarea>
-											</div>
-										</div>
-									</div>
 
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-sm-2 control-label" for="finance_email">E-mail:</label>
+                      <div class="col-sm-2">
+                        <input id="finance_email" name="finance_email" type="text" placeholder="" class="form-control">
+                      </div>
+                      <label class="col-sm-2 control-label" for="finance_phone">Cell Phone:</label>
+                      <div class="col-sm-2">
+                        <input id="finance_phone" name="finance_phone" type="text" placeholder="" class="form-control">
+                      </div>
+                    </div>
+                  </div>
 									<hr>
 
 									<h4 class="text-primary">Account Information:</h4>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="customer_id_numbers">Customer ID Number(s):</label>
+											<label class="col-sm-2 control-label" for="client_id_number">Client ID Number(s):</label>
 											<div class="col-sm-2">
-												<input id="customer_id_numbers" name="customer_id_numbers" type="text" placeholder="" class="form-control">
+												<input id="client_id_number" name="client_id_number" type="text" placeholder="" class="form-control">
 											</div>
 											<label class="col-sm-2 control-label" for="credit_period">Credit Period:</label>
 											<div class="col-sm-2">
@@ -204,45 +194,45 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="name_ref">Name:</label>
+											<label class="col-sm-2 control-label" for="reference_name">Name:</label>
 											<div class="col-sm-2">
-												<input id="name_ref" name="name_ref" type="text" placeholder="" class="form-control">
+												<input id="reference_name" name="reference_name" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="phone_ref">Phone:</label>
+											<label class="col-sm-2 control-label" for="reference_phone">Phone:</label>
 											<div class="col-sm-2">
-												<input id="phone_ref" name="phone_ref" type="text" placeholder="" class="form-control">
+												<input id="reference_phone" name="reference_phone" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="other_notes">Other Notes:</label>
+											<label class="col-sm-2 control-label" for="notes">Other Notes:</label>
 											<div class="col-sm-4">
-												<textarea class="form-control" id="other_notes" name="other_notes"></textarea>
+												<textarea class="form-control" id="notes" name="notes"></textarea>
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="account_issued_by">Account Issued By (Sales Man):</label>
+											<label class="col-sm-2 control-label" for="issued_by">Account Issued By (Sales Man):</label>
 											<div class="col-sm-2">
-												<input id="account_issued_by" name="account_issued_by" type="text" placeholder="" class="form-control">
+												<input id="issued_by" name="issued_by" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="account_authorise_by">Account Authorised By:</label>
+											<label class="col-sm-2 control-label" for="authorized_by">Account Authorised By:</label>
 											<div class="col-sm-2">
-												<input id="account_authorise_by" name="account_authorise_by" type="text" placeholder="" class="form-control">
+												<input id="authorized_by" name="authorized_by" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>

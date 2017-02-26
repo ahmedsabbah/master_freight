@@ -19,24 +19,28 @@
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                              <div class="col-sm-2">
-                                <input id="client_name" name="client_name" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="client">Client</label>
+															<div class="col-sm-2">
+																<select class=" form-control" name="client">
+																	{% for client in clients %}
+																	<option value="{{ client.id }}">{{ client.client_name }}</option>
+																	{% endfor %}
+																</select>
+																<!-- <input id="client_name" name="client_name" type="text" placeholder="" class="form-control"> -->
+															</div>
+														</div>
+													</div>
 
 													<hr/>
-
 													<h4 class="text-primary">Details:</h4>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
                               <div class="col-sm-2">
-                                <input id="company_name" name="company_name" type="text" placeholder="" class="form-control">
+                                <input disabled id="company_name" name="company_name" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -46,7 +50,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
                               <div class="col-sm-2">
-                                <input id="contact" name="contact" type="text" placeholder="" class="form-control">
+                                <input disabled id="contact" name="contact" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -55,7 +59,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
                               <div class="col-sm-2">
-                                <input id="phone" name="phone" type="text" placeholder="" class="form-control">
+                                <input disabled id="phone" name="phone" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -64,16 +68,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
                               <div class="col-sm-2">
-                                <input id="email" name="email" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2">
-                                <input id="extra_info" name="extra_info" type="text" placeholder="" class="form-control">
+                                <input disabled id="email" name="email" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -206,24 +201,6 @@
                               <label class="col-sm-2 control-label" for="packing">Packing</label>
                               <div class="col-sm-2">
                                 <input id="packing" name="packing" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2">
-                                <input id="dimensions" name="dimensions" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="any">Any</label>
-                              <div class="col-sm-2">
-                                <input id="any" name="any" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>

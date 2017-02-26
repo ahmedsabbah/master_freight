@@ -1,128 +1,5 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-{% load static %}
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Dashboard</title>
-<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
-<script src="{% static "js/bootstrap.min.js" %}"></script>
-
-<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-<link href="{% static "css/styles.css" %}" rel="stylesheet">
-<link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylsheet">
-<script src="{% static "js/lumino.glyphs.js" %}"></script>
-
-<!--[if lt IE 9]>
-<script src="js/html5shiv.js"></script>
-<script src="js/respond.min.js"></script>
-<![endif]-->
-
-</head>
-
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/admin/"><span>Admin </span>Dashboard</a>
-				<ul class="user-menu">
-					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="/settings/"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="/logout/"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-
-		</div><!-- /.container-fluid -->
-	</nav>
-
-	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<ul class="nav menu">
-			<li><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Work Space</a></li>
-			<li><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
-			<li><a href="/admin/employees/"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Employees Management</a></li>
-			<li><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
-			<li class="parent active">
-				<a data-toggle="expand" href="#sub-item-1">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Rate Request
-				</a>
-				<ul class="children expand" id="sub-item-1">
-					<li>
-						<a class="" href="/rate_request/aif/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Air Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/lcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/fcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
-						</a>
-					</li>
-					<li>
-						<a class="" href="/rate_request/sales/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-2">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Quotation
-				</a>
-				<ul class="children collapse" id="sub-item-2">
-					<li>
-						<a class="" href="/quotation/aif/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations AIR
-						</a>
-					</li>
-					<li>
-						<a class="" href="/quotation/fcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations FCL
-						</a>
-					</li>
-					<li>
-						<a class="" href="/quotation/lcl/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Quotations LCL
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-3">
-					<span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
-				</a>
-				<ul class="children collapse" id="sub-item-3">
-					<li>
-						<a class="" href="/offer/air/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
-						</a>
-					</li>
-					<li>
-						<a class="" href="/offer/sea/new/">
-							<svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
-						</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-
-	</div><!--/.sidebar-->
-
+{% extends './base.html' %}
+{% block content %}
 			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 				<br/>
 					<div class="row">
@@ -141,7 +18,7 @@
                           <input type="hidden" name="type" value="LCL">
              <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="company_name">Company Name:</label>  
+            <label class="col-sm-2 control-label" for="company_name">Company Name:</label>
             <div class="col-sm-2">
               <input id="company_name" name="company_name" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -150,7 +27,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="business_type">Business Type:</label>  
+            <label class="col-sm-2 control-label" for="business_type">Business Type:</label>
             <div class="col-sm-2">
               <select id="business_type" name="business_type" class="form-control">
               <option value="1">CORP</option>
@@ -166,7 +43,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="business_type_documentation">Business Type Documentation:</label>  
+            <label class="col-sm-2 control-label" for="business_type_documentation">Business Type Documentation:</label>
             <div class="col-sm-2">
               <input id="business_type_documentation" name="business_type_documentation" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -175,7 +52,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="main_office_address">Main Office Address:</label>  
+            <label class="col-sm-2 control-label" for="main_office_address">Main Office Address:</label>
             <div class="col-sm-2">
               <input id="main_office_address" name="main_office_address" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -184,7 +61,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="city">City:</label>  
+            <label class="col-sm-2 control-label" for="city">City:</label>
             <div class="col-sm-2">
               <input id="city" name="city" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -193,7 +70,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="state">State:</label>  
+            <label class="col-sm-2 control-label" for="state">State:</label>
             <div class="col-sm-2">
               <input id="state" name="state" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -203,7 +80,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="country">Country:</label>  
+            <label class="col-sm-2 control-label" for="country">Country:</label>
             <div class="col-sm-2">
               <input id="country" name="country" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -212,7 +89,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="zip_code">Zip Code:</label>  
+            <label class="col-sm-2 control-label" for="zip_code">Zip Code:</label>
             <div class="col-sm-2">
               <input id="zip_code" name="zip_code" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -221,7 +98,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="mailing_address">Mailing Address:</label>  
+            <label class="col-sm-2 control-label" for="mailing_address">Mailing Address:</label>
             <div class="col-sm-4">
               <textarea id="mailing_address" name="mailing_address" type="text" placeholder="Please complete this section if your mailing address differs from the main office address." class="form-control"></textarea>
             </div>
@@ -230,7 +107,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="key_contact">Key Contact:</label>  
+            <label class="col-sm-2 control-label" for="key_contact">Key Contact:</label>
             <div class="col-sm-2">
               <input id="key_contact" name="key_contact" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -239,7 +116,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="position">Position:</label>  
+            <label class="col-sm-2 control-label" for="position">Position:</label>
             <div class="col-sm-2">
               <input id="position" name="position" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -248,7 +125,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="telephone">Telephone:</label>  
+            <label class="col-sm-2 control-label" for="telephone">Telephone:</label>
             <div class="col-sm-2">
               <input id="telephone" name="telephone" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -257,7 +134,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="fax">Fax:</label>  
+            <label class="col-sm-2 control-label" for="fax">Fax:</label>
             <div class="col-sm-2">
               <input id="fax" name="fax" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -266,7 +143,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="after_hours">After Hours:</label>  
+            <label class="col-sm-2 control-label" for="after_hours">After Hours:</label>
             <div class="col-sm-2">
               <input id="after_hours" name="after_hours" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -275,7 +152,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="email">Email:</label>  
+            <label class="col-sm-2 control-label" for="email">Email:</label>
             <div class="col-sm-2">
               <input id="email" name="email" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -284,7 +161,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="website">Website:</label>  
+            <label class="col-sm-2 control-label" for="website">Website:</label>
             <div class="col-sm-2">
               <input id="website" name="website" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -293,7 +170,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="additional_locations">Additional Locations/Branch Offices:</label>  
+            <label class="col-sm-2 control-label" for="additional_locations">Additional Locations/Branch Offices:</label>
             <div class="col-sm-2">
               <input id="additional_locations" name="additional_locations" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -302,7 +179,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="year_business_started">Year business was started:</label>  
+            <label class="col-sm-2 control-label" for="year_business_started">Year business was started:</label>
             <div class="col-sm-2">
               <input id="year_business_started" name="year_business_started" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -311,18 +188,18 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="number_of_employees">Number of Employees:</label>  
+            <label class="col-sm-2 control-label" for="number_of_employees">Number of Employees:</label>
             <div class="col-sm-2">
               <input id="number_of_employees" name="number_of_employees" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
           </div>
         </div>
-        
+
         <h3 class="text-primary">Banking Information</h3>
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="bank_name">Bank Name:</label>  
+            <label class="col-sm-2 control-label" for="bank_name">Bank Name:</label>
             <div class="col-sm-2">
               <input id="bank_name" name="bank_name" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -331,7 +208,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="address">Address:</label>  
+            <label class="col-sm-2 control-label" for="address">Address:</label>
             <div class="col-sm-2">
               <input id="address" name="address" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -340,7 +217,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="city_b">City:</label>  
+            <label class="col-sm-2 control-label" for="city_b">City:</label>
             <div class="col-sm-2">
               <input id="city_b" name="city_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -349,7 +226,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="state_b">State:</label>  
+            <label class="col-sm-2 control-label" for="state_b">State:</label>
             <div class="col-sm-2">
               <input id="state_b" name="state_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -359,7 +236,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="country_b">Country:</label>  
+            <label class="col-sm-2 control-label" for="country_b">Country:</label>
             <div class="col-sm-2">
               <input id="country_b" name="country_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -368,7 +245,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="contact_b">Contact:</label>  
+            <label class="col-sm-2 control-label" for="contact_b">Contact:</label>
             <div class="col-sm-2">
               <input id="contact_b" name="contact_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -377,7 +254,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="zip_code_b">Zip Code:</label>  
+            <label class="col-sm-2 control-label" for="zip_code_b">Zip Code:</label>
             <div class="col-sm-2">
               <input id="zip_code_b" name="zip_code_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -386,7 +263,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="telephone_b">Telephone:</label>  
+            <label class="col-sm-2 control-label" for="telephone_b">Telephone:</label>
             <div class="col-sm-2">
               <input id="telephone_b" name="telephone_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -395,7 +272,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="fax_b">Fax:</label>  
+            <label class="col-sm-2 control-label" for="fax_b">Fax:</label>
             <div class="col-sm-2">
               <input id="fax_b" name="fax_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -404,7 +281,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="account_number_b">Account Number:</label>  
+            <label class="col-sm-2 control-label" for="account_number_b">Account Number:</label>
             <div class="col-sm-2">
               <input id="account_number_b" name="account_number_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -413,7 +290,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="routing_b">Routing:</label>  
+            <label class="col-sm-2 control-label" for="routing_b">Routing:</label>
             <div class="col-sm-2">
               <input id="routing_b" name="routing_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -422,7 +299,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="account_currency_b">Account Currency:</label>  
+            <label class="col-sm-2 control-label" for="account_currency_b">Account Currency:</label>
             <div class="col-sm-2">
               <input id="account_currency_b" name="account_currency_b" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -430,10 +307,10 @@
         </div>
 
         <h3 class="text-primary">Accounting Contact</h3>
-          
+
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="contact_person_billing">Contact Person for Billing:</label>  
+            <label class="col-sm-2 control-label" for="contact_person_billing">Contact Person for Billing:</label>
             <div class="col-sm-2">
               <input id="contact_person_billing" name="contact_person_billing" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -442,7 +319,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="contact_email_billing">Contact Email for Billing:</label>  
+            <label class="col-sm-2 control-label" for="contact_email_billing">Contact Email for Billing:</label>
             <div class="col-sm-2">
               <input id="contact_email_billing" name="contact_email_billing" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -451,7 +328,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="phone_c">Phone:</label>  
+            <label class="col-sm-2 control-label" for="phone_c">Phone:</label>
             <div class="col-sm-2">
               <input id="phone_c" name="phone_c" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -460,7 +337,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="fax_c">Fax:</label>  
+            <label class="col-sm-2 control-label" for="fax_c">Fax:</label>
             <div class="col-sm-2">
               <input id="fax_c" name="fax_c" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -469,7 +346,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="mobile_phone_c">Mobile Phone:</label>  
+            <label class="col-sm-2 control-label" for="mobile_phone_c">Mobile Phone:</label>
             <div class="col-sm-2">
               <input id="mobile_phone_c" name="mobile_phone_c" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -478,7 +355,7 @@
 
         <div class="form-group">
           <div class="row">
-            <label class="col-sm-2 control-label" for="billing_address_c">Billing Address:</label>  
+            <label class="col-sm-2 control-label" for="billing_address_c">Billing Address:</label>
             <div class="col-sm-2">
               <input id="billing_address_c" name="billing_address_c" type="text" placeholder="Click here to enter text." class="form-control">
             </div>
@@ -495,9 +372,4 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-</body>
-
-</html>
+{% endblock %}
