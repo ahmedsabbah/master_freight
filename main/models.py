@@ -13,12 +13,39 @@ class Todo(models.Model):
         return self.text
 
 class Client(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
-    company_name = models.CharField(max_length=200, blank=True, null=True)
-    contact = models.TextField(blank=True, null=True)
-    phone = models.CharField(max_length=100, blank=True, null=True)
-    email = models.CharField(max_length=100, blank=True, null=True)
-    extra_information = models.TextField(blank=True, null=True)
+    TYPE_CHOICES = (
+        ('IN', 'Individual'),
+        ('CO', 'Corporation or Organization'),
+        ('BA', 'Business Address'),
+        ('RS', 'Residence'),
+    )
+
+    client_name = models.CharField(max_length=200, blank=True, null=True)
+    client_type = models.CharField(max_length=2, choices=TYPE_CHOICES)
+    client_address = models.CharField(max_length=200, blank=True, null=True)
+    commodity = models.CharField(max_length=200, blank=True, null=True)
+    business_phone = models.CharField(max_length=100, blank=True, null=True)
+    alt_phone = models.CharField(max_length=100, blank=True, null=True)
+    fax = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(blank=False, unique=True)
+    op_contact = models.CharField(max_length=200, blank=True, null=True)
+    op_job_title = models.CharField(max_length=200, blank=True, null=True)
+    op_business_phone = models.CharField(max_length=200, blank=True, null=True)
+    op_email = models.CharField(max_length=200, blank=True, null=True)
+    op_phone = models.CharField(max_length=200, blank=True, null=True)
+    finance_contact = models.CharField(max_length=200, blank=True, null=True)
+    finance_job_title = models.CharField(max_length=200, blank=True, null=True)
+    finance_business_phone = models.CharField(max_length=200, blank=True, null=True)
+    finance_email = models.CharField(max_length=200, blank=True, null=True)
+    finance_phone = models.CharField(max_length=200, blank=True, null=True)
+    client_id_number = models.CharField(max_length=100, blank=True, null=True)
+    credit_period = models.CharField(max_length=100, blank=True, null=True)
+    credit_limit = models.CharField(max_length=100, blank=True, null=True)
+    reference_name = models.CharField(max_length=100, blank=True, null=True)
+    reference_phone = models.CharField(max_length=100, blank=True, null=True)
+    notes = models.TextField(max_length=250, blank=True, null=True)
+    issued_by = models.CharField(max_length=100, blank=True, null=True)
+    authorized_by = models.CharField(max_length=100, blank=True, null=True)
     class Meta:
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
