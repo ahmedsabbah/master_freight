@@ -58,10 +58,11 @@ def getAdminEmployees(request):
         role = request.POST.get('role', None)
         first_name = request.POST.get('first_name', None)
         last_name = request.POST.get('last_name', None)
+        password = request.POST.get('password', None)
 
-        print email,role, first_name, last_name
-        if email and role and first_name and last_name:
+        if email and role and first_name and last_name and role:
             user = User(email=email, role=role, first_name=first_name, last_name=last_name)
+            user.set_password(password)
             user.save()
         # else:
         #     response = HttpResponse(content_type='application/json')
