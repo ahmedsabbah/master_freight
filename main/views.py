@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.core import serializers
 from django.http.response import HttpResponse ,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import render_to_string
 
 def main(request):
     if not request.user.is_authenticated():
@@ -474,6 +475,21 @@ def postOffer(request):
 
         offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
         offer.save()
+
+        msg_plain = render_to_string('./offerEmail.txt', {'offer': offer})
+        msg_html = render_to_string('./offerEmail.html', {'offer': offer})
+        print offer.quotation.rate_request.client.email
+        send_mail(
+            "Master Freight Offer",
+            msg_plain,
+            request.user.email,
+            [offer.quotation.rate_request.client.email,
+            offer.quotation.rate_request.client.op_email,
+            offer.quotation.rate_request.client.finance_email],
+            html_message=msg_html,
+            fail_silently=False,
+        )
+
     else:
         shipping_line = request.POST.get('shipping_line', None)
         ocean_freight = request.POST.get('ocean_freight', None)
@@ -494,6 +510,20 @@ def postOffer(request):
 
         offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
         offer.save()
+
+        msg_plain = render_to_string('./offerSeaEmail.txt', {'offer': offer})
+        msg_html = render_to_string('./offerSeaEmail.html', {'offer': offer})
+        print offer.quotation.rate_request.client.email
+        send_mail(
+            "Master Freight Offer",
+            msg_plain,
+            request.user.email,
+            [offer.quotation.rate_request.client.email,
+            offer.quotation.rate_request.client.op_email,
+            offer.quotation.rate_request.client.finance_email],
+            html_message=msg_html,
+            fail_silently=False,
+        )
 
     if request.user.role == 'SA':
         return redirect('/sales/tasks/')

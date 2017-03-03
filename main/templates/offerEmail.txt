@@ -1,0 +1,65 @@
+
+    Master Freight Proposed Offer
+
+     Client Name:
+     {{offer.quotation.rate_request.client.client_name}}
+
+
+     Client Company Name:
+     {{offer.quotation.rate_request.client.client_name}}
+
+
+     AIRFREIGHT/KG:
+     {{offer.air_quotation.air_freight_kg}}
+
+
+     FUEL SUERCHARGE/KG:
+      {{offer.air_quotation.fuel_sur_charge_kg}}
+
+
+     SECURITY FEES/KG:
+      {{offer.air_quotation.security_fees_kg}}
+
+
+     EXW - CHARGES:
+      {{offer.air_quotation.exw_charges}}
+
+
+     SCREENING FEES:
+      {{offer.air_quotation.screening_fees}}
+
+
+     STORAGE:
+      {{offer.air_quotation.storage}}
+
+
+     INLAND:
+      {{offer.air_quotation.inland}}
+
+
+     PACKING:
+      {{offer.air_quotation.packing}}
+
+
+     TAXES and DUTIES:
+      {{offer.air_quotation.taxes_duties}}
+
+
+     HANDLING FEES:
+      {{offer.air_quotation.handling_fees}}
+
+
+     OFFICIAL RECEIPTS:
+     {{offer.air_quotation.official_receipts}}
+
+
+     P SHARE:
+    {{offer.air_quotation.p_share}}
+
+
+     OTHER NOTES:
+     {{offer.air_quotation.other_notes}}
+
+
+     OFFER VALIDITY:
+     {{offer.air_quotation.offer_validity}}

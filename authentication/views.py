@@ -140,6 +140,6 @@ def removeUser(request, pk):
     try:
         user = User.objects.get(pk=pk)
         user.delete()
-        return redirect('/users/')
+        return redirect('/admin/employees')
     except User.DoesNotExist:
-        return redirect('/users/')
+        return redirect('/admin/employees')

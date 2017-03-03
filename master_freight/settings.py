@@ -113,12 +113,17 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.privateemail.com'
-EMAIL_PORT=465
-EMAIL_HOST_USER='email@email.com'
-EMAIL_HOST_PASSWORD='password'
-EMAIL_USE_SSL=True
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+
+# EMAIL_USE_TLS = True
+# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT=465
+# EMAIL_HOST_USER='email@email.com'
+# EMAIL_HOST_PASSWORD='password'
+# EMAIL_USE_SSL=True
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)

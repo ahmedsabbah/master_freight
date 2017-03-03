@@ -1,0 +1,61 @@
+
+  Master Freight Proposed Offer
+
+     Client Name:
+     {{offer.quotation.rate_request.client.client_name}}
+
+
+     Client Company Name:
+     {{offer.quotation.rate_request.client.client_name}}
+
+
+     SHIPPING LINE:
+     {{offer.sea_quotation.shipping_line}}
+
+
+     T.H.C:
+      {{offer.sea_quotation.thc}}
+
+
+     TRANSPORTATION:
+      {{offer.sea_quotation.transporation}}
+
+
+     TRANSFER:
+      {{offer.sea_quotation.transfer}}
+
+
+     CLEARANCE:
+      {{offer.sea_quotation.clearance}}
+
+
+     B/L FEES:
+      {{offer.sea_quotation.bl_fees}}
+
+
+     TELEX RELEASE:
+      {{offer.sea_quotation.telex_release}}
+
+
+     FREE TIME AT DESTINATION:
+      {{offer.sea_quotation.free_time_at_destination}}
+
+
+     VESSELS:
+      {{offer.sea_quotation.vessels}}
+
+
+     PAYMENT CREDIT:
+      {{offer.sea_quotation.payment_credit}}
+
+
+     OFFICIAL RECEIPTS:
+     {{offer.sea_quotation.official_receipts}}
+
+
+     OTHER NOTES:
+     {{offer.sea_quotation.other_notes}}
+
+  
+     OFFER VALIDITY:
+     {{offer.sea_quotation.offer_validity}}
