@@ -21,6 +21,7 @@ class Client(models.Model):
     )
 
     client_name = models.CharField(max_length=200, blank=True, null=True)
+    company_name = models.CharField(max_length=200, blank=True, null=True)
     client_type = models.CharField(max_length=2, choices=TYPE_CHOICES, default='IN')
     client_address = models.CharField(max_length=200, blank=True, null=True)
     commodity = models.CharField(max_length=200, blank=True, null=True)
@@ -51,6 +52,23 @@ class Client(models.Model):
         verbose_name_plural = 'Clients'
     def __str__(self):
         return self.name
+class Trucker(models.Model):
+    company_name = models.CharField(max_length=200, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    op_name = models.CharField(max_length=200, blank=True, null=True)
+    op_phone = models.CharField(max_length=200, blank=True, null=True)
+    op_email = models.CharField(max_length=200, blank=True, null=True)
+    acc_name = models.CharField(max_length=200, blank=True, null=True)
+    acc_phone = models.CharField(max_length=200, blank=True, null=True)
+    acc_email = models.CharField(max_length=200, blank=True, null=True)
+    payment_terms = models.CharField(max_length=200, blank=True, null=True)
+    special_requirements = models.CharField(max_length=200, blank=True, null=True)
+    other_notes = models.CharField(max_length=200, blank=True, null=True)
+    class Meta:
+        verbose_name = 'Trucker'
+        verbose_name_plural = 'Truckers'
+    def __str__(self):
+        return self.company_name
 
 class Destination(models.Model):
     port_of_loading = models.CharField(max_length=200, blank=True, null=True)
@@ -96,6 +114,7 @@ class IMOClass(models.Model):
     non_hazardous = models.CharField(max_length=200, blank=True, null=True)
 
 class ShipmentTerm(models.Model):
+    title =  models.CharField(max_length=200, blank=True, null=True)
     ex_work = models.CharField(max_length=200, blank=True, null=True)
     fas = models.CharField(max_length=200, blank=True, null=True)
     fob = models.CharField(max_length=200, blank=True, null=True)
@@ -286,7 +305,7 @@ class AirQuotation(models.Model):
     exw_charges = models.CharField(max_length=200, blank=True, null=True)
     screening_fees = models.CharField(max_length=200, blank=True, null=True)
     storage = models.CharField(max_length=200, blank=True, null=True)
-    inland = models.CharField(max_length=200, blank=True, null=True)
+    inland = models.ForeignKey('main.Trucker', related_name='quotations', blank=True, null=True)
     packing = models.CharField(max_length=200, blank=True, null=True)
     taxes_duties = models.CharField(max_length=200, blank=True, null=True)
     handling_fees = models.CharField(max_length=200, blank=True, null=True)

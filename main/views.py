@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from models import Client, Destination, FinalDeliveryDestination, AIFCargoSales, FCLCargoSales, LCLCargoSales, ShippingLine, IMOClass, ShipmentTerm, RateRequest, AIFCargoOperations, FCLCargoOperations, LCLCargoOperations, AIFQuotation, FCLQuotation, LCLQuotation, ExtraNotes, Quotation, AirQuotation, SeaQuotation, Offer, Todo
+from models import *
 from authentication.models import User
 from django.core.mail import send_mail
 from django.core import serializers
@@ -181,6 +181,79 @@ def getClient(request, pk):
     client = Client.objects.get(pk=pk)
     return render(request, 'client_account_view.html', {'client': client})
 
+
+####### TRUCKER ########
+
+def createTrucker(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method == 'POST':
+        company_name = request.POST.get('company_name', None)
+        address = request.POST.get('address', None)
+        op_name = request.POST.get('op_name', None)
+        op_phone = request.POST.get('op_phone', None)
+        op_email = request.POST.get('op_email', None)
+        acc_name = request.POST.get('acc_name', None)
+        acc_phone = request.POST.get('acc_phone', None)
+        acc_email = request.POST.get('acc_email', None)
+        payment_terms = request.POST.get('payment_terms', None)
+        special_requirements = request.POST.get('special_requirements', None)
+        other_notes = request.POST.get('other_notes', None)
+
+        trucker = Trucker(company_name=company_name, address=address,
+            op_name=op_name, op_phone=op_phone,
+            op_email=op_email, acc_name=acc_name, acc_phone=acc_phone,
+            acc_email=acc_email, payment_terms=payment_terms,
+            special_requirements= special_requirements, other_notes=other_notes)
+        trucker.save()
+    return render(request, 'trucker_add.html')
+
+def listTrucker(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    truckers = Trucker.objects.all()
+    return render(request, 'trucker_list.html', {'truckers': truckers})
+
+
+def getTrucker(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    trucker = Trucker.objects.get(pk=pk)
+    return render(request, 'trucker_detail.html', {'trucker': trucker})
+
+####### Shipment Term ########
+
+def createShipmentTerm(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.method == 'POST':
+        title = request.POST.get('title', None)
+        ex_work = request.POST.get('ex_work', None)
+        fas = request.POST.get('fas', None)
+        fob = request.POST.get('fob', None)
+        cf = request.POST.get('cnf', None)
+        cif = request.POST.get('cif', None)
+        others = request.POST.get('others', None)
+        shipment_term = ShipmentTerm(title=title,ex_work=ex_work, fas=fas, fob=fob, cf=cf, cif=cif, others=others)
+        shipment_term.save()
+
+    return render(request, 'shipment_term_add.html')
+
+def listShipmentTerm(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    shipment_terms = ShipmentTerm.objects.all()
+    return render(request, 'shipment_term_list.html', {'shipment_terms': shipment_terms})
+
+
+def getShipmentTerm(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    shipment_term = ShipmentTerm.objects.get(pk=pk)
+    return render(request, 'shipment_term_detail.html', {'shipment_term': shipment_term})
+
 ####### Rate Request #########
 
 def getAIFRateRequest(request):
@@ -190,7 +263,8 @@ def getAIFRateRequest(request):
         return render(request, 'sales_rate_request_aif.html')
     elif request.user.role == 'AD':
         clients = Client.objects.all()
-        return render(request, 'admin_rate_request_aif.html', {'clients': clients})
+        shipment_terms = ShipmentTerm.objects.all()
+        return render(request, 'admin_rate_request_aif.html', {'clients': clients, 'shipment_terms': shipment_terms})
     else:
         return redirect('/')
 
@@ -201,7 +275,8 @@ def getFCLRateRequest(request):
         return render(request, 'sales_rate_request_fcl.html')
     elif request.user.role == 'AD':
         clients = Client.objects.all()
-        return render(request, 'admin_rate_request_fcl.html',{'clients': clients})
+        shipment_terms = ShipmentTerm.objects.all()
+        return render(request, 'admin_rate_request_fcl.html',{'clients': clients, 'shipment_terms': shipment_terms})
     else:
         return redirect('/')
 
@@ -212,7 +287,8 @@ def getLCLRateRequest(request):
         return render(request, 'sales_rate_request_lcl.html')
     elif request.user.role == 'AD':
         clients = Client.objects.all()
-        return render(request, 'admin_rate_request_lcl.html',{'clients': clients})
+        shipment_terms = ShipmentTerm.objects.all()
+        return render(request, 'admin_rate_request_lcl.html',{'clients': clients, 'shipment_terms': shipment_terms})
     else:
         return redirect('/')
 
@@ -227,6 +303,7 @@ def postRateRequest(request):
     sales_person = request.user
     type = request.POST.get('type', None)
     client = Client.objects.get(pk=request.POST.get('client', None))
+    shipment_term = ShipmentTerm.objects.get(pk=request.POST.get('shipment_term', None))
     # name = request.POST.get('client_name', None)
     # company_name = request.POST.get('company_name', None)
     # contact = request.POST.get('contact', None)
@@ -256,14 +333,6 @@ def postRateRequest(request):
     imo_class = IMOClass(hazardous=hazardous, non_hazardous=non_hazardous)
     imo_class.save()
 
-    ex_work = request.POST.get('ex_work', None)
-    fas = request.POST.get('fas', None)
-    fob = request.POST.get('fob', None)
-    cf = request.POST.get('cnf', None)
-    cif = request.POST.get('cif', None)
-    others = request.POST.get('others', None)
-    shipment_term = ShipmentTerm(ex_work=ex_work, fas=fas, fob=fob, cf=cf, cif=cif, others=others)
-    shipment_term.save()
 
     payment_term = request.POST.get('payment_term', None)
     special_instructions = request.POST.get('special_instructions', None)

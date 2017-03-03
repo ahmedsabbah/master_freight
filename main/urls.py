@@ -21,6 +21,18 @@ urlpatterns = [
     url(r'^client/list/$', views.listClient, name='listClient'),
     url(r'^client/(?P<pk>[0-9]+)/view/$', views.getClient, name='getClient'),
 
+    url(r'^trucker/new/$', views.createTrucker, name='createTrucker'),
+    url(r'^trucker/list/$', views.listTrucker, name='listTrucker'),
+    url(r'^trucker/(?P<pk>[0-9]+)/view/$', views.getTrucker, name='getTrucker'),
+
+    url(r'^shipment_term/new/$', views.createShipmentTerm, name='createShipmentTerm'),
+    url(r'^shipment_term/list/$', views.listShipmentTerm, name='listTShipmentTerm'),
+    url(r'^shipment_term/(?P<pk>[0-9]+)/view/$', views.getShipmentTerm, name='getShipmentTerm'),
+    #
+    # url(r'^shipping_line/new/$', views.createShippingLine, name='createShippingLine'),
+    # url(r'^shipping_line/list/$', views.listShippingLine, name='listShippingLine'),
+    # url(r'^shipping_line/(?P<pk>[0-9]+)/view/$', views.getShippingLine, name='getShippingLine'),
+
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
     url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),
     url(r'^rate_request/lcl/new/$', views.getLCLRateRequest, name='getLCLRateRequest'),

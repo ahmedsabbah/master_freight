@@ -241,59 +241,19 @@
 
                           <h4 class="text-primary">Shipment Term:</h4>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="ex_work">Ex-work</label>
-                              <div class="col-sm-2">
-                                <input id="ex_work" name="ex_work" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="fas">F.A.S</label>
-                              <div class="col-sm-2">
-                                <input id="fas" name="fas" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="fob">F.O.B</label>
-                              <div class="col-sm-2">
-                                <input id="fob" name="fob" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="cnf">C&F</label>
-                              <div class="col-sm-2">
-                                <input id="cnf" name="cnf" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="cif">C.I.F</label>
-                              <div class="col-sm-2">
-                                <input id="cif" name="cif" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="others">Others</label>
-                              <div class="col-sm-2">
-                                <input id="others" name="others" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="shipment_term">Term</label>
+															<div class="col-sm-2">
+																<select class=" form-control" name="shipment_term">
+																	{% for term in shipment_terms %}
+																	<option value="{{ term.id }}">{{ term.title }}</option>
+																	{% endfor %}
+																</select>
+																<!-- <input id="client_name" name="client_name" type="text" placeholder="" class="form-control"> -->
+															</div>
+														</div>
+													</div>
 
                           <hr/>
 
