@@ -15,12 +15,18 @@
   <link href="{% static "css/datepicker3.css" %}" rel="stylesheet">
   <link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylsheet">
+  <link rel="stylesheet" href="https://unpkg.com/simplebar@2.0.3/umd/simplebar.css" />
+  <script src="https://unpkg.com/simplebar@2.0.3/umd/simplebar.js"></script>
   <script src="{% static "js/lumino.glyphs.js" %}"></script>
 
   <script src="{% static "js/dataTables.altEditor.free.js" %}"></script>
   {% block extra_styling %}
   {% endblock %}
-
+  <style media="screen">
+  /*[data-simplebar] {
+      overflow: auto !important;
+    }*/
+  </style>
   <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
   <script src="js/respond.min.js"></script>
@@ -53,11 +59,13 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+  <div id="sidebar-collapse" data-simplebar style="height:100%" class="col-sm-3 col-lg-2 sidebar">
     <ul class="nav menu">
       <li {% if request.path == '/admin/' %}class="active"{% endif %}><a href="/admin/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg>Work Space</a></li>
       <li {% if request.path == '/admin/tasks/' %}class="active"{% endif %}><a href="/admin/tasks/"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tasks</a></li>
+      {% if user.role == 'AD'%}
       <li {% if request.path == '/admin/employees/' %}class="active"{% endif %}><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
+      {% endif %}
       <li {% if request.path == '/admin/charts/' %}class="active"{% endif %}><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-1">
@@ -92,15 +100,16 @@
         <svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"></use></svg> Clients <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
         <ul class="children expand" id="sub-item-2">
-
+          {% if user.role == 'AD' or user.role == 'SA'%}
           <li {% if request.path == '/client/new/' %}class="active"{% endif %}>
             <a class="" href="/client/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Client
             </a>
           </li>
+          {% endif %}
           <li {% if request.path == '/client/list/' %}class="active"{% endif %}>
             <a class="" href="/client/list/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Client
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Clients
             </a>
           </li>
 
@@ -111,12 +120,13 @@
         <svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Truckers <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
         <ul class="children expand" id="sub-item-2">
-
+          {% if user.role == 'AD' or user.role == 'SA'%}
           <li {% if request.path == '/trucker/new/' %}class="active"{% endif %}>
             <a class="" href="/trucker/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Trucker
             </a>
           </li>
+          {% endif %}
           <li {% if request.path == '/trucker/list/' %}class="active"{% endif %}>
             <a class="" href="/trucker/list/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Truckers
@@ -130,15 +140,35 @@
         <svg class="glyph stroked dashboard notepad"><use xlink:href="#stroked-notepad"></use></svg> Shipment Term <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
         <ul class="children expand" id="sub-item-2">
-
+          {% if user.role == 'AD'%}
           <li {% if request.path == '/shipment_term/new/' %}class="active"{% endif %}>
             <a class="" href="/shipment_term/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Term
             </a>
           </li>
+          {% endif %}
           <li {% if request.path == '/shipment_term/list/' %}class="active"{% endif %}>
             <a class="" href="/shipment_term/list/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Terms
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="parent">
+        <a data-toggle="expand" href="#sub-item-2">
+        <svg class="glyph stroked dashboard notepad"><use xlink:href="#stroked-notepad"></use></svg> Shipping Line <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
+        </a>
+        <ul class="children expand" id="sub-item-2">
+          {% if user.role == 'AD'%}
+          <li {% if request.path == '/shipping_line/new/' %}class="active"{% endif %}>
+            <a class="" href="/shipping_line/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Line
+            </a>
+          </li>
+          {% endif %}
+          <li {% if request.path == '/shipping_line/list/' %}class="active"{% endif %}>
+            <a class="" href="/shipping_line/list/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Lines
             </a>
           </li>
         </ul>
@@ -182,8 +212,15 @@
     </ul>
 
   </div><!--/.sidebar-->
+  </div>
+
+<div class="col-sm-9 col-lg-10 main" data-simplebar>
+  	<br/>
+	<div class="row" style="padding:0; width:100%">
   {% block content %}
   {% endblock %}
+  </div>
+</div>
 
   {% block extra_script %}
   {% endblock %}

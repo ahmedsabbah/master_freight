@@ -10,18 +10,19 @@ from django.template.loader import render_to_string
 def main(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'SA':
-        return redirect('/sales/')
-    elif request.user.role == 'OP':
-        return redirect('/operations/')
-    elif request.user.role == 'AC':
-        return redirect('/accounting/')
-    elif request.user.role == 'HR':
-        return redirect('/hr/')
-    elif request.user.role == 'AD':
-        return redirect('/admin/')
+    # if request.user.role == 'SA':
+    #     return redirect('/sales/')
+    # elif request.user.role == 'OP':
+    #     return redirect('/operations/')
+    # elif request.user.role == 'AC':
+    #     return redirect('/accounting/')
+    # elif request.user.role == 'HR':
+    #     return redirect('/hr/')
     else:
-        return redirect('/404/')
+        print 'authentic'
+        return redirect('/admin/')
+    # else:
+    #     return redirect('/404/')
 
 def hr(request):
     if not request.user.is_authenticated():
@@ -35,18 +36,18 @@ def hr(request):
 def getAdminWorkspace(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'AD':
-        return redirect('/')
+    # if request.user.role != 'AD':
+    #     return redirect('/')
     return render(request, 'admin_workspace.html')
 
 def getAdminTasks(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role != 'AD':
-        return redirect('/')
-    rate_requests = RateRequest.objects.all().exclude(status='DO')
-    quotations = Quotation.objects.all().exclude(status='DO')
-    offers = Offer.objects.all().exclude(status='DO')
+    # if request.user.role != 'AD':
+    #     return redirect('/')
+    rate_requests = RateRequest.objects.all().exclude(status='D')
+    quotations = Quotation.objects.all().exclude(status='D')
+    offers = Offer.objects.all().exclude(status='D')
     return render(request, 'admin_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
 
 def getAdminEmployees(request):
@@ -126,46 +127,49 @@ def getOperationsTasks(request):
 def createClient(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.method == 'POST':
-        client_name = request.POST.get('client_name', None)
-        client_type = request.POST.get('client_type', None)
-        client_address = request.POST.get('client_address', None)
-        commodity = request.POST.get('commodity', None)
-        business_phone = request.POST.get('business_phone', None)
-        alt_phone = request.POST.get('alt_phone', None)
-        fax = request.POST.get('fax', None)
-        email = request.POST.get('email', None)
-        op_contact = request.POST.get('op_contact', None)
-        op_job_title = request.POST.get('op_job_title', None)
-        op_business_phone = request.POST.get('op_business_phone', None)
-        op_email = request.POST.get('op_email', None)
-        op_phone = request.POST.get('op_phone', None)
-        finance_contact = request.POST.get('finance_contact', None)
-        finance_job_title = request.POST.get('finance_job_title', None)
-        finance_business_phone = request.POST.get('finance_business_phone', None)
-        finance_email = request.POST.get('finance_email', None)
-        finance_phone = request.POST.get('finance_phone', None)
-        client_id_number = request.POST.get('client_id_number', None)
-        credit_period = request.POST.get('credit_period', None)
-        credit_limit = request.POST.get('credit_limit', None)
-        reference_name = request.POST.get('reference_name', None)
-        reference_phone = request.POST.get('reference_phone', None)
-        notes = request.POST.get('notes', None)
-        issued_by = request.POST.get('issued_by', None)
-        authorized_by = request.POST.get('authorized_by', None)
-        client = Client(client_name=client_name, client_type=client_type,
-            client_address=client_address, commodity=commodity,
-            business_phone=business_phone, alt_phone=alt_phone, fax=fax,
-            email=email, op_contact=op_contact, op_job_title= op_job_title,
-            op_business_phone=op_business_phone, op_email=op_email, op_phone=op_phone,
-            finance_contact=finance_contact, finance_job_title=finance_job_title,
-            finance_business_phone=finance_business_phone, finance_email=finance_email,
-            finance_phone=finance_phone, client_id_number=client_id_number,
-            credit_period=credit_period, credit_limit=credit_limit,
-            reference_name=reference_name, reference_phone= reference_phone,
-            notes=notes, issued_by=issued_by, authorized_by=authorized_by)
-        client.save()
-    return render(request, 'client_account.html')
+    if request.user.role == 'AD' or request.user.role == 'SA':
+        if request.method == 'POST':
+            client_name = request.POST.get('client_name', None)
+            client_type = request.POST.get('client_type', None)
+            client_address = request.POST.get('client_address', None)
+            commodity = request.POST.get('commodity', None)
+            business_phone = request.POST.get('business_phone', None)
+            alt_phone = request.POST.get('alt_phone', None)
+            fax = request.POST.get('fax', None)
+            email = request.POST.get('email', None)
+            op_contact = request.POST.get('op_contact', None)
+            op_job_title = request.POST.get('op_job_title', None)
+            op_business_phone = request.POST.get('op_business_phone', None)
+            op_email = request.POST.get('op_email', None)
+            op_phone = request.POST.get('op_phone', None)
+            finance_contact = request.POST.get('finance_contact', None)
+            finance_job_title = request.POST.get('finance_job_title', None)
+            finance_business_phone = request.POST.get('finance_business_phone', None)
+            finance_email = request.POST.get('finance_email', None)
+            finance_phone = request.POST.get('finance_phone', None)
+            client_id_number = request.POST.get('client_id_number', None)
+            credit_period = request.POST.get('credit_period', None)
+            credit_limit = request.POST.get('credit_limit', None)
+            reference_name = request.POST.get('reference_name', None)
+            reference_phone = request.POST.get('reference_phone', None)
+            notes = request.POST.get('notes', None)
+            issued_by = request.POST.get('issued_by', None)
+            authorized_by = request.POST.get('authorized_by', None)
+            client = Client(client_name=client_name, client_type=client_type,
+                client_address=client_address, commodity=commodity,
+                business_phone=business_phone, alt_phone=alt_phone, fax=fax,
+                email=email, op_contact=op_contact, op_job_title= op_job_title,
+                op_business_phone=op_business_phone, op_email=op_email, op_phone=op_phone,
+                finance_contact=finance_contact, finance_job_title=finance_job_title,
+                finance_business_phone=finance_business_phone, finance_email=finance_email,
+                finance_phone=finance_phone, client_id_number=client_id_number,
+                credit_period=credit_period, credit_limit=credit_limit,
+                reference_name=reference_name, reference_phone= reference_phone,
+                notes=notes, issued_by=issued_by, authorized_by=authorized_by)
+            client.save()
+        return render(request, 'client_account.html')
+    else:
+        return redirect('/')
 
 def listClient(request):
     if not request.user.is_authenticated():
@@ -187,26 +191,29 @@ def getClient(request, pk):
 def createTrucker(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.method == 'POST':
-        company_name = request.POST.get('company_name', None)
-        address = request.POST.get('address', None)
-        op_name = request.POST.get('op_name', None)
-        op_phone = request.POST.get('op_phone', None)
-        op_email = request.POST.get('op_email', None)
-        acc_name = request.POST.get('acc_name', None)
-        acc_phone = request.POST.get('acc_phone', None)
-        acc_email = request.POST.get('acc_email', None)
-        payment_terms = request.POST.get('payment_terms', None)
-        special_requirements = request.POST.get('special_requirements', None)
-        other_notes = request.POST.get('other_notes', None)
+    if request.user.role == 'AD' or request.user.role == 'SA':
+        if request.method == 'POST':
+            company_name = request.POST.get('company_name', None)
+            address = request.POST.get('address', None)
+            op_name = request.POST.get('op_name', None)
+            op_phone = request.POST.get('op_phone', None)
+            op_email = request.POST.get('op_email', None)
+            acc_name = request.POST.get('acc_name', None)
+            acc_phone = request.POST.get('acc_phone', None)
+            acc_email = request.POST.get('acc_email', None)
+            payment_terms = request.POST.get('payment_terms', None)
+            special_requirements = request.POST.get('special_requirements', None)
+            other_notes = request.POST.get('other_notes', None)
 
-        trucker = Trucker(company_name=company_name, address=address,
-            op_name=op_name, op_phone=op_phone,
-            op_email=op_email, acc_name=acc_name, acc_phone=acc_phone,
-            acc_email=acc_email, payment_terms=payment_terms,
-            special_requirements= special_requirements, other_notes=other_notes)
-        trucker.save()
-    return render(request, 'trucker_add.html')
+            trucker = Trucker(company_name=company_name, address=address,
+                op_name=op_name, op_phone=op_phone,
+                op_email=op_email, acc_name=acc_name, acc_phone=acc_phone,
+                acc_email=acc_email, payment_terms=payment_terms,
+                special_requirements= special_requirements, other_notes=other_notes)
+            trucker.save()
+        return render(request, 'trucker_add.html')
+    else:
+        return redirect('/')
 
 def listTrucker(request):
     if not request.user.is_authenticated():
@@ -219,8 +226,31 @@ def listTrucker(request):
 def getTrucker(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    trucker = Trucker.objects.get(pk=pk)
+    trucker = ShippingLine.objects.get(pk=pk)
     return render(request, 'trucker_detail.html', {'trucker': trucker})
+
+####### ShippingLine ########
+
+def createShippingLine(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role == 'AD':
+        if request.method == 'POST':
+            name = request.POST.get('name', None)
+
+            shipping_line = ShippingLine(name=name)
+            shipping_line.save()
+
+        return render(request, 'shipping_line_add.html')
+    else:
+        return redirect('/')
+
+def listShippingLine(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    shipping_lines = ShippingLine.objects.all()
+    return render(request, 'shipping_line_list.html', {'shipping_lines': shipping_lines})
 
 ####### Shipment Term ########
 
@@ -259,33 +289,37 @@ def getShipmentTerm(request, pk):
 def getAIFRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'SA':
-        return render(request, 'sales_rate_request_aif.html')
-    elif request.user.role == 'AD':
+    # if request.user.role == 'SA':
+    #     return render(request, 'sales_rate_request_aif.html')
+    if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
         shipment_terms = ShipmentTerm.objects.all()
-        return render(request, 'admin_rate_request_aif.html', {'clients': clients, 'shipment_terms': shipment_terms})
+        shipping_lines = ShippingLine.objects.all()
+        return render(request, 'admin_rate_request_aif.html', {'clients': clients,
+        'shipment_terms': shipment_terms, 'shipping_lines': shipping_lines})
     else:
         return redirect('/')
 
 def getFCLRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'SA':
-        return render(request, 'sales_rate_request_fcl.html')
-    elif request.user.role == 'AD':
+    # if request.user.role == 'SA':
+    #     return render(request, 'sales_rate_request_fcl.html')
+    if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
         shipment_terms = ShipmentTerm.objects.all()
-        return render(request, 'admin_rate_request_fcl.html',{'clients': clients, 'shipment_terms': shipment_terms})
+        shipping_lines = ShippingLine.objects.all()
+        return render(request, 'admin_rate_request_fcl.html',{'clients': clients,
+         'shipment_terms': shipment_terms, 'shipping_lines': shipping_lines})
     else:
         return redirect('/')
 
 def getLCLRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    if request.user.role == 'SA':
-        return render(request, 'sales_rate_request_lcl.html')
-    elif request.user.role == 'AD':
+    # if request.user.role == 'SA':
+    #     return render(request, 'sales_rate_request_lcl.html')
+    if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
         shipment_terms = ShipmentTerm.objects.all()
         return render(request, 'admin_rate_request_lcl.html',{'clients': clients, 'shipment_terms': shipment_terms})
@@ -348,16 +382,15 @@ def postRateRequest(request):
         aif_cargo_details = AIFCargoSales(quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight, pieces=pieces, packing=packing, dimensions=dimensions)
         aif_cargo_details.save()
 
-        prefered = request.POST.get('prefered', None)
-        any = request.POST.get('any', None)
-        shipping_line = ShippingLine(prefered=prefered, any=any)
-        shipping_line.save()
+        preferred_shipping_line = ShippingLine.objects.get(pk=request.POST.get('preferred_shipping_line', None))
+        other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
 
         rate_request = RateRequest(sales_person=sales_person, type=type,
         client=client, destination=destination, final_delivery_destination=final_delivery_destination,
         required_delivery_time_within=required_delivery_time_within,
-        imo_class=imo_class, shipment_term=shipment_term, aif_cargo_details=aif_cargo_details,
-        shipping_line=shipping_line, payment_term=payment_term, special_instructions=special_instructions)
+        imo_class=imo_class, shipment_term=shipment_term, preferred_shipping_line=preferred_shipping_line,
+        other_shipping_line=other_shipping_line, aif_cargo_details=aif_cargo_details,
+        payment_term=payment_term, special_instructions=special_instructions)
         rate_request.save()
 
     elif type == 'FCL':
@@ -369,12 +402,17 @@ def postRateRequest(request):
         fcl_cargo_details = FCLCargoSales(container_type=container_type, quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight)
         fcl_cargo_details.save()
 
-        prefered = request.POST.get('preferred', None)
-        any = request.POST.get('any', None)
-        shipping_line = ShippingLine(prefered=prefered, any=any)
-        shipping_line.save()
 
-        rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, shipment_term=shipment_term, fcl_cargo_details=fcl_cargo_details, shipping_line=shipping_line, payment_term=payment_term, special_instructions=special_instructions)
+        preferred_shipping_line = ShippingLine.objects.get(pk=request.POST.get('preferred_shipping_line', None))
+        other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
+
+        rate_request = RateRequest(sales_person=sales_person, type=type,
+         client=client, destination=destination, final_delivery_destination=final_delivery_destination,
+          required_delivery_time_within=required_delivery_time_within,
+          imo_class=imo_class, shipment_term=shipment_term,
+          fcl_cargo_details=fcl_cargo_details, preferred_shipping_line=preferred_shipping_line,
+          other_shipping_line=other_shipping_line, payment_term=payment_term,
+          special_instructions=special_instructions)
         rate_request.save()
 
     else:
@@ -390,9 +428,7 @@ def postRateRequest(request):
         rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, shipment_term=shipment_term, lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions)
         rate_request.save()
 
-    if request.user.role == 'SA':
-        return redirect('/sales/tasks/')
-    elif request.user.role == 'AD':
+    if request.user.role == 'SA' or request.user.role == 'AD':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
@@ -423,21 +459,13 @@ def viewRateRequest(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
-        if request.user.role == 'AD':
+        if request.user.role == 'AD' or request.user.role == 'SA':
             if rate_request.type == 'AIF':
                 return render(request, 'admin_rate_request_aif_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'FCL':
                 return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'LCL':
                 return render(request, 'admin_rate_request_lcl_view.html', { 'rate_request': rate_request })
-        if  request.user.role == 'SA':
-            if rate_request.sales_person.id == request.user.id:
-                if rate_request.type == 'AIF':
-                    return render(request, 'sales_rate_request_aif_view.html', { 'rate_request': rate_request })
-                elif rate_request.type == 'FCL':
-                    return render(request, 'sales_rate_request_fcl_view.html', { 'rate_request': rate_request })
-                elif rate_request.type == 'LCL':
-                    return render(request, 'sales_rate_request_lcl_view.html', { 'rate_request': rate_request })
         if request.user.role == 'OP':
             if rate_request.type == 'AIF':
                 return render(request, 'operations_rate_request_aif_view.html', { 'rate_request': rate_request })
@@ -560,7 +588,7 @@ def postOffer(request):
         )
 
     else:
-        shipping_line = request.POST.get('shipping_line', None)
+        shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
         ocean_freight = request.POST.get('ocean_freight', None)
         thc = request.POST.get('thc', None)
         transporation = request.POST.get('transporation', None)
@@ -609,10 +637,11 @@ def editOffer(request, pk):
     try:
         offer = Offer.objects.get(pk=pk)
         if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
+
             offer.status = request.POST.get('status', offer.status)
-            offer.sales_person = request.POST.get('sales_person', offer.sales_person)
+            # offer.sales_person = request.POST.get('sales_person', offer.sales_person)
             offer.save()
-            return HttpResponse(content_type='application/json')
+            return HttpResponseRedirect('/admin/tasks')
         else:
             response = HttpResponse(content_type='application/json')
             response.status_code = 401
@@ -628,10 +657,11 @@ def viewOffer(request, pk):
     try:
         offer = Offer.objects.get(pk=pk)
         if request.user.role == 'AD':
+            eligible = True
             if offer.type == 'A':
-                return render(request, 'admin_offer_air_view.html', { 'offer': offer })
+                return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
-                return render(request, 'admin_offer_sea_view.html', { 'offer': offer })
+                return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
         if  request.user.role == 'SA':
             if offer.sales_person.id == request.user.id:
                 if quotation.type == 'A':
@@ -790,7 +820,7 @@ def postQuotation(request):
     elif type == 'FCL':
         agent_details = request.POST.get('agent_details', None)
 
-        shipping_line = request.POST.get('shipping_line', None)
+        shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
         container_type = request.POST.get('container_type', None)
         quantity = request.POST.get('quantity', None)
         commodity = request.POST.get('commodity', None)
@@ -837,7 +867,7 @@ def postQuotation(request):
         agent_details = request.POST.get('agent_details', None)
         co_loader = request.POST.get('co_loader', None)
 
-        shipping_line = request.POST.get('shipping_line', None)
+        shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
         container_type = request.POST.get('container_type', None)
         num_of_packages = request.POST.get('number_of_packages', None)
         commodity = request.POST.get('commodity', None)
@@ -896,7 +926,7 @@ def editQuotation(request, pk):
     try:
         quotation = Quotation.objects.get(pk=pk)
         if request.user.role == 'AD' or (request.user.role == 'OP' and quotation.operations_person.id == request.user.id):
-            quotation.status = request.POST.get('status', quotation.status)
+            quotation.status = request.POST.get('status', None)
             quotation.operations_person = request.POST.get('operations_person', quotation.operations_person)
             quotation.save()
             return HttpResponse(content_type='application/json')

@@ -9,7 +9,9 @@
 								<div class="panel-heading">
 									<span>Quotation-Air</span>
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
+									{% if user.role == 'AD' or user.role == 'SA'%}
 									<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
+									{% endif %}
 								</div>
 								<div class="panel-body">
                     <form class="form-horizontal" role="form" method="post" action="/quotation/new/">

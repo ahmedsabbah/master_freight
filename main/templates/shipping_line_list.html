@@ -20,7 +20,7 @@
 
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Clients</div>
+						<div class="panel-heading">Shipping Lines</div>
 						<div class="panel-body">
 							<!-- <div class="container"> -->
 
@@ -63,12 +63,9 @@
 		$(document).ready(function() {
 
 			var dataSet = [
-				{% for client in clients %}
-				["{{client.id}}", "{{client.client_name}}", "{{client.client_type}}",
-				"{{client.business_phone}}", "{{client.email}}",
-				"{{client.client_id_number}}", "{{client.credit_period}}",
-				"{{client.reference_name}}", "{{client.issued_by}}",
-				"{{client.authorized_by}}","<a href='/client/{{client.id}}/view/'>View</a>"]
+				{% for shipping_line in shipping_lines %}
+				["{{shipping_line.id}}", "{{shipping_line.name}}",
+				"<a href='/shipping_line/{{shipping_line.id}}/delete/'>Delete</a>"]
 				{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
@@ -77,34 +74,10 @@
 				title: "ID"
 			},
 			{
-				title: "Client Name"
+				title: "Company Name"
 			},
 			{
-				title: "Client Type"
-			},
-			{
-				title: "Business Phone"
-			},
-			{
-				title: "Email"
-			},
-			{
-				title: "Client ID Number"
-			},
-			{
-				title: "Credit Period"
-			},
-			{
-				title: "Reference Name"
-			},
-			{
-				title: "Issued By"
-			},
-			{
-				title: "Authorized By"
-			},
-			{
-				title: "View"
+				title: "Delete"
 			}];
 
 			var myTable;

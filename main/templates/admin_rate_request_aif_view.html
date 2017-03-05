@@ -1,17 +1,15 @@
 {% extends './base.html' %}
 
 {% block content %}
-
-			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-				<br/>
-					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<span>Air-Freight Rate Request</span>
 									<a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Rate Request </a>
+									{% if user.role == 'AD' or user.role == 'OP'%}
 									<a href="/rate_request/{{rate_request.id}}/quotation/aif/new/"
 									class="btn btn-default pull-right" style="margin-right:5px;">Create Quotation</a>
+									{% endif %}
 								</div>
 								<div class="panel-body">
 
@@ -330,5 +328,4 @@
 							</div>
 						</div>
 					</div>
-				</div>
 		{% endblock %}

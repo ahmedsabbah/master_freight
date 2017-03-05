@@ -514,7 +514,9 @@ a.bg-danger:hover {
 	outline: 0;
 	box-shadow: inset 0px 0px 0px 1px #E15626;
 }
-
+.nav>li>a {
+	padding: 10px 10px
+}
 .user-menu {
 	display: inline-block;
 	margin-top: 14px;
@@ -551,7 +553,7 @@ a.bg-danger:hover {
 	.sidebar {
 		display: block;
   		position: fixed;
-		top: 50px;
+		/*top: 50px;*/
 		bottom: 0;
 		left: 0;
 		z-index: 1000;

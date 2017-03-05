@@ -106,8 +106,7 @@ class LCLCargoSales(models.Model):
     packing = models.CharField(max_length=200, blank=True, null=True)
 
 class ShippingLine(models.Model):
-    prefered = models.CharField(max_length=200, blank=True, null=True)
-    any = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
 
 class IMOClass(models.Model):
     hazardous = models.CharField(max_length=200, blank=True, null=True)
@@ -139,15 +138,16 @@ class RateRequest(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     sales_person = models.ForeignKey('authentication.User', related_name='rate_requests', blank=True, null=True)
     client = models.ForeignKey('main.Client', related_name='rate_requests', blank=True, null=True)
-    destination = models.OneToOneField('main.Destination', related_name='rate_request', blank=True, null=True)
+    destination = models.OneToOneField('main.Destination', related_name='rate_requests', blank=True, null=True)
     final_delivery_destination = models.OneToOneField('main.FinalDeliveryDestination', related_name='rate_request', blank=True, null=True)
     required_delivery_time_within = models.CharField(max_length=200, blank=True, null=True)
-    aif_cargo_details = models.OneToOneField('main.AIFCargoSales', related_name='rate_request', blank=True, null=True)
-    fcl_cargo_details = models.OneToOneField('main.FCLCargoSales', related_name='rate_request', blank=True, null=True)
-    lcl_cargo_details = models.OneToOneField('main.LCLCargoSales', related_name='rate_request', blank=True, null=True)
-    shipping_line = models.OneToOneField('main.ShippingLine', related_name='rate_request', null=True, blank=True)
+    aif_cargo_details = models.OneToOneField('main.AIFCargoSales', related_name='rate_requests', blank=True, null=True)
+    fcl_cargo_details = models.OneToOneField('main.FCLCargoSales', related_name='rate_requests', blank=True, null=True)
+    lcl_cargo_details = models.OneToOneField('main.LCLCargoSales', related_name='rate_requests', blank=True, null=True)
+    preferred_shipping_line = models.ForeignKey('main.ShippingLine', related_name='rate_requests', null=True, blank=True)
+    other_shipping_line = models.ForeignKey('main.ShippingLine', related_name='other_rate_requests', null=True, blank=True)
     imo_class = models.OneToOneField('main.IMOClass', related_name='rate_request', blank=True, null=True)
-    shipment_term = models.OneToOneField('main.ShipmentTerm', related_name='rate_request', blank=True, null=True)
+    shipment_term = models.ForeignKey('main.ShipmentTerm', related_name='rate_requests', blank=True, null=True)
     payment_term = models.CharField(max_length=200, blank=True, null=True)
     special_instructions = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SO')
@@ -172,7 +172,8 @@ class AIFCargoOperations(models.Model):
     hawb_number = models.CharField(max_length=200, blank=True, null=True)
 
 class FCLCargoOperations(models.Model):
-    shipping_line = models.CharField(max_length=200, blank=True, null=True)
+
+    shipping_line = models.ForeignKey('main.ShippingLine', related_name='fcl_cargos', null=True, blank=True)
     container_type = models.CharField(max_length=200, blank=True, null=True)
     quantity = models.CharField(max_length=200, blank=True, null=True)
     commodity = models.CharField(max_length=200, blank=True, null=True)
@@ -180,7 +181,7 @@ class FCLCargoOperations(models.Model):
     net_weight = models.CharField(max_length=200, blank=True, null=True)
 
 class LCLCargoOperations(models.Model):
-    shipping_line = models.CharField(max_length=200, blank=True, null=True)
+    shipping_line = models.ForeignKey('main.ShippingLine', related_name='lcl_cargos', null=True, blank=True)
     container_type = models.CharField(max_length=200, blank=True, null=True)
     num_of_packages = models.CharField(max_length=200, blank=True, null=True)
     commodity = models.CharField(max_length=200, blank=True, null=True)
@@ -315,7 +316,8 @@ class AirQuotation(models.Model):
     offer_validity = models.CharField(max_length=200, blank=True, null=True)
 
 class SeaQuotation(models.Model):
-    shipping_line = models.CharField(max_length=200, blank=True, null=True)
+
+    shipping_line = models.ForeignKey('main.ShippingLine', related_name='sea_rate_requests', null=True, blank=True)
     ocean_freight = models.CharField(max_length=200, blank=True, null=True)
     thc = models.CharField(max_length=200, blank=True, null=True)
     transporation = models.CharField(max_length=200, blank=True, null=True)
@@ -338,7 +340,8 @@ class Offer(models.Model):
     STATUS_CHOICES = (
         ('S', 'Sent To Client'),
         ('A', 'Accepted'),
-        ('D', 'Done')
+        ('D', 'Done'),
+        ('R', 'Rejected')
     )
     quotation = models.ForeignKey('main.Quotation', related_name='offers', blank=False, null=False)
     reference = models.CharField(max_length=6, default=uuid.uuid4().hex[:6].upper())

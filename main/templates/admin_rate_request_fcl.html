@@ -1,10 +1,6 @@
 {% extends './base.html' %}
 
 {% block content %}
-
-			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-				<br/>
-					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">FCL Rate Request</div>
@@ -197,23 +193,28 @@
 
                           <h4 class="text-primary">Shipping-Line:</h4>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="preferred">Preferred</label>
-                              <div class="col-sm-2">
-                                <input id="preferred" name="preferred" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+														<div class="row">
+															<div class="col-sm-2">
+															<label class=" control-label" for="preferred">Preferred</label>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="any">Any</label>
-                              <div class="col-sm-2">
-                                <input id="any" name="any" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+																<select class=" form-control" name="preferred_shipping_line">
+																	{% for shipping_line in shipping_lines %}
+																	<option value="{{ shipping_line.id }}">{{ shipping_line.name }}</option>
+																	{% endfor %}
+																</select>
+															</div>
+															<div class="col-sm-2">
+															<label class=" control-label" for="other_shipping_line">Other</label>
+
+																<select class=" form-control" name="other_shipping_line">
+																	{% for shipping_line in shipping_lines %}
+																	<option value="{{ shipping_line.id }}">{{ shipping_line.name }}</option>
+																	{% endfor %}
+																</select>
+															</div>
+														</div>
+													</div>
 
 													<hr/>
 
@@ -283,5 +284,4 @@
                   </div>
 						</div>
 					</div>
-				</div>
 		{% endblock %}
