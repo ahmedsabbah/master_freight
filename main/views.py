@@ -183,7 +183,8 @@ def getClient(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
     client = Client.objects.get(pk=pk)
-    return render(request, 'client_account_view.html', {'client': client})
+    offers = Offer.objects.filter(client=client,status='D')
+    return render(request, 'client_account_view.html', {'client': client, 'offers': offers})
 
 
 ####### TRUCKER ########
@@ -459,20 +460,13 @@ def viewRateRequest(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
-        if request.user.role == 'AD' or request.user.role == 'SA':
+        if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role =='OP':
             if rate_request.type == 'AIF':
                 return render(request, 'admin_rate_request_aif_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'FCL':
                 return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request })
             elif rate_request.type == 'LCL':
                 return render(request, 'admin_rate_request_lcl_view.html', { 'rate_request': rate_request })
-        if request.user.role == 'OP':
-            if rate_request.type == 'AIF':
-                return render(request, 'operations_rate_request_aif_view.html', { 'rate_request': rate_request })
-            elif rate_request.type == 'FCL':
-                return render(request, 'operations_rate_request_fcl_view.html', { 'rate_request': rate_request })
-            elif rate_request.type == 'LCL':
-                return render(request, 'operations_rate_request_lcl_view.html', { 'rate_request': rate_request })
         return redirect('/')
     except RateRequest.DoesNotExist:
         return redirect('/404/')
@@ -507,10 +501,9 @@ def getAirOffer(request, pk):
         return redirect('/login/')
     try:
         quotation = Quotation.objects.get(pk=pk)
-        if request.user.role == 'SA':
-            return render(request, 'sales_offer_air.html', { 'quotation': quotation })
-        elif request.user.role == 'AD':
-            return render(request, 'admin_offer_air.html', { 'quotation': quotation })
+        if request.user.role == 'AD' or 'SA':
+            truckers = Trucker.objects.all()
+            return render(request, 'admin_offer_air.html', { 'quotation': quotation, 'truckers': truckers })
         else:
             return redirect('/')
     except Quotation.DoesNotExist:
@@ -521,10 +514,9 @@ def getSeaOffer(request, pk):
         return redirect('/login/')
     try:
         quotation = Quotation.objects.get(pk=pk)
-        if request.user.role == 'SA':
-            return render(request, 'sales_offer_sea.html', { 'quotation': quotation })
-        elif request.user.role == 'AD':
-            return render(request, 'admin_offer_sea.html', { 'quotation': quotation })
+        if request.user.role == 'AD' or 'SA':
+            shipping_lines = ShippingLine.objects.all()
+            return render(request, 'admin_offer_sea.html', { 'quotation': quotation , 'shipping_lines': shipping_lines})
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -559,7 +551,7 @@ def postOffer(request):
         exw_charges = request.POST.get('exw_charges', None)
         screening_fees = request.POST.get('screening_fees', None)
         storage = request.POST.get('storage', None)
-        inland = request.POST.get('inland', None)
+        inland = Trucker.objects.get(pk=request.POST.get('inland', None))
         packing = request.POST.get('packing', None)
         taxes_duties = request.POST.get('taxes_duties', None)
         handling_fees = request.POST.get('handling_fees', None)
@@ -573,9 +565,10 @@ def postOffer(request):
         offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
         offer.save()
 
+        quotation.sales_person = sales_person
+        quotation.save()
         msg_plain = render_to_string('./offerEmail.txt', {'offer': offer})
         msg_html = render_to_string('./offerEmail.html', {'offer': offer})
-        print offer.quotation.rate_request.client.email
         send_mail(
             "Master Freight Offer",
             msg_plain,
@@ -608,6 +601,9 @@ def postOffer(request):
         offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
         offer.save()
 
+        quotation.sales_person = sales_person
+        quotation.save()
+
         msg_plain = render_to_string('./offerSeaEmail.txt', {'offer': offer})
         msg_html = render_to_string('./offerSeaEmail.html', {'offer': offer})
         print offer.quotation.rate_request.client.email
@@ -622,9 +618,7 @@ def postOffer(request):
             fail_silently=False,
         )
 
-    if request.user.role == 'SA':
-        return redirect('/sales/tasks/')
-    elif request.user.role == 'AD':
+    if request.user.role == 'AD' or request.user.role == 'SA':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
@@ -656,19 +650,14 @@ def viewOffer(request, pk):
         return redirect('/login/')
     try:
         offer = Offer.objects.get(pk=pk)
-        if request.user.role == 'AD':
+        if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
             eligible = True
             if offer.type == 'A':
                 return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
                 return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
-        if  request.user.role == 'SA':
-            if offer.sales_person.id == request.user.id:
-                if quotation.type == 'A':
-                    return render(request, 'sales_offer_air_view.html', { 'offer': offer })
-                elif quotation.type == 'S':
-                    return render(request, 'sales_offer_air_view.html', { 'offer': offer })
-        return redirect('/')
+        else:
+            return redirect('/')
     except Offer.DoesNotExist:
         return redirect('/404/')
 
@@ -680,10 +669,10 @@ def deleteOffer(request, pk):
         if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
             offer = Offer.objects.get(pk=pk)
             offer.delete()
-            if request.user.role == 'AD':
+            if request.user.role == 'AD' or request.user.role == 'SA':
                 return HttpResponseRedirect('/admin/tasks')
             else:
-                return HttpResponseRedirect('/sales/tasks')
+                return redirect('/')
         else:
             response = HttpResponse(content_type='application/json')
             response.status_code = 401
@@ -702,9 +691,7 @@ def getAIFQuotation(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
-        if request.user.role == 'OP':
-            return render(request, 'operations_quotations_aif.html', { 'rate_request': rate_request })
-        elif request.user.role == 'AD':
+        if request.user.role == 'OP' or request.user.role == 'AD':
             return render(request, 'admin_quotations_aif.html', { 'rate_request': rate_request })
         else:
             return redirect('/')
@@ -716,10 +703,11 @@ def getFCLQuotation(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
-        if request.user.role == 'OP':
-            return render(request, 'operations_quotations_fcl.html', { 'rate_request': rate_request })
-        elif request.user.role == 'AD':
-            return render(request, 'admin_quotations_fcl.html', { 'rate_request': rate_request })
+
+        if request.user.role == 'AD' or request.user.role == 'OP':
+            shipping_lines = ShippingLine.objects.all()
+            return render(request, 'admin_quotations_fcl.html', { 'rate_request': rate_request,
+             'shipping_lines': shipping_lines })
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -730,10 +718,10 @@ def getLCLQuotation(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
-        if request.user.role == 'OP':
-            return render(request, 'operations_quotations_lcl.html', { 'rate_request': rate_request })
-        elif request.user.role == 'AD':
-            return render(request, 'admin_quotations_lcl.html', { 'rate_request': rate_request })
+        if request.user.role == 'AD' or request.user.role == 'OP':
+            shipping_lines = ShippingLine.objects.all()
+            return render(request, 'admin_quotations_lcl.html', { 'rate_request': rate_request,
+            'shipping_lines': shipping_lines  })
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -901,19 +889,16 @@ def postQuotation(request):
         lcl_quotation.save()
 
         free_time_at_destination = request.POST.get('free_time_destination', None)
-        vessel_available = request.POST.get('vessels_available', None)
+        vessels_available = request.POST.get('vessels_available', None)
         route = request.POST.get('route', None)
         transit_time = request.POST.get('transit_time', None)
         offer_validity = request.POST.get('offer_validity', None)
-        extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessel_available=vessel_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
+        extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessels_available=vessels_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
         quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
         quotation.save()
-
-    if request.user.role == 'OP':
-        return redirect('/operations/tasks/')
-    elif request.user.role == 'AD':
+    if request.user.role == 'AD' or request.user.role == 'OP':
         return redirect('/admin/tasks/')
     else:
         return redirect('/')
@@ -944,29 +929,13 @@ def viewQuotation(request, pk):
         return redirect('/login/')
     try:
         quotation = Quotation.objects.get(pk=pk)
-        if request.user.role == 'AD':
+        if request.user.role == 'AD' or request.user.role == 'SA'or request.user.role == 'OP':
             if quotation.type == 'AIF':
                 return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation })
             elif quotation.type == 'FCL':
                 return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation })
             elif quotation.type == 'LCL':
                 return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation })
-        if  request.user.role == 'SA':
-            if quotation.sales_person.id == request.user.id:
-                if quotation.type == 'AIF':
-                    return render(request, 'sales_quotations_aif_view.html', { 'quotation': quotation })
-                elif quotation.type == 'FCL':
-                    return render(request, 'sales_quotations_fcl_view.html', { 'quotation': quotation })
-                elif quotation.type == 'LCL':
-                    return render(request, 'sales_quotations_lcl_view.html', { 'quotation': quotation })
-        if request.user.role == 'OP':
-            if quotation.operations_person.id == request.user.id:
-                if quotation.type == 'AIF':
-                    return render(request, 'operations_quotations_aif_view.html', { 'quotation': quotation })
-                elif quotation.type == 'FCL':
-                    return render(request, 'operations_quotations_fcl_view.html', { 'quotation': quotation })
-                elif quotation.type == 'LCL':
-                    return render(request, 'operations_quotations_lcl_view.html', { 'quotation': quotation })
         return redirect('/')
     except Quotation.DoesNotExist:
         return redirect('/404/')

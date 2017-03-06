@@ -2,9 +2,6 @@
 
 {% block content %}
 
-			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-        <br/>
-				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">Offer to Client Air</div>
@@ -135,14 +132,18 @@
                           </div>
                         </div>
 
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="inland">INLAND</label>
-                            <div class="col-sm-2">
-                              <input id="inland" name="inland" type="text" placeholder="" class="form-control">
-                            </div>
-                          </div>
-                        </div>
+												<div class="form-group">
+	                        <div class="row">
+	                          <label class="col-sm-2 control-label" for="inland">In-land</label>
+	                          <div class="col-sm-2">
+	                            <select class=" form-control" name="inland">
+	                              {% for trucker in truckers %}
+	                              <option value="{{ trucker.id }}">{{ trucker.company_name }}</option>
+	                              {% endfor %}
+	                            </select>
+	                          </div>
+	                        </div>
+	                      </div>
 
                         <div class="form-group">
                           <div class="row">
@@ -239,5 +240,4 @@
                 </div>
 					</div>
 				</div>
-			</div>
  {% endblock %}

@@ -120,8 +120,12 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
                               <div class="col-sm-2">
-                                <input id="shipping_line" name="shipping_line" type="text" placeholder="" class="form-control">
-                              </div>
+																<select class=" form-control" name="shipping_line">
+																	{% for shipping_line in shipping_lines %}
+																	<option value="{{ shipping_line.id }}">{{ shipping_line.name }}</option>
+																	{% endfor %}
+																</select>
+															</div>
                             </div>
                           </div>
 

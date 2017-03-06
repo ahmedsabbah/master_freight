@@ -1,17 +1,7 @@
 {% extends './base.html' %}
 {% load staticfiles%}
 {% block content%}
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<!-- <div class="row">
-			<ol class="breadcrumb">
-				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Icons</li>
-			</ol>
-		</div> -->
 
-	<br/>
-
-		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Line Chart</div>
@@ -22,9 +12,7 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->
 
-		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Bar Chart</div>
@@ -35,9 +23,7 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->
 
-		<div class="row">
 			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">Pie Chart</div>
@@ -58,9 +44,7 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->
 
-		<div class="row">
 			<div class="col-xs-6 col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-body easypiechart-panel">
@@ -97,13 +81,10 @@
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->
 
-	</div>	<!--/.main-->
 {% endblock %}
 {% block extra_script%}
 	<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
-	<script src="{% static "js/bootstrap.min.js" %}"></script>
 	<script src="{% static "js/chart.min.js" %}"></script>
 	<script src="{% static "js/chart-data.js" %}"></script>
 	<script src="{% static "js/easypiechart.js" %}"></script>

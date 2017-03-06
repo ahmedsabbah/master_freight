@@ -259,7 +259,7 @@ class LCLQuotation(models.Model):
 
 class ExtraNotes(models.Model):
     free_time_at_destination = models.CharField(max_length=200, blank=True, null=True)
-    vessel_available = models.CharField(max_length=200, blank=True, null=True)
+    vessels_available = models.CharField(max_length=200, blank=True, null=True)
     route = models.CharField(max_length=200, blank=True, null=True)
     transit_time = models.CharField(max_length=200, blank=True, null=True)
     offer_validity = models.CharField(max_length=200, blank=True, null=True)

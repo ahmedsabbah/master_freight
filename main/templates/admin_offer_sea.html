@@ -1,9 +1,6 @@
 {% extends './base.html' %}
 
 {% block content %}
-  <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <br/>
-      <div class="row">
         <div class="col-lg-12">
           <div class="panel panel-default">
             <div class="panel-heading">Offer to Client Sea</div>
@@ -81,11 +78,14 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="ocean_freight">SHIPPING LINE/AIR LINE</label>
+                          <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
                           <div class="col-sm-2">
-                            <input id="ocean_freight" name="shipping_line" type="text" placeholder="" class="form-control">
+                            <select class=" form-control" name="shipping_line">
+                              {% for shipping_line in shipping_lines %}
+                              <option value="{{ shipping_line.id }}">{{ shipping_line.name }}</option>
+                              {% endfor %}
+                            </select>
                           </div>
-
                         </div>
                       </div>
 
@@ -242,5 +242,4 @@
 
         </div>
       </div>
-    </div>
   {% endblock %}

@@ -67,6 +67,7 @@
       <li {% if request.path == '/admin/employees/' %}class="active"{% endif %}><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
       {% endif %}
       <li {% if request.path == '/admin/charts/' %}class="active"{% endif %}><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+      {% if user.role == 'AD' or user.role == 'SA'%}
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-1">
          <svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> New Rate Request
@@ -95,6 +96,7 @@
           </li>
         </ul>
       </li>
+      {% endif %}
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-2">
         <svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"></use></svg> Clients <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
@@ -214,7 +216,7 @@
   </div><!--/.sidebar-->
   </div>
 
-<div class="col-sm-9 col-lg-10 main" data-simplebar>
+<div id="mainView" class="col-sm-9 col-lg-10 main" data-simplebar>
   	<br/>
 	<div class="row" style="padding:0; width:100%">
   {% block content %}

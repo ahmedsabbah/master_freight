@@ -35,10 +35,8 @@
 
 {% block extra_script %}
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-	<script src="{% static "js/bootstrap.min.js" %}"></script>
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-	<script src="{% static "js/dataTables.altEditor.free.js" %}"></script>
+	<script src="{% static 'js/dataTables.altEditor.free.js' %}"></script>
 	<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
@@ -56,16 +54,14 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
-	</script>
-
-
-	<script>
 		$(document).ready(function() {
 
 			var dataSet = [
 				{% for shipping_line in shipping_lines %}
 				["{{shipping_line.id}}", "{{shipping_line.name}}",
-				"<a href='/shipping_line/{{shipping_line.id}}/delete/'>Delete</a>"]
+				{% if user.role == 'AD'%}
+				"<a href='/shipping_line/{{shipping_line.id}}/delete/'>Delete</a>"
+				{% endif %}]
 				{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
 			];
@@ -75,10 +71,12 @@
 			},
 			{
 				title: "Company Name"
-			},
+			}
+			{% if user.role == 'AD'%}
+			,
 			{
 				title: "Delete"
-			}];
+			}{% endif %}];
 
 			var myTable;
 
