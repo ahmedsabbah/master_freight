@@ -5,7 +5,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard</title>
+  <title>{% if user.role == 'AD' %}
+          Admin
+        {% elif user.role == 'SA' %}
+          Sales
+        {% elif user.role == 'OP' %}
+          Operations
+        {% elif user.role == 'AC' %}
+          Accounting
+        {% endif %}
+    Dashboard
+  </title>
   <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
   <script src="{% static "js/bootstrap.min.js" %}"></script>
 
@@ -44,7 +54,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/admin/"><span>Master Freight </span> <span class="small" style="color:white"> ADMIN DASHBOARD</span></a>
+        <a class="navbar-brand" href="/admin/"><span>Master Freight </span> <span class="small" style="color:white">
+          {% if user.role == 'AD' %}
+                  ADMIN
+                {% elif user.role == 'SA' %}
+                  SALES
+                {% elif user.role == 'OP' %}
+                  OPERATIONS
+                {% elif user.role == 'AC' %}
+                  ACCOUNTING
+                {% endif %}
+          DASHBOARD</span></a>
         <ul class="user-menu">
           <li class="dropdown pull-right">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user.first_name }} {{ user.last_name }} <span class="caret"></span></a>
@@ -66,7 +86,11 @@
       {% if user.role == 'AD'%}
       <li {% if request.path == '/admin/employees/' %}class="active"{% endif %}><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
       {% endif %}
+
+      {% if user.role != 'AC'%}
       <li {% if request.path == '/admin/charts/' %}class="active"{% endif %}><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+      {% endif %}
+      
       {% if user.role == 'AD' or user.role == 'SA'%}
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-1">
@@ -97,6 +121,7 @@
         </ul>
       </li>
       {% endif %}
+      {% if user.role != 'AC'%}
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-2">
         <svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"></use></svg> Clients <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
@@ -175,42 +200,7 @@
           </li>
         </ul>
       </li>
-      <!-- <li class="parent">
-        <a data-toggle="expand" href="#sub-item-2">
-        <svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Truckers <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
-        </a>
-        <ul class="children expand" id="sub-item-2">
-
-          <li {% if request.path == '/trucker/new/' %}class="active"{% endif %}>
-            <a class="" href="/trucker/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Trucker
-            </a>
-          </li>
-          <li {% if request.path == '/trucker/list/' %}class="active"{% endif %}>
-            <a class="" href="/trucker/list/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Trucker
-            </a>
-          </li>
-
-        </ul>
-      </li> -->
-      <!-- <li class="parent ">
-        <a data-toggle="collapse" href="#sub-item-3">
-          <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> New Offer
-        </a>
-        <ul class="children collapse" id="sub-item-3">
-          <li>
-            <a class="" href="/offer/air/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Air
-            </a>
-          </li>
-          <li>
-            <a class="" href="/offer/sea/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Offer to Client Sea
-            </a>
-          </li>
-        </ul>
-      </li> -->
+      {% endif %}
     </ul>
 
   </div><!--/.sidebar-->

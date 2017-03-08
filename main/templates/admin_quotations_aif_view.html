@@ -5,7 +5,9 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<span>Quotation-Air</span>
+									{% if user.role != 'AC'%}
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
+									{% endif %}
 									{% if user.role == 'AD' or user.role == 'SA'%}
 									<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 									{% endif %}

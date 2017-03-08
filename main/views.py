@@ -43,12 +43,20 @@ def getAdminWorkspace(request):
 def getAdminTasks(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    # if request.user.role != 'AD':
-    #     return redirect('/')
-    rate_requests = RateRequest.objects.all().exclude(status='D')
-    quotations = Quotation.objects.all().exclude(status='D')
-    offers = Offer.objects.all().exclude(status='D')
-    return render(request, 'admin_tasks.html', {'rate_requests': rate_requests, 'quotations': quotations, 'offers': offers})
+
+    if request.user.role == 'AC':
+        offers = Offer.objects.filter(status='A')
+        quotations = []
+        for offer in offers:
+            print offer.quotation.status
+            quotations.append(offer.quotation)
+        context = {'quotations': quotations, 'offers': offers}
+    else:
+        rate_requests = RateRequest.objects.all().exclude(status='D')
+        quotations = Quotation.objects.all().exclude(status='D')
+        offers = Offer.objects.all().exclude(status='D')
+        context = {'rate_requests': rate_requests,'quotations': quotations, 'offers': offers}
+    return render(request, 'admin_tasks.html', context )
 
 def getAdminEmployees(request):
     if not request.user.is_authenticated():
@@ -565,8 +573,8 @@ def postOffer(request):
         offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
         offer.save()
 
-        quotation.sales_person = sales_person
-        quotation.save()
+        # quotation.sales_person = sales_person
+        # quotation.save()
         msg_plain = render_to_string('./offerEmail.txt', {'offer': offer})
         msg_html = render_to_string('./offerEmail.html', {'offer': offer})
         send_mail(
@@ -656,6 +664,13 @@ def viewOffer(request, pk):
                 return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
                 return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
+        elif request.user.role == 'AC' and offer.status == 'A':
+            eligible = False
+            if offer.type == 'A':
+                return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
+            elif offer.type == 'S':
+                return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
+
         else:
             return redirect('/')
     except Offer.DoesNotExist:
@@ -747,6 +762,7 @@ def postQuotation(request):
         return redirect('/404/')
 
     client = rate_request.client
+    sales_person = rate_request.sales_person
 
     # port_of_loading = request.POST.get('port_of_loading', None)
     # loading_location_type = request.POST.get('location_type_loading', None)
@@ -929,7 +945,7 @@ def viewQuotation(request, pk):
         return redirect('/login/')
     try:
         quotation = Quotation.objects.get(pk=pk)
-        if request.user.role == 'AD' or request.user.role == 'SA'or request.user.role == 'OP':
+        if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role == 'OP' or (request.user.role == 'AC' and quotation.offers.first().status == 'A'):
             if quotation.type == 'AIF':
                 return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation })
             elif quotation.type == 'FCL':
