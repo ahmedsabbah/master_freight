@@ -56,6 +56,8 @@
      OTHER NOTES:
      {{offer.sea_quotation.other_notes}}
 
-  
+
      OFFER VALIDITY:
      {{offer.sea_quotation.offer_validity}}
+
+     Track offer and shipment at www.masterfreight.org/track_offer/{{offer.reference}}

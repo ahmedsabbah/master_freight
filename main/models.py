@@ -166,8 +166,6 @@ class AIFCargoOperations(models.Model):
     air_line = models.CharField(max_length=200, blank=True, null=True)
     transit_time = models.CharField(max_length=200, blank=True, null=True)
     route = models.CharField(max_length=200, blank=True, null=True)
-    departure_date = models.CharField(max_length=200, blank=True, null=True)
-    arrival_date = models.CharField(max_length=200, blank=True, null=True)
     mawb_number = models.CharField(max_length=200, blank=True, null=True)
     hawb_number = models.CharField(max_length=200, blank=True, null=True)
 
@@ -277,6 +275,9 @@ class Quotation(models.Model):
     )
     rate_request = models.ForeignKey('main.RateRequest', related_name='quotations', blank=True, null=True)
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
+    current_location = models.CharField(max_length=200, null=True, blank=True)
+    departure_date = models.CharField(max_length=200, blank=True, null=True)
+    arrival_date = models.CharField(max_length=200, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     sales_person = models.ForeignKey('authentication.User', related_name='quotations_sales', blank=True, null=True)
     operations_person = models.ForeignKey('authentication.User', related_name='quotations_operations', blank=True, null=True)

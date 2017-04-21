@@ -63,3 +63,5 @@
 
      OFFER VALIDITY:
      {{offer.air_quotation.offer_validity}}
+     
+     Track offer and shipment at www.masterfreight.org/track_offer/{{offer.reference}}

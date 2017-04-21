@@ -8,11 +8,55 @@
 									{% if user.role != 'AC'%}
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
 									{% endif %}
-									{% if user.role == 'AD' or user.role == 'SA'%}
+									{% if user.role == 'AD' or user.role == 'SA' and quotation.offer == None %}
 									<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 									{% endif %}
+		              {% if user.role == 'AD' %}
+									<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+									{% endif %}
+									{% if user.role == 'OP' and quotation.operations_person.id == user.id %}
+		              <button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+		              {% endif %}
 								</div>
 								<div class="panel-body">
+									<div id="updateStatus" class="row">
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<form id="#statuform" class="form-horizontal" role="form" method="post" action="/quotation/{{quotation.id}}/edit/">
+														<fieldset>
+															{% csrf_token %}
+															<div class="form-group">
+																<div class="row">
+																	<label class="col-sm-2 control-label" for="current_location">Current Location</label>
+																	<div class="col-sm-2">
+																		<input id="current_location" name="current_location" type="text" placeholder="" class="form-control">
+																	</div>
+
+																	<label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
+																	<div class="col-sm-2">
+																		<input id="departure_date" name="departure_date" type="text" placeholder="" class="form-control">
+																	</div>
+
+																	<label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
+																	<div class="col-sm-2">
+																		<input id="arrival_date" name="arrival_date" type="text" placeholder="" class="form-control">
+																	</div>
+
+																	<div class="col-md-2">
+																		<button id="updateStatus" name="updateStatus" class="btn btn-info">Update Quotation</button>
+																	</div>
+																</div>
+															</div>
+
+
+														</fieldset>
+													</form>
+												</div>
+											</div>
+										</div><!-- /.col-->
+									</div><!-- /.row -->
+
                     <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
                       <fieldset>
                         <br>
@@ -189,19 +233,28 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
                               <div class="col-sm-2 control-label">
-                            		<p>{{ quotation.aif_cargo_details.departure_date }}</p>
+                            		<p>{{ quotation.departure_date }}</p>
                               </div>
                             </div>
                           </div>
 
-                          <div class="form-group">
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_cargo_details.arrival_date }}</p>
+                                <p>{{ quotation.arrival_date }}</p>
                               </div>
                             </div>
                           </div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="arrival_date">Current Location</label>
+															<div class="col-sm-2 control-label">
+																<p>{{ quotation.current_location }}</p>
+															</div>
+														</div>
+													</div>
 
                           <div class="form-group">
                             <div class="row">
@@ -383,3 +436,15 @@
             </div>
 
     {% endblock %}
+		{% block extra_script %}
+		<script>
+
+		$('#updateStatus').hide();
+
+
+		$("#editOffer").click(function(){
+
+			$("#updateStatus").show('1000');
+		});
+		</script>
+		{% endblock %}

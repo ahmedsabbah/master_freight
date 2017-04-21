@@ -48,7 +48,6 @@ def getAdminTasks(request):
         offers = Offer.objects.filter(status='A')
         quotations = []
         for offer in offers:
-            print offer.quotation.status
             quotations.append(offer.quotation)
         context = {'quotations': quotations, 'offers': offers}
     else:
@@ -86,7 +85,28 @@ def getAdminCharts(request):
         return redirect('/login/')
     if request.user.role != 'AD':
         return redirect('/')
-    return render(request, 'admin_charts.html')
+    aif_requests = []
+    lcl_requests = []
+    fcl_requests = []
+    offers_acc = []
+    offers_rej = []
+    offers_done = []
+    trucker_numbers = []
+    trucker_names = []
+    for month in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
+        aif_requests.append(RateRequest.objects.filter(created_date__month=month, type="AIF").count())
+        lcl_requests.append(RateRequest.objects.filter(created_date__month=month, type="LCL").count())
+        fcl_requests.append(RateRequest.objects.filter(created_date__month=month, type="FCL").count())
+
+        offers_acc.append(Offer.objects.filter(created_date__month=month, status="A").count())
+        offers_rej.append(Offer.objects.filter(created_date__month=month, status="R").count())
+        offers_done.append(Offer.objects.filter(created_date__month=month, status="D").count())
+    for trucker in Trucker.objects.all():
+        trucker_numbers.append(trucker.quotations.count())
+        trucker_names.append(trucker.company_name)
+    return render(request, 'admin_charts.html', {'aif_requests': aif_requests,
+    'lcl_requests': lcl_requests, 'fcl_requests': fcl_requests, 'offers_acc': offers_acc,
+    'offers_rej': offers_rej, 'offers_done': offers_done, 'trucker_numbers': trucker_numbers, 'trucker_names': trucker_names})
 
 ################################
 
@@ -614,7 +634,6 @@ def postOffer(request):
 
         msg_plain = render_to_string('./offerSeaEmail.txt', {'offer': offer})
         msg_html = render_to_string('./offerSeaEmail.html', {'offer': offer})
-        print offer.quotation.rate_request.client.email
         send_mail(
             "Master Freight Offer",
             msg_plain,
@@ -658,6 +677,7 @@ def viewOffer(request, pk):
         return redirect('/login/')
     try:
         offer = Offer.objects.get(pk=pk)
+        print offer.reference
         if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
             eligible = True
             if offer.type == 'A':
@@ -697,6 +717,18 @@ def deleteOffer(request, pk):
         response.status_code = 404
         return response
 
+def trackOffer(request, pk):
+    try:
+        offer = Offer.objects.get(reference=pk)
+        if offer.type == 'A':
+            return render(request, 'track_offer_air_view.html', { 'offer': offer })
+        elif offer.type == 'S':
+            return render(request, 'track_offer_sea_view.html', { 'offer': offer })
+
+        else:
+            return redirect('/')
+    except Offer.DoesNotExist:
+        return redirect('/404/')
 ##################################
 
 ######### Quotation ##############
@@ -927,14 +959,13 @@ def editQuotation(request, pk):
     try:
         quotation = Quotation.objects.get(pk=pk)
         if request.user.role == 'AD' or (request.user.role == 'OP' and quotation.operations_person.id == request.user.id):
-            quotation.status = request.POST.get('status', None)
-            quotation.operations_person = request.POST.get('operations_person', quotation.operations_person)
+            quotation.current_location = request.POST.get('current_location', None)
+            quotation.departure_date = request.POST.get('departure_date', None)
+            quotation.arrival_date = request.POST.get('arrival_date', None)
             quotation.save()
-            return HttpResponse(content_type='application/json')
+            return HttpResponseRedirect('/admin/tasks')
         else:
-            response = HttpResponse(content_type='application/json')
-            response.status_code = 401
-            return response
+            return HttpResponseRedirect('/admin/tasks')
     except Quotation.DoesNotExist:
         response = HttpResponse(content_type='application/json')
         response.status_code = 404

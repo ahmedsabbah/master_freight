@@ -64,6 +64,8 @@ urlpatterns = [
     url(r'^offer/(?P<pk>[0-9]+)/delete/$', views.deleteOffer, name='deleteOffer'),
     url(r'^offer/(?P<pk>[0-9]+)/view/$', views.viewOffer, name='viewOffer'),
 
+    url(r'^track_offer/(?P<pk>.*)/$', views.trackOffer, name='trackOffer'),
+
     ########################################################################
 
     url(r'^contact/$', views.contact, name='contact'),
