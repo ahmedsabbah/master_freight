@@ -50,9 +50,18 @@ def getAdminTasks(request):
         for offer in offers:
             quotations.append(offer.quotation)
         context = {'quotations': quotations, 'offers': offers}
+    elif request.user.role == 'OP':
+        rate_requests = RateRequest.objects.all().exclude(status='DO')
+        quotations = Quotation.objects.all().filter(operations_person=request.user).exclude(status='DO')
+        context = {'rate_requests' : rate_requests, 'quotations' : quotations}
+    elif request.user.role == 'SA':
+        rate_requests = RateRequest.objects.filter(sales_person=request.user).exclude(status='DO')
+        quotations = Quotation.objects.filter(sales_person=request.user).exclude(status='DO')
+        offers = Offer.objects.filter(sales_person=request.user).exclude(status='D')
+        context = {'rate_requests': rate_requests,'quotations': quotations, 'offers': offers}
     else:
-        rate_requests = RateRequest.objects.all().exclude(status='D')
-        quotations = Quotation.objects.all().exclude(status='D')
+        rate_requests = RateRequest.objects.all().exclude(status='DO')
+        quotations = Quotation.objects.all().exclude(status='DO')
         offers = Offer.objects.all().exclude(status='D')
         context = {'rate_requests': rate_requests,'quotations': quotations, 'offers': offers}
     return render(request, 'admin_tasks.html', context )
@@ -255,7 +264,7 @@ def listTrucker(request):
 def getTrucker(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    trucker = ShippingLine.objects.get(pk=pk)
+    trucker = Trucker.objects.get(pk=pk)
     return render(request, 'trucker_detail.html', {'trucker': trucker})
 
 ####### ShippingLine ########
@@ -572,6 +581,12 @@ def postOffer(request):
 
     client = quotation.client
 
+    admins = User.objects.filter(role='AD')
+    email_list = [];
+    for admin in admins:
+        email_list.append(admin.email)
+    email_list.append(sales_person.email)
+    print email_list
     if type == 'A':
         air_freight_kg = request.POST.get('air_freight_kg', None)
         fuel_sur_charge_kg = request.POST.get('fuel_sur_charge_kg', None)
@@ -601,9 +616,7 @@ def postOffer(request):
             "Master Freight Offer",
             msg_plain,
             request.user.email,
-            [offer.quotation.rate_request.client.email,
-            offer.quotation.rate_request.client.op_email,
-            offer.quotation.rate_request.client.finance_email],
+            email_list,
             html_message=msg_html,
             fail_silently=False,
         )
@@ -638,9 +651,7 @@ def postOffer(request):
             "Master Freight Offer",
             msg_plain,
             request.user.email,
-            [offer.quotation.rate_request.client.email,
-            offer.quotation.rate_request.client.op_email,
-            offer.quotation.rate_request.client.finance_email],
+            email_list,
             html_message=msg_html,
             fail_silently=False,
         )
@@ -796,6 +807,9 @@ def postQuotation(request):
     client = rate_request.client
     sales_person = rate_request.sales_person
 
+    arrival_date = request.POST.get('arrival_date', None)
+    departure_date = request.POST.get('departure_date', None)
+
     # port_of_loading = request.POST.get('port_of_loading', None)
     # loading_location_type = request.POST.get('location_type_loading', None)
     # port_of_discharge = request.POST.get('port_of_discharge', None)
@@ -816,12 +830,15 @@ def postQuotation(request):
         air_line = request.POST.get('air_line', None)
         transit_time = request.POST.get('transit_date', None)
         route = request.POST.get('route', None)
-        departure_date = request.POST.get('departure_date', None)
         arrival_date = request.POST.get('arrival_date', None)
         mawb_number = request.POST.get('mawb', None)
         hawb_number = request.POST.get('hawb', None)
 
-        aif_cargo_details = AIFCargoOperations(commodity=commodity, num_of_packages=num_of_packages, actual_weight=actual_weight, chargeable_weight=chargeable_weight, dimensions=dimensions, air_line=air_line, transit_time=transit_time, route=route, departure_date=departure_date, arrival_date=arrival_date, mawb_number=mawb_number, hawb_number=hawb_number)
+        aif_cargo_details = AIFCargoOperations(commodity=commodity,
+        num_of_packages=num_of_packages, actual_weight=actual_weight,
+        chargeable_weight=chargeable_weight, dimensions=dimensions, air_line=air_line,
+        transit_time=transit_time, route=route,
+        mawb_number=mawb_number, hawb_number=hawb_number)
         aif_cargo_details.save()
 
         air_freight_kg_net = request.POST.get('airfreight_net', None)
@@ -850,7 +867,7 @@ def postQuotation(request):
         aif_quotation = AIFQuotation(air_freight_kg_net=air_freight_kg_net, air_freight_kg_selling=air_freight_kg_selling, fuel_sur_charge_kg_net=fuel_sur_charge_kg_net, fuel_sur_charge_kg_selling=fuel_sur_charge_kg_selling, security_fees_kg_net=security_fees_kg_net, security_fees_kg_selling=security_fees_kg_selling, exw_charges_net=exw_charges_net, exw_charges_selling=exw_charges_selling, screening_fees_net=screening_fees_net, screening_fees_selling=screening_fees_selling, storage_net=storage_net, storage_selling=storage_selling, inland_net=inland_net, inland_selling=inland_selling, packing_net=packing_net, packing_selling=packing_selling, taxes_duties_net=taxes_duties_net, taxes_duties_selling=taxes_duties_selling, handling_fees_net=handling_fees_net, handling_fees_selling=handling_fees_selling, p_share_net=p_share_net, p_share_selling=p_share_selling)
         aif_quotation.save()
 
-        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, aif_cargo_details=aif_cargo_details, aif_quotation=aif_quotation, special_instructions=special_instructions)
+        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date, rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type, client=client, destination=destination, aif_cargo_details=aif_cargo_details, aif_quotation=aif_quotation, special_instructions=special_instructions)
         quotation.save()
 
     elif type == 'FCL':
@@ -896,7 +913,7 @@ def postQuotation(request):
         extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessels_available=vessels_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
-        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
+        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date, rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
         quotation.save()
 
     else:
@@ -944,7 +961,7 @@ def postQuotation(request):
         extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessels_available=vessels_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
-        quotation = Quotation(rate_request=rate_request, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
+        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date,rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
         quotation.save()
     if request.user.role == 'AD' or request.user.role == 'OP':
         return redirect('/admin/tasks/')

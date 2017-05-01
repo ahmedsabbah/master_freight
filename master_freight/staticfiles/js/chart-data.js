@@ -1,5 +1,4 @@
 var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
-console.log(trucker_numbers, trucker_names, 'tr');
 	var lineChartData = {
 			labels : ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			datasets : [

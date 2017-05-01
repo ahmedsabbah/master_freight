@@ -87,10 +87,10 @@
       <li {% if request.path == '/admin/employees/' %}class="active"{% endif %}><a href="/admin/employees/"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Employees</a></li>
       {% endif %}
 
-      {% if user.role != 'AC'%}
+      {% if user.role == 'AD'%}
       <li {% if request.path == '/admin/charts/' %}class="active"{% endif %}><a href="/admin/charts/"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
       {% endif %}
-      
+
       {% if user.role == 'AD' or user.role == 'SA'%}
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-1">

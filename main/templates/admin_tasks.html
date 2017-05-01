@@ -132,7 +132,7 @@ $(document).ready(function() {
 	var dataSet = [
 		{% for quotation in quotations %}
 		["{{quotation.id}}", "{{quotation.type}}", "{{quotation.client.client_name}}",
-		"{{quotation.sales_person.first_name}} {{quotation.sales_person.last_name}}",
+		"{{quotation.rate_request.sales_person.first_name}} {{quotation.rate_request.sales_person.last_name}}",
 		"{{quotation.operations_person.first_name}} {{quotation.operations_person.last_name}}",
 		"{{quotation.get_status_display}}", "{{quotation.created_date}}", "<a href='/quotation/{{quotation.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 		{% endfor %}

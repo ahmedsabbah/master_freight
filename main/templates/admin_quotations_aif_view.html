@@ -11,12 +11,12 @@
 									{% if user.role == 'AD' or user.role == 'SA' and quotation.offer == None %}
 									<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 									{% endif %}
-		              {% if user.role == 'AD' %}
+		              <!-- {% if user.role == 'AD' %}
 									<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
 									{% endif %}
 									{% if user.role == 'OP' and quotation.operations_person.id == user.id %}
 		              <button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
-		              {% endif %}
+		              {% endif %} -->
 								</div>
 								<div class="panel-body">
 									<div id="updateStatus" class="row">
