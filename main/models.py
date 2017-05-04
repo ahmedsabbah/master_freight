@@ -51,7 +51,7 @@ class Client(models.Model):
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
     def __str__(self):
-        return self.name
+        return self.client_name
 class Trucker(models.Model):
     company_name = models.CharField(max_length=200, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)

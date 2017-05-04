@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^client/list/$', views.listClient, name='listClient'),
     url(r'^client/(?P<pk>[0-9]+)/view/$', views.getClient, name='getClient'),
 
+    url(r'^clientSelectHandler/$', views.clientSelectHandler, name='clientSelect'),
+
     url(r'^trucker/new/$', views.createTrucker, name='createTrucker'),
     url(r'^trucker/list/$', views.listTrucker, name='listTrucker'),
     url(r'^trucker/(?P<pk>[0-9]+)/view/$', views.getTrucker, name='getTrucker'),

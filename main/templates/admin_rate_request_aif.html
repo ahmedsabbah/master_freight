@@ -18,7 +18,7 @@
 										<div class="row">
 											<label class="col-sm-2 control-label" for="client">Client</label>
 											<div class="col-sm-2">
-												<select class=" form-control" name="client">
+												<select id="client_select" class=" form-control" name="client">
 													{% for client in clients %}
 													<option value="{{ client.id }}">{{ client.client_name }}</option>
 													{% endfor %}
@@ -311,4 +311,27 @@
 				</div>
 			</div>
 		</div>
+{% endblock %}
+
+{% block extra_script%}
+<script type="text/javascript">
+	$("#client_select").change(function () {
+     var optionSelected = $(this).find("option:selected");
+     var valueSelected  = optionSelected.val();
+     var textSelected   = optionSelected.text();
+		 $.ajax({
+			 url : "/clientSelectHandler/",
+			 type : "GET",
+			 data : {"id" : valueSelected},
+			 dataType : "json",
+			 success : function(client_data){
+				 $('#company_name').val(client_data.company_name);
+				 $('#phone').val(client_data.phone);
+				 $('#contact').val(client_data.contact);
+				 $('#extra_info').val(client_data.extra_info);
+				 $('#email').val(client_data.email);
+			 }
+		 });
+  });
+</script>
 {% endblock %}

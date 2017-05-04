@@ -6,6 +6,7 @@ from django.core import serializers
 from django.http.response import HttpResponse ,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 def main(request):
     if not request.user.is_authenticated():
@@ -223,9 +224,15 @@ def getClient(request, pk):
     offers = Offer.objects.filter(client=client,status='D')
     return render(request, 'client_account_view.html', {'client': client, 'offers': offers})
 
+def clientSelectHandler(request):
+   client_id = request.GET["id"]
+   client = Client.objects.get(pk=client_id)
+   print client
+   return JsonResponse({'company_name':client.client_name,
+   'contact': client.op_contact, 'phone': client.op_phone, 'email': client.op_email,
+   'extra_info': client.notes})
 
 ####### TRUCKER ########
-
 def createTrucker(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
