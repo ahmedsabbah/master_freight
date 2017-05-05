@@ -103,6 +103,13 @@ def getAdminCharts(request):
     offers_done = []
     trucker_numbers = []
     trucker_names = []
+    shipping_line_numbers = []
+    shipping_line_names = []
+    total_offer_count = Offer.objects.count()
+    percentage_acc_count =round(Offer.objects.filter(status='A').count()/float(total_offer_count)*100)
+    percentage_rej_count = round(Offer.objects.filter(status='R').count()/float(total_offer_count)*100)
+    percentage_done_count = round(Offer.objects.filter(status='D').count()/float(total_offer_count)*100)
+    percentage_pending_count = round(Offer.objects.filter(status='S').count()/float(total_offer_count)*100)
     for month in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
         aif_requests.append(RateRequest.objects.filter(created_date__month=month, type="AIF").count())
         lcl_requests.append(RateRequest.objects.filter(created_date__month=month, type="LCL").count())
@@ -111,12 +118,21 @@ def getAdminCharts(request):
         offers_acc.append(Offer.objects.filter(created_date__month=month, status="A").count())
         offers_rej.append(Offer.objects.filter(created_date__month=month, status="R").count())
         offers_done.append(Offer.objects.filter(created_date__month=month, status="D").count())
+
     for trucker in Trucker.objects.all():
         trucker_numbers.append(trucker.quotations.count())
         trucker_names.append(trucker.company_name)
+
+
+    for shipping_line in ShippingLine.objects.all():
+        shipping_line_numbers.append(shipping_line.sea_rate_requests.count())
+        shipping_line_names.append(shipping_line.name)
     return render(request, 'admin_charts.html', {'aif_requests': aif_requests,
     'lcl_requests': lcl_requests, 'fcl_requests': fcl_requests, 'offers_acc': offers_acc,
-    'offers_rej': offers_rej, 'offers_done': offers_done, 'trucker_numbers': trucker_numbers, 'trucker_names': trucker_names})
+    'offers_rej': offers_rej, 'offers_done': offers_done, 'trucker_numbers': trucker_numbers, 'trucker_names': trucker_names,
+    'shipping_line_numbers': shipping_line_numbers, 'shipping_line_names': shipping_line_names, 'total_offer_count': total_offer_count,
+    'percentage_acc_count': percentage_acc_count, 'percentage_rej_count': percentage_rej_count, 'percentage_done_count': percentage_done_count,
+    'percentage_pending_count': percentage_pending_count})
 
 ################################
 
@@ -320,7 +336,7 @@ def deleteShippingLine(request, pk):
         if request.user.role == 'AD':
             shipping_line = ShippingLine.objects.get(pk=pk)
             shipping_line.delete()
-            return HttpResponseRedirect('/admin/tasks')
+            return HttpResponseRedirect('/shipping_line/list/')
         else:
             response = HttpResponse(content_type='application/json')
             response.status_code = 401

@@ -40,20 +40,23 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 			labels : ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			datasets : [
 				{
-					fillColor : "rgba(220,220,220,0.5)",
-					strokeColor : "rgba(220,220,220,0.8)",
-					highlightFill: "rgba(220,220,220,0.75)",
-					highlightStroke: "rgba(220,220,220,1)",
-					data : offers_acc.slice(1, -1).split(',')
-				},
-				{
+					label: "Accepted",
 					fillColor : "rgba(48, 164, 255, 0.2)",
 					strokeColor : "rgba(48, 164, 255, 0.8)",
 					highlightFill : "rgba(48, 164, 255, 0.75)",
 					highlightStroke : "rgba(48, 164, 255, 1)",
+					data : offers_acc.slice(1, -1).split(',')
+				},
+				{
+					label: "Rejected",
+					fillColor : "rgba(220,220,220,0.5)",
+					strokeColor : "rgba(220,220,220,0.8)",
+					highlightFill: "rgba(220,220,220,0.75)",
+					highlightStroke: "rgba(220,220,220,1)",
 					data : offers_rej.slice(1, -1).split(',')
 				},
 				{
+					label: "Done",
 					fillColor : "rgba(225, 86, 38, 0.2)",
 					strokeColor : "rgba(225, 86, 38, 0.8)",
 					highlightFill : "rgba(225, 86, 38, 0.75)",
@@ -66,80 +69,70 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 	var pieData = []
 	trucker_numbers = trucker_numbers.replace(/ /g,'').slice(1, -1).split(',')
 	trucker_names = trucker_names.slice(1, -1).split(',')
-	console.log(trucker_names, 'nms');
 	for (var i = 0; i < trucker_numbers.length; i++) {
-		console.log(trucker_numbers[i],trucker_names[i].trim().slice(6,-5), 'tsttt');
 		pieData.push({
 			value: trucker_numbers[i],
 			label: trucker_names[i].trim().slice(6,-5),
 			color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)
 		})
 	}
-	// var pieData = [
-	// 			{
-	// 				value: 300,
-	// 				color:"#30a5ff",
-	// 				highlight: "#62b9fb",
-	// 				label: "Blue"
-	// 			},
-	// 			{
-	// 				value: 50,
-	// 				color: "#ffb53e",
-	// 				highlight: "#fac878",
-	// 				label: "Orange"
-	// 			},
-	// 			{
-	// 				value: 100,
-	// 				color: "#1ebfae",
-	// 				highlight: "#3cdfce",
-	// 				label: "Teal"
-	// 			},
-	// 			{
-	// 				value: 120,
-	// 				color: "#f9243f",
-	// 				highlight: "#f6495f",
-	// 				label: "Red"
-	// 			}
+
+	var doughnutData = []
+	shipping_line_numbers = shipping_line_numbers.replace(/ /g,'').slice(1, -1).split(',')
+	shipping_line_names = shipping_line_names.slice(1, -1).split(',')
+
+	for (var i = 0; i < shipping_line_numbers.length; i++) {
+		// if (shipping_line_numbers[i] > 0) {
+			console.log(shipping_line_numbers[i], shipping_line_names[i].trim().slice(6,-5));
+			doughnutData.push({
+				value: Math.floor(shipping_line_numbers[i]),
+					// value: Math.floor(shipping_line_numbers[i]/shipping_line_numbers.length*100),
+				label: shipping_line_names[i].trim().slice(6,-5),
+				color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)
+			})
+		// }
+	}
+
+	// var doughnutData = [
+	// 				{
+	// 					value: 2,
+	// 					color:"#30a5ff",
+	// 					highlight: "#62b9fb",
+	// 					label: "Exercitationem"
+	// 				},
+	// 				{
+	// 					value: 1,
+	// 					color: "#ffb53e",
+	// 					highlight: "#fac878",
+	// 					label: "Animi error ab minima voluptatem et rerum ut voluptates recusandae Voluptatum elit sint voluptas"
+	// 				},
+	// 				{
+	// 					value: 1,
+	// 					color: "#1ebfae",
+	// 					highlight: "#3cdfce",
+	// 					label: "Autem excepturi a et est non mollitia deserunt est magna qui cillum ex nostrud aut sapiente ullamco aute sunt ex"
+	// 				},
+	// 				{
+	// 					value: 5,
+	// 					color: "#f9243f",
+	// 					highlight: "#f6495f",
+	// 					label: "Evelyn Mccoy"
+	// 				}
 	//
-	// 		];
-
-	var doughnutData = [
-					{
-						value: 300,
-						color:"#30a5ff",
-						highlight: "#62b9fb",
-						label: "Blue"
-					},
-					{
-						value: 50,
-						color: "#ffb53e",
-						highlight: "#fac878",
-						label: "Orange"
-					},
-					{
-						value: 100,
-						color: "#1ebfae",
-						highlight: "#3cdfce",
-						label: "Teal"
-					},
-					{
-						value: 120,
-						color: "#f9243f",
-						highlight: "#f6495f",
-						label: "Red"
-					}
-
-				];
+	// 			];
 
 window.onload = function(){
 	var chart1 = document.getElementById("line-chart").getContext("2d");
 	window.myLine = new Chart(chart1).Line(lineChartData, {
 		responsive: true
 	});
+	document.getElementById('line-legend').innerHTML = window.myLine.generateLegend();
 	var chart2 = document.getElementById("bar-chart").getContext("2d");
 	window.myBar = new Chart(chart2).Bar(barChartData, {
 		responsive : true
 	});
+	document.getElementById('bar-legend').innerHTML = window.myBar.generateLegend();
+
 	var chart3 = document.getElementById("doughnut-chart").getContext("2d");
 	window.myDoughnut = new Chart(chart3).Doughnut(doughnutData, {responsive : true
 	});
