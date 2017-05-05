@@ -274,12 +274,14 @@
 										<div class="row">
 											<label class="col-sm-2 control-label" for="client">Term</label>
 											<div class="col-sm-2">
-												<select class=" form-control" name="shipment_term">
-													{% for term in shipment_terms %}
-													<option value="{{ term.id }}">{{ term.title }}</option>
-													{% endfor %}
+												<select id="shipment_term" name="shipment_term" class="form-control">
+													<option value="EX">Ex-Work</option>
+													<option value="FAS">F.A.S</option>
+													<option value="FOB">F.O.B</option>
+													<option value="CF">C & F</option>
+													<option value="CIF">C.I.F</option>
+													<option value="OTH">Other</option>
 												</select>
-												<!-- <input id="client_name" name="client_name" type="text" placeholder="" class="form-control"> -->
 											</div>
 										</div>
 									</div>
@@ -333,5 +335,6 @@
 			 }
 		 });
   });
+		$("select:not(#client_select)").prepend("<option value=''>N/A</option>").val('');
 </script>
 {% endblock %}

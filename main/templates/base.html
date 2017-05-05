@@ -30,6 +30,7 @@
   <script src="{% static "js/lumino.glyphs.js" %}"></script>
 
   <script src="{% static "js/dataTables.altEditor.free.js" %}"></script>
+
   {% block extra_styling %}
   {% endblock %}
   <style media="screen">
@@ -113,11 +114,11 @@
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
             </a>
           </li>
-          <li {% if request.path == '/rate_request/sales/new/' %}class="active"{% endif %}>
+          <!-- <li {% if request.path == '/rate_request/sales/new/' %}class="active"{% endif %}>
             <a class="" href="/rate_request/sales/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> Sales Rate Request
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
       {% endif %}

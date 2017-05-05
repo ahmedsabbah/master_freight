@@ -26,15 +26,15 @@ urlpatterns = [
     url(r'^trucker/new/$', views.createTrucker, name='createTrucker'),
     url(r'^trucker/list/$', views.listTrucker, name='listTrucker'),
     url(r'^trucker/(?P<pk>[0-9]+)/view/$', views.getTrucker, name='getTrucker'),
-    # url(r'^trucker/(?P<pk>[0-9]+)/delete/$', views.deleteTrucker, name='deleteTrucker'),
+    url(r'^trucker/(?P<pk>[0-9]+)/delete/$', views.deleteTrucker, name='deleteTrucker'),
 
-    url(r'^shipment_term/new/$', views.createShipmentTerm, name='createShipmentTerm'),
-    url(r'^shipment_term/list/$', views.listShipmentTerm, name='listTShipmentTerm'),
-    url(r'^shipment_term/(?P<pk>[0-9]+)/view/$', views.getShipmentTerm, name='getShipmentTerm'),
+    # url(r'^shipment_term/new/$', views.createShipmentTerm, name='createShipmentTerm'),
+    # url(r'^shipment_term/list/$', views.listShipmentTerm, name='listTShipmentTerm'),
+    # url(r'^shipment_term/(?P<pk>[0-9]+)/view/$', views.getShipmentTerm, name='getShipmentTerm'),
     #
     url(r'^shipping_line/new/$', views.createShippingLine, name='createShippingLine'),
     url(r'^shipping_line/list/$', views.listShippingLine, name='listShippingLine'),
-    # url(r'^shipping_line/(?P<pk>[0-9]+)/delete/$', views.deleteShippingLine, name='deleteShippingLine'),
+    url(r'^shipping_line/(?P<pk>[0-9]+)/delete/$', views.deleteShippingLine, name='deleteShippingLine'),
 
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
     url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),

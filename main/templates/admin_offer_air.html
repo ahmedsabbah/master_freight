@@ -241,3 +241,10 @@
 					</div>
 				</div>
  {% endblock %}
+
+ {% block extra_script%}
+ <script type="text/javascript">
+
+  $("select:not(#status)").prepend("<option value=''>N/A</option>").val('');
+ </script>
+ {% endblock %}

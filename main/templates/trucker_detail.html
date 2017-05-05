@@ -6,7 +6,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           Trucker Account
-          <!-- <a href="/rate_request/{{rate_request.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete trucker </a> -->
+          {% if user.role == 'AD' %}
+          <a href="/trucker/{{trucker.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Trucker </a>
+          {% endif %}
         </div>
         <div class="panel-body">
           <h4 class="text-primary">Trucker Information:</h4>

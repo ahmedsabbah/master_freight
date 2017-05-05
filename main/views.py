@@ -274,6 +274,22 @@ def getTrucker(request, pk):
     trucker = Trucker.objects.get(pk=pk)
     return render(request, 'trucker_detail.html', {'trucker': trucker})
 
+def deleteTrucker(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        if request.user.role == 'AD':
+            trucker = Trucker.objects.get(pk=pk)
+            trucker.delete()
+            return HttpResponseRedirect('/admin/tasks')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except Trucker.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
 ####### ShippingLine ########
 
 def createShippingLine(request):
@@ -297,37 +313,54 @@ def listShippingLine(request):
     shipping_lines = ShippingLine.objects.all()
     return render(request, 'shipping_line_list.html', {'shipping_lines': shipping_lines})
 
+def deleteShippingLine(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        if request.user.role == 'AD':
+            shipping_line = ShippingLine.objects.get(pk=pk)
+            shipping_line.delete()
+            return HttpResponseRedirect('/admin/tasks')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except ShippingLine.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
+
 ####### Shipment Term ########
-
-def createShipmentTerm(request):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
-    if request.method == 'POST':
-        title = request.POST.get('title', None)
-        ex_work = request.POST.get('ex_work', None)
-        fas = request.POST.get('fas', None)
-        fob = request.POST.get('fob', None)
-        cf = request.POST.get('cnf', None)
-        cif = request.POST.get('cif', None)
-        others = request.POST.get('others', None)
-        shipment_term = ShipmentTerm(title=title,ex_work=ex_work, fas=fas, fob=fob, cf=cf, cif=cif, others=others)
-        shipment_term.save()
-
-    return render(request, 'shipment_term_add.html')
-
-def listShipmentTerm(request):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
-
-    shipment_terms = ShipmentTerm.objects.all()
-    return render(request, 'shipment_term_list.html', {'shipment_terms': shipment_terms})
-
-
-def getShipmentTerm(request, pk):
-    if not request.user.is_authenticated():
-        return redirect('/login/')
-    shipment_term = ShipmentTerm.objects.get(pk=pk)
-    return render(request, 'shipment_term_detail.html', {'shipment_term': shipment_term})
+#
+# def createShipmentTerm(request):
+#     if not request.user.is_authenticated():
+#         return redirect('/login/')
+#     if request.method == 'POST':
+#         title = request.POST.get('title', None)
+#         ex_work = request.POST.get('ex_work', None)
+#         fas = request.POST.get('fas', None)
+#         fob = request.POST.get('fob', None)
+#         cf = request.POST.get('cnf', None)
+#         cif = request.POST.get('cif', None)
+#         others = request.POST.get('others', None)
+#         shipment_term = ShipmentTerm(title=title,ex_work=ex_work, fas=fas, fob=fob, cf=cf, cif=cif, others=others)
+#         shipment_term.save()
+#
+#     return render(request, 'shipment_term_add.html')
+#
+# def listShipmentTerm(request):
+#     if not request.user.is_authenticated():
+#         return redirect('/login/')
+#
+#     shipment_terms = ShipmentTerm.objects.all()
+#     return render(request, 'shipment_term_list.html', {'shipment_terms': shipment_terms})
+#
+#
+# def getShipmentTerm(request, pk):
+#     if not request.user.is_authenticated():
+#         return redirect('/login/')
+#     shipment_term = ShipmentTerm.objects.get(pk=pk)
+#     return render(request, 'shipment_term_detail.html', {'shipment_term': shipment_term})
 
 ####### Rate Request #########
 
@@ -338,10 +371,9 @@ def getAIFRateRequest(request):
     #     return render(request, 'sales_rate_request_aif.html')
     if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
-        shipment_terms = ShipmentTerm.objects.all()
         shipping_lines = ShippingLine.objects.all()
         return render(request, 'admin_rate_request_aif.html', {'clients': clients,
-        'shipment_terms': shipment_terms, 'shipping_lines': shipping_lines})
+        'shipping_lines': shipping_lines})
     else:
         return redirect('/')
 
@@ -352,10 +384,9 @@ def getFCLRateRequest(request):
     #     return render(request, 'sales_rate_request_fcl.html')
     if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
-        shipment_terms = ShipmentTerm.objects.all()
         shipping_lines = ShippingLine.objects.all()
         return render(request, 'admin_rate_request_fcl.html',{'clients': clients,
-         'shipment_terms': shipment_terms, 'shipping_lines': shipping_lines})
+        'shipping_lines': shipping_lines})
     else:
         return redirect('/')
 
@@ -366,8 +397,7 @@ def getLCLRateRequest(request):
     #     return render(request, 'sales_rate_request_lcl.html')
     if request.user.role == 'AD' or request.user.role == 'SA':
         clients = Client.objects.all()
-        shipment_terms = ShipmentTerm.objects.all()
-        return render(request, 'admin_rate_request_lcl.html',{'clients': clients, 'shipment_terms': shipment_terms})
+        return render(request, 'admin_rate_request_lcl.html',{'clients': clients})
     else:
         return redirect('/')
 
@@ -382,7 +412,7 @@ def postRateRequest(request):
     sales_person = request.user
     type = request.POST.get('type', None)
     client = Client.objects.get(pk=request.POST.get('client', None))
-    shipment_term = ShipmentTerm.objects.get(pk=request.POST.get('shipment_term', None))
+    # shipment_term = ShipmentTerm.objects.get(pk=request.POST.get('shipment_term', None))
     # name = request.POST.get('client_name', None)
     # company_name = request.POST.get('company_name', None)
     # contact = request.POST.get('contact', None)
@@ -433,7 +463,7 @@ def postRateRequest(request):
         rate_request = RateRequest(sales_person=sales_person, type=type,
         client=client, destination=destination, final_delivery_destination=final_delivery_destination,
         required_delivery_time_within=required_delivery_time_within,
-        imo_class=imo_class, shipment_term=shipment_term, preferred_shipping_line=preferred_shipping_line,
+        imo_class=imo_class, preferred_shipping_line=preferred_shipping_line,
         other_shipping_line=other_shipping_line, aif_cargo_details=aif_cargo_details,
         payment_term=payment_term, special_instructions=special_instructions)
         rate_request.save()
@@ -454,7 +484,7 @@ def postRateRequest(request):
         rate_request = RateRequest(sales_person=sales_person, type=type,
          client=client, destination=destination, final_delivery_destination=final_delivery_destination,
           required_delivery_time_within=required_delivery_time_within,
-          imo_class=imo_class, shipment_term=shipment_term,
+          imo_class=imo_class,
           fcl_cargo_details=fcl_cargo_details, preferred_shipping_line=preferred_shipping_line,
           other_shipping_line=other_shipping_line, payment_term=payment_term,
           special_instructions=special_instructions)
@@ -470,7 +500,7 @@ def postRateRequest(request):
         lcl_cargo_details = LCLCargoSales(quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight, pieces=pieces, packing=packing)
         lcl_cargo_details.save()
 
-        rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, shipment_term=shipment_term, lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions)
+        rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions)
         rate_request.save()
 
     if request.user.role == 'SA' or request.user.role == 'AD':

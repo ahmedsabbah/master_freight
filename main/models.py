@@ -22,7 +22,7 @@ class Client(models.Model):
 
     client_name = models.CharField(max_length=200, blank=True, null=True)
     company_name = models.CharField(max_length=200, blank=True, null=True)
-    client_type = models.CharField(max_length=2, choices=TYPE_CHOICES, default='IN')
+    client_type = models.CharField(max_length=2, choices=TYPE_CHOICES, default='IN', null=True, blank=True)
     client_address = models.CharField(max_length=200, blank=True, null=True)
     commodity = models.CharField(max_length=200, blank=True, null=True)
     business_phone = models.CharField(max_length=100, blank=True, null=True)
@@ -112,15 +112,6 @@ class IMOClass(models.Model):
     hazardous = models.CharField(max_length=200, blank=True, null=True)
     non_hazardous = models.CharField(max_length=200, blank=True, null=True)
 
-class ShipmentTerm(models.Model):
-    title =  models.CharField(max_length=200, blank=True, null=True)
-    ex_work = models.CharField(max_length=200, blank=True, null=True)
-    fas = models.CharField(max_length=200, blank=True, null=True)
-    fob = models.CharField(max_length=200, blank=True, null=True)
-    cf = models.CharField(max_length=200, blank=True, null=True)
-    cif = models.CharField(max_length=200, blank=True, null=True)
-    others = models.TextField(blank=True, null=True)
-
 class RateRequest(models.Model):
     TYPE_CHOICES = (
         ('AIF', 'AIF'),
@@ -133,6 +124,14 @@ class RateRequest(models.Model):
         ('OS', 'Offer Sent'),
         ('OA', 'Offer Accepted'),
         ('DO', 'Done')
+    )
+    SHIPMENT_TERM_CHOICES = (
+        ('EX','Ex-Work'),
+        ('FAS', 'F.A.S'),
+        ('FOB', 'F.O.B'),
+        ('CF', 'C & F'),
+        ('CIF', 'C.I.F'),
+        ('OTH', 'Other')
     )
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -147,15 +146,17 @@ class RateRequest(models.Model):
     preferred_shipping_line = models.ForeignKey('main.ShippingLine', related_name='rate_requests', null=True, blank=True)
     other_shipping_line = models.ForeignKey('main.ShippingLine', related_name='other_rate_requests', null=True, blank=True)
     imo_class = models.OneToOneField('main.IMOClass', related_name='rate_request', blank=True, null=True)
-    shipment_term = models.ForeignKey('main.ShipmentTerm', related_name='rate_requests', blank=True, null=True)
+    shipment_term =  models.CharField(max_length=3, choices=SHIPMENT_TERM_CHOICES, default='OTH', null=True, blank=True)
     payment_term = models.CharField(max_length=200, blank=True, null=True)
     special_instructions = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SO')
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SO', null=True, blank=True)
     class Meta:
         verbose_name = 'Rate Request'
         verbose_name_plural = 'Rate Requests'
     def __str__(self):
         return self.client.name
+    def status_verbose(self):
+        return dict(RateRequest.STATUS_CHOCIES)[self.status]
 
 class AIFCargoOperations(models.Model):
     commodity = models.CharField(max_length=200, blank=True, null=True)
@@ -293,12 +294,15 @@ class Quotation(models.Model):
     lcl_quotation = models.OneToOneField('main.LCLQuotation', related_name='quotation', blank=True, null=True)
     extra_notes = models.OneToOneField('main.ExtraNotes', related_name='quotation', blank=True, null=True)
     special_instructions = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SS')
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='SS', null=True, blank=True)
     class Meta:
         verbose_name = 'Quotation'
         verbose_name_plural = 'Quotations'
     def __str__(self):
         return self.client.name
+
+    def status_verbose(self):
+        return dict(Quotation.STATUS_CHOCIES)[self.status]
 
 class AirQuotation(models.Model):
     air_freight_kg = models.CharField(max_length=200, blank=True, null=True)
@@ -351,7 +355,7 @@ class Offer(models.Model):
     client = models.ForeignKey('main.Client', related_name='offers', blank=True, null=True)
     air_quotation = models.OneToOneField('main.AirQuotation', related_name='offer', blank=True, null=True)
     sea_quotation = models.OneToOneField('main.SeaQuotation', related_name='offer', blank=True, null=True)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='S')
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='S', null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name = 'Offer'

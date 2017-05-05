@@ -390,3 +390,10 @@
               </div>
             </div>
    {% endblock %}
+
+	 {% block extra_script%}
+	 <script type="text/javascript">
+
+	  $("select:not(#client_select)").prepend("<option value=''>N/A</option>").val('');
+	 </script>
+	 {% endblock %}

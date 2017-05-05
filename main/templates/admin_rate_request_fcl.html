@@ -306,5 +306,6 @@
 					 }
 				 });
 		  });
+			$("select:not(#client_select)").prepend("<option value=''>N/A</option>").val('');
 		</script>
 		{% endblock %}
