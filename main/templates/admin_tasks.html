@@ -95,7 +95,10 @@ $(document).ready(function() {
 
 	var dataSet = [
 		{% for rate_request in rate_requests %}
-		["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.client_name}}", "{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}", "{{rate_request.get_status_display}}", "{{rate_request.created_date}}", "<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
+		["{{rate_request.id}}", "{{rate_request.type}}", "{{rate_request.client.client_name}}",
+		"{{rate_request.sales_person.first_name}} {{rate_request.sales_person.last_name}}",
+		"{{rate_request.get_status_display}}", "{{rate_request.created_date}}",
+		"<a href='/rate_request/{{rate_request.id}}/view/'>View</a>"]{% if not forloop.last %} ,{% endif %}
 		{% endfor %}
 	];
 

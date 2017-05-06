@@ -106,10 +106,17 @@ def getAdminCharts(request):
     shipping_line_numbers = []
     shipping_line_names = []
     total_offer_count = Offer.objects.count()
-    percentage_acc_count =round(Offer.objects.filter(status='A').count()/float(total_offer_count)*100)
-    percentage_rej_count = round(Offer.objects.filter(status='R').count()/float(total_offer_count)*100)
-    percentage_done_count = round(Offer.objects.filter(status='D').count()/float(total_offer_count)*100)
-    percentage_pending_count = round(Offer.objects.filter(status='S').count()/float(total_offer_count)*100)
+    if total_offer_count !=0:
+        percentage_acc_count =round(Offer.objects.filter(status='A').count()/float(total_offer_count)*100)
+        percentage_rej_count = round(Offer.objects.filter(status='R').count()/float(total_offer_count)*100)
+        percentage_done_count = round(Offer.objects.filter(status='D').count()/float(total_offer_count)*100)
+        percentage_pending_count = round(Offer.objects.filter(status='S').count()/float(total_offer_count)*100)
+    else:
+        percentage_acc_count = 0
+        percentage_rej_count = 0
+        percentage_done_count = 0
+        percentage_pending_count = 0
+
     for month in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
         aif_requests.append(RateRequest.objects.filter(created_date__month=month, type="AIF").count())
         lcl_requests.append(RateRequest.objects.filter(created_date__month=month, type="LCL").count())

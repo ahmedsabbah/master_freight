@@ -299,7 +299,7 @@ class Quotation(models.Model):
         verbose_name = 'Quotation'
         verbose_name_plural = 'Quotations'
     def __str__(self):
-        return self.client.name
+        return self.client.client_name
 
     def status_verbose(self):
         return dict(Quotation.STATUS_CHOCIES)[self.status]

@@ -76,11 +76,19 @@
 													</div>
 												</div>
 												<hr/>
-                        <h4 class="text-primary">Offer Details:</h4>
+
+                        <div class ="row">
+                          <h4 class="text-primary col-sm-1">Offer Details:</h4>
+                          <label class="col-sm-2 control-label" for="">Net Cost</label>
+                          <label class="col-sm-2 control-label" for="">Selling</label>
+                        </div>
 
                         <div class="form-group">
                           <div class="row">
                             <label class="col-sm-2 control-label" for="air_freight_kg">AIRFREIGHT/KG</label>
+                            <div class="col-sm-2">
+                              <input disabled id="airfreight" name="airfreight_net" type="text" value="{{quotation.aif_quotation.air_freight_kg_net}}" class="form-control">
+                            </div>
                             <div class="col-sm-2">
                               <input id="airfreight" name="air_freight_kg" type="text" placeholder="" class="form-control">
                             </div>
@@ -89,7 +97,10 @@
 
                         <div class="form-group">
                           <div class="row">
-                            <label class="col-sm-2 control-label" for="fuel_sur_charge_kg">FUEL SUERCHARGE/KG</label>
+                            <label class="col-sm-2 control-label" for="fuel_sur_charge_kg">FUEL SURCHARGE/KG</label>
+                            <div class="col-sm-2">
+                              <input disabled id="fuel_suercharge" name="fuel_surcharge_net" type="text" value="{{quotation.aif_quotation.fuel_sur_charge_kg_net}}" placeholder="" class="form-control">
+                            </div>
                             <div class="col-sm-2">
                               <input id="fuel_suercharge" name="fuel_sur_charge_kg" type="text" placeholder="" class="form-control">
                             </div>
@@ -100,6 +111,9 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="security_fees_kg">SECURITY FEES/KG</label>
                             <div class="col-sm-2">
+                              <input disabled id="security_fees" name="security_fees_net" type="text" placeholder="" value="{{quotation.aif_quotation.security_fees_kg_net}}" class="form-control">
+                            </div>
+                            <div class="col-sm-2">
                               <input id="security_fees" name="security_fees_kg" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
@@ -108,6 +122,9 @@
                         <div class="form-group">
                           <div class="row">
                             <label class="col-sm-2 control-label" for="exw_charges">EXW - CHARGES</label>
+                            <div class="col-sm-2">
+                              <input disabled id="exw_charges" name="exw_charges_net" type="text" placeholder="" value="{{quotation.aif_quotation.exw_charges_net}}" class="form-control">
+                            </div>
                             <div class="col-sm-2">
                               <input id="exw_charges" name="exw_charges" type="text" placeholder="" class="form-control">
                             </div>
@@ -118,6 +135,9 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
                             <div class="col-sm-2">
+                              <input disabled id="screening_fees" name="screening_fees_net" type="text" placeholder="" value="{{quotation.aif_quotation.screening_fees_net}}"class="form-control">
+                            </div>
+                            <div class="col-sm-2">
                               <input id="screening_fees" name="screening_fees" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
@@ -127,27 +147,36 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="storage">STORAGE</label>
                             <div class="col-sm-2">
+                              <input disabled id="storage" name="storage_net" type="text" placeholder="" value="{{quotation.aif_quotation.storage_net}}" class="form-control">
+                            </div>
+                            <div class="col-sm-2">
                               <input id="storage" name="storage" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
 
-												<div class="form-group">
-	                        <div class="row">
-	                          <label class="col-sm-2 control-label" for="inland">In-land</label>
-	                          <div class="col-sm-2">
-	                            <select class=" form-control" name="inland">
-	                              {% for trucker in truckers %}
-	                              <option value="{{ trucker.id }}">{{ trucker.company_name }}</option>
-	                              {% endfor %}
-	                            </select>
-	                          </div>
-	                        </div>
-	                      </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <label class="col-sm-2 control-label" for="inland">INLAND</label>
+                            <div class="col-sm-2">
+                              <input disabled id="inland" name="inland_net" type="text" placeholder="" value="{{quotation.aif_quotation.inland_net}}" class="form-control">
+                            </div>
+														<div class="col-sm-2">
+															<select class=" form-control" name="inland">
+																{% for trucker in truckers %}
+																<option value="{{ trucker.id }}">{{ trucker.company_name }}</option>
+																{% endfor %}
+															</select>
+														</div>
+                          </div>
+                        </div>
 
                         <div class="form-group">
                           <div class="row">
                             <label class="col-sm-2 control-label" for="packing">PACKING</label>
+                            <div class="col-sm-2">
+                              <input disabled id="packing" name="packing_net" type="text" placeholder="" value="{{quotation.aif_quotation.packing_net}}" class="form-control">
+                            </div>
                             <div class="col-sm-2">
                               <input id="packing" name="packing" type="text" placeholder="" class="form-control">
                             </div>
@@ -158,6 +187,9 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="taxes_duties">TAXES & DUTIES</label>
                             <div class="col-sm-2">
+                              <input disabled id="taxes_n_duties" name="taxes_n_duties_net" type="text" value="{{quotation.aif_quotation.taxes_duties_net}}" placeholder="" class="form-control">
+                            </div>
+                            <div class="col-sm-2">
                               <input id="taxes_n_duties" name="taxes_duties" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
@@ -167,16 +199,10 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="handling_fees">HANDLING FEES</label>
                             <div class="col-sm-2">
-                              <input id="handling_fees" name="handling_fees" type="text" placeholder="" class="form-control">
+                              <input disabled id="handling_fees" name="handling_fees_net" type="text" placeholder="" value="{{quotation.aif_quotation.handling_fees_net}}" class="form-control">
                             </div>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
                             <div class="col-sm-2">
-                              <input id="official_receipts" name="official_receipts" type="text" placeholder="" class="form-control">
+                              <input id="handling_fees" name="handling_fees" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
@@ -185,7 +211,20 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
                             <div class="col-sm-2">
+                              <input disabled id="p_share" name="p_share_net" type="text" placeholder="" value="{{quotation.aif_quotation.p_share_net}}" class="form-control">
+                            </div>
+                            <div class="col-sm-2">
                               <input id="p_share" name="p_share" type="text" placeholder="" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+
+												<hr>
+												<div class="form-group">
+                          <div class="row">
+                            <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
+                            <div class="col-sm-4">
+                              <input id="official_receipts" name="official_receipts" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
@@ -193,7 +232,7 @@
                         <div class="form-group">
                           <div class="row">
                             <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                               <input id="other_notes" name="other_notes" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
@@ -202,7 +241,7 @@
                         <div class="form-group">
                           <div class="row">
                             <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                               <input id="offer_validity" name="offer_validity" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
