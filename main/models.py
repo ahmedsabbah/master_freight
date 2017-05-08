@@ -361,4 +361,4 @@ class Offer(models.Model):
         verbose_name = 'Offer'
         verbose_name_plural = 'Offers'
     def __str__(self):
-        return self.client.name
+        return self.client.client_name

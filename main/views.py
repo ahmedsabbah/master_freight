@@ -435,7 +435,8 @@ def postRateRequest(request):
     sales_person = request.user
     type = request.POST.get('type', None)
     client = Client.objects.get(pk=request.POST.get('client', None))
-    # shipment_term = ShipmentTerm.objects.get(pk=request.POST.get('shipment_term', None))
+
+    shipment_term = request.POST.get('shipment_term', None)
     # name = request.POST.get('client_name', None)
     # company_name = request.POST.get('company_name', None)
     # contact = request.POST.get('contact', None)
@@ -480,15 +481,21 @@ def postRateRequest(request):
         aif_cargo_details = AIFCargoSales(quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight, pieces=pieces, packing=packing, dimensions=dimensions)
         aif_cargo_details.save()
 
-        preferred_shipping_line = ShippingLine.objects.get(pk=request.POST.get('preferred_shipping_line', None))
-        other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
+        if request.POST.get('preferred_shipping_line'):
+            preferred_shipping_line = ShippingLine.objects.get(pk=request.POST.get('preferred_shipping_line', None))
+        else:
+            preferred_shipping_line = None
+        if request.POST.get('other_shipping_line'):
+            other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
+        else:
+            other_shipping_line = None
 
         rate_request = RateRequest(sales_person=sales_person, type=type,
         client=client, destination=destination, final_delivery_destination=final_delivery_destination,
         required_delivery_time_within=required_delivery_time_within,
         imo_class=imo_class, preferred_shipping_line=preferred_shipping_line,
         other_shipping_line=other_shipping_line, aif_cargo_details=aif_cargo_details,
-        payment_term=payment_term, special_instructions=special_instructions)
+        payment_term=payment_term, special_instructions=special_instructions, shipment_term=shipment_term)
         rate_request.save()
 
     elif type == 'FCL':
@@ -510,7 +517,7 @@ def postRateRequest(request):
           imo_class=imo_class,
           fcl_cargo_details=fcl_cargo_details, preferred_shipping_line=preferred_shipping_line,
           other_shipping_line=other_shipping_line, payment_term=payment_term,
-          special_instructions=special_instructions)
+          special_instructions=special_instructions, shipment_term=shipment_term)
         rate_request.save()
 
     else:
@@ -523,7 +530,11 @@ def postRateRequest(request):
         lcl_cargo_details = LCLCargoSales(quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight, pieces=pieces, packing=packing)
         lcl_cargo_details.save()
 
-        rate_request = RateRequest(sales_person=sales_person, type=type, client=client, destination=destination, final_delivery_destination=final_delivery_destination, required_delivery_time_within=required_delivery_time_within, imo_class=imo_class, lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions)
+        rate_request = RateRequest(sales_person=sales_person, type=type,
+        client=client, destination=destination, final_delivery_destination=final_delivery_destination,
+        required_delivery_time_within=required_delivery_time_within, imo_class=imo_class,
+        lcl_cargo_details=lcl_cargo_details, payment_term=payment_term, special_instructions=special_instructions
+        , shipment_term=shipment_term)
         rate_request.save()
 
     if request.user.role == 'SA' or request.user.role == 'AD':
@@ -654,7 +665,12 @@ def postOffer(request):
         exw_charges = request.POST.get('exw_charges', None)
         screening_fees = request.POST.get('screening_fees', None)
         storage = request.POST.get('storage', None)
-        inland = Trucker.objects.get(pk=request.POST.get('inland', None))
+
+        if request.POST.get('inland'):
+            inland = Trucker.objects.get(pk=request.POST.get('inland', None))
+        else:
+            inland = None
+
         packing = request.POST.get('packing', None)
         taxes_duties = request.POST.get('taxes_duties', None)
         handling_fees = request.POST.get('handling_fees', None)
@@ -731,8 +747,12 @@ def editOffer(request, pk):
         if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
 
             offer.status = request.POST.get('status', offer.status)
-            # offer.sales_person = request.POST.get('sales_person', offer.sales_person)
             offer.save()
+            if request.POST.get('status', offer.status) == 'A':
+                offer.quotation.status = 'OA'
+            elif request.POST.get('status', offer.status) == 'D':
+                offer.quotation.status = 'DO'
+            offer.quotation.save()
             return HttpResponseRedirect('/admin/tasks')
         else:
             response = HttpResponse(content_type='application/json')
@@ -1053,13 +1073,19 @@ def viewQuotation(request, pk):
         return redirect('/login/')
     try:
         quotation = Quotation.objects.get(pk=pk)
+        offer_accepted = False;
+        for offer in quotation.offers.all():
+            if offer.status == 'A':
+                offer_accepted = offer_accepted or True
+            else:
+                offer_accepted = offer_accepted or False
         if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role == 'OP' or (request.user.role == 'AC' and quotation.offers.first().status == 'A'):
             if quotation.type == 'AIF':
-                return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation })
+                return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
             elif quotation.type == 'FCL':
-                return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation })
+                return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
             elif quotation.type == 'LCL':
-                return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation })
+                return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
         return redirect('/')
     except Quotation.DoesNotExist:
         return redirect('/404/')
