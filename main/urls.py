@@ -65,6 +65,7 @@ urlpatterns = [
     url(r'^offer/(?P<pk>[0-9]+)/edit/$', views.editOffer, name='editOffer'),
     url(r'^offer/(?P<pk>[0-9]+)/delete/$', views.deleteOffer, name='deleteOffer'),
     url(r'^offer/(?P<pk>[0-9]+)/view/$', views.viewOffer, name='viewOffer'),
+    url(r'^offer/(?P<pk>[0-9]+)/view_client_format/$', views.viewOfferClientFormat, name='viewOfferClientFormat'),
 
     url(r'^track_offer/(?P<pk>.*)/$', views.trackOffer, name='trackOffer'),
 

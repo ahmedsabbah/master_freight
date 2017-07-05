@@ -148,7 +148,7 @@
         <svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Truckers <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
         </a>
         <ul class="children expand" id="sub-item-2">
-          {% if user.role == 'AD' or user.role == 'SA'%}
+          {% if user.role == 'AD' %}
           <li {% if request.path == '/trucker/new/' %}class="active"{% endif %}>
             <a class="" href="/trucker/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Trucker

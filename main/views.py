@@ -787,6 +787,24 @@ def viewOffer(request, pk):
     except Offer.DoesNotExist:
         return redirect('/404/')
 
+def viewOfferClientFormat(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        offer = Offer.objects.get(pk=pk)
+        print offer.reference
+        if request.user.role == 'AD' or (request.user.role == 'SA' and offer.sales_person.id == request.user.id):
+            eligible = True
+            if offer.type == 'A':
+                return render(request, 'admin_offer_client_air_view.html', { 'offer': offer,  'eligible': eligible })
+            elif offer.type == 'S':
+                return render(request, 'admin_offer_client_sea_view.html', { 'offer': offer , 'eligible': eligible})
+
+        else:
+            return redirect('/')
+    except Offer.DoesNotExist:
+        return redirect('/404/')
+
 def deleteOffer(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')

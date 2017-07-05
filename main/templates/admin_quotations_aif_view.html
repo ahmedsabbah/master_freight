@@ -8,8 +8,10 @@
 									{% if user.role != 'AC'%}
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
 									{% endif %}
-									{% if user.role == 'AD' or user.role == 'SA' and quotation.offer == None %}
-									<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
+									{% if user.role == 'AD' or user.role == 'SA' and quotation.offer == None%}
+										{% if not offer_accepted %}
+										<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
+										{% endif %}
 									{% endif %}
 									{% if offer_accepted %}
 			              {% if user.role == 'AD' %}
