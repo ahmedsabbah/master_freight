@@ -68,7 +68,7 @@ class Trucker(models.Model):
         verbose_name = 'Trucker'
         verbose_name_plural = 'Truckers'
     def __str__(self):
-        return self.company_name
+        return str(self.company_name)
 
 class Destination(models.Model):
     port_of_loading = models.CharField(max_length=200, blank=True, null=True)
@@ -123,6 +123,7 @@ class RateRequest(models.Model):
         ('QR', 'Quotation Received'),
         ('OS', 'Offer Sent'),
         ('OA', 'Offer Accepted'),
+        ('OR', 'Offer Rejected'),
         ('DO', 'Done')
     )
     SHIPMENT_TERM_CHOICES = (
@@ -154,7 +155,7 @@ class RateRequest(models.Model):
         verbose_name = 'Rate Request'
         verbose_name_plural = 'Rate Requests'
     def __str__(self):
-        return self.client.name
+        return self.client.client_name
     def status_verbose(self):
         return dict(RateRequest.STATUS_CHOCIES)[self.status]
 
@@ -271,7 +272,9 @@ class Quotation(models.Model):
     )
     STATUS_CHOICES = (
         ('SS', 'Sent To Sales'),
+        ('OC', 'Offer Created'),
         ('OA', 'Offer Accepted'),
+        ('OR', 'Offer Rejected'),
         ('DO', 'Done')
     )
     rate_request = models.ForeignKey('main.RateRequest', related_name='quotations', blank=True, null=True)
@@ -285,7 +288,7 @@ class Quotation(models.Model):
     client = models.ForeignKey('main.Client', related_name='quotations', blank=True, null=True)
     agent_details = models.CharField(max_length=200, blank=True, null=True)
     co_loader = models.CharField(max_length=200, blank=True, null=True)
-    destination = models.OneToOneField('main.Destination', related_name='quotation', blank=True, null=True)
+    destination = models.ForeignKey('main.Destination', related_name='quotations', blank=True, null=True)
     aif_cargo_details = models.OneToOneField('main.AIFCargoOperations', related_name='quotation', blank=True, null=True)
     fcl_cargo_details = models.OneToOneField('main.FCLCargoOperations', related_name='quotation', blank=True, null=True)
     lcl_cargo_details = models.OneToOneField('main.LCLCargoOperations', related_name='quotation', blank=True, null=True)

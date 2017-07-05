@@ -647,6 +647,7 @@ def postOffer(request):
         return redirect('/400/')
     try:
         quotation = Quotation.objects.get(pk=quotation_id)
+        rate_request = quotation.rate_request
     except Quotation.DoesNotExist:
         return redirect('/404/')
 
@@ -732,6 +733,12 @@ def postOffer(request):
             fail_silently=False,
         )
 
+    if offer:
+        quotation.status = 'OC'
+        rate_request.status = 'OS'
+        quotation.save()
+        rate_request.save()
+
     if request.user.role == 'AD' or request.user.role == 'SA':
         return redirect('/admin/tasks/')
     else:
@@ -748,12 +755,23 @@ def editOffer(request, pk):
 
             offer.status = request.POST.get('status', offer.status)
             offer.save()
+
+            rate_request = offer.quotation.rate_request
+            print "rate request"
+            print rate_request
             if request.POST.get('status', offer.status) == 'A':
                 offer.quotation.status = 'OA'
+                rate_request.status = 'OA'
             elif request.POST.get('status', offer.status) == 'D':
                 offer.quotation.status = 'DO'
+                rate_request.status = 'DO'
+            elif request.POST.get('status', offer.status) == 'R':
+                offer.quotation.status = 'OR'
+                rate_request.status = 'OR'
+            rate_request.save()
             offer.quotation.save()
             return HttpResponseRedirect('/admin/tasks')
+
         else:
             response = HttpResponse(content_type='application/json')
             response.status_code = 401
@@ -1061,6 +1079,11 @@ def postQuotation(request):
 
         quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date,rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, co_loader=co_loader, lcl_cargo_details=lcl_cargo_details, lcl_quotation=lcl_quotation, extra_notes=extra_notes)
         quotation.save()
+
+    if quotation:
+        rate_request.status = 'QR'
+        rate_request.save()
+
     if request.user.role == 'AD' or request.user.role == 'OP':
         return redirect('/admin/tasks/')
     else:
@@ -1093,7 +1116,7 @@ def viewQuotation(request, pk):
         quotation = Quotation.objects.get(pk=pk)
         offer_accepted = False;
         for offer in quotation.offers.all():
-            if offer.status == 'A':
+            if offer.status == 'A' or quotation.status == 'OC':
                 offer_accepted = offer_accepted or True
             else:
                 offer_accepted = offer_accepted or False
