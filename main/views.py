@@ -7,6 +7,8 @@ from django.http.response import HttpResponse ,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def main(request):
     if not request.user.is_authenticated():
@@ -216,6 +218,7 @@ def createClient(request):
             notes = request.POST.get('notes', None)
             issued_by = request.POST.get('issued_by', None)
             authorized_by = request.POST.get('authorized_by', None)
+            extra_information = request.POST.get('extra_information', None)
             client = Client(client_name=client_name, client_type=client_type,
                 client_address=client_address, commodity=commodity,
                 business_phone=business_phone, alt_phone=alt_phone, fax=fax,
@@ -226,7 +229,8 @@ def createClient(request):
                 finance_phone=finance_phone, client_id_number=client_id_number,
                 credit_period=credit_period, credit_limit=credit_limit,
                 reference_name=reference_name, reference_phone= reference_phone,
-                notes=notes, issued_by=issued_by, authorized_by=authorized_by)
+                notes=notes, issued_by=issued_by, authorized_by=authorized_by,
+                extra_information=extra_information)
             client.save()
         return render(request, 'client_account.html')
     else:
@@ -244,7 +248,7 @@ def getClient(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
     client = Client.objects.get(pk=pk)
-    offers = Offer.objects.filter(client=client,status='D')
+    offers = Offer.objects.filter(client=client)
     return render(request, 'client_account_view.html', {'client': client, 'offers': offers})
 
 def clientSelectHandler(request):
@@ -294,8 +298,18 @@ def listTrucker(request):
 def getTrucker(request, pk):
     if not request.user.is_authenticated():
         return redirect('/login/')
+    offers=[]
     trucker = Trucker.objects.get(pk=pk)
-    return render(request, 'trucker_detail.html', {'trucker': trucker})
+    air_quotations = AirQuotation.objects.filter(inland=trucker)
+    for quot in air_quotations:
+        # print quot.offer
+        try:
+            offers.append(quot.offer)
+        except ObjectDoesNotExist:
+            pass
+
+    # offers = Offer.objects.filter(air_quotation__inline=trucker)
+    return render(request, 'trucker_detail.html', {'trucker': trucker, 'offers': offers})
 
 def deleteTrucker(request, pk):
     if not request.user.is_authenticated():
@@ -335,6 +349,21 @@ def listShippingLine(request):
 
     shipping_lines = ShippingLine.objects.all()
     return render(request, 'shipping_line_list.html', {'shipping_lines': shipping_lines})
+
+def getShippingLine(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    offers=[]
+    shipping_line = ShippingLine.objects.get(pk=pk)
+    sea_quotations = SeaQuotation.objects.filter(shipping_line=shipping_line)
+    for quot in sea_quotations:
+        try:
+            offers.append(quot.offer)
+        except ObjectDoesNotExist:
+            pass
+
+    # offers = Offer.objects.filter(air_quotation__inline=trucker)
+    return render(request, 'shipping_line_detail.html', {'shipping_line': shipping_line, 'offers': offers})
 
 def deleteShippingLine(request, pk):
     if not request.user.is_authenticated():
@@ -658,7 +687,8 @@ def postOffer(request):
     for admin in admins:
         email_list.append(admin.email)
     email_list.append(sales_person.email)
-    print email_list
+
+    terms = request.POST.get('terms', None)
     if type == 'A':
         air_freight_kg = request.POST.get('air_freight_kg', None)
         fuel_sur_charge_kg = request.POST.get('fuel_sur_charge_kg', None)
@@ -682,7 +712,7 @@ def postOffer(request):
         air_quotation = AirQuotation(air_freight_kg=air_freight_kg, fuel_sur_charge_kg=fuel_sur_charge_kg, security_fees_kg=security_fees_kg, exw_charges=exw_charges, screening_fees=screening_fees, storage=storage, inland=inland, packing=packing, taxes_duties=taxes_duties, handling_fees=handling_fees, official_receipts=official_receipts, p_share=p_share, other_notes=other_notes, offer_validity=offer_validity)
         air_quotation.save()
 
-        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation)
+        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, air_quotation=air_quotation, terms=terms)
         offer.save()
 
         # quotation.sales_person = sales_person
@@ -716,7 +746,7 @@ def postOffer(request):
         sea_quotation = SeaQuotation(shipping_line=shipping_line, ocean_freight=ocean_freight, thc=thc, transporation=transporation, transfer=transfer, clearance=clearance, bl_fees=bl_fees, telex_release=telex_release, free_time_at_destination=free_time_at_destination, vessels=vessels, payment_credit=payment_credit, official_receipts=official_receipts, other_notes=other_notes, offer_validity=offer_validity)
         sea_quotation.save()
 
-        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation)
+        offer = Offer(quotation=quotation, type=type, sales_person=sales_person, client=client, sea_quotation=sea_quotation, terms=terms)
         offer.save()
 
         quotation.sales_person = sales_person

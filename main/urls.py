@@ -34,6 +34,7 @@ urlpatterns = [
     #
     url(r'^shipping_line/new/$', views.createShippingLine, name='createShippingLine'),
     url(r'^shipping_line/list/$', views.listShippingLine, name='listShippingLine'),
+    url(r'^shipping_line/(?P<pk>[0-9]+)/view/$', views.getShippingLine, name='getShippingLine'),
     url(r'^shipping_line/(?P<pk>[0-9]+)/delete/$', views.deleteShippingLine, name='deleteShippingLine'),
 
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),

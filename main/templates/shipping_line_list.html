@@ -60,7 +60,7 @@
 				{% for shipping_line in shipping_lines %}
 				["{{shipping_line.id}}", "{{shipping_line.name}}",
 				{% if user.role == 'AD'%}
-				"<a href='/shipping_line/{{shipping_line.id}}/delete/'>Delete</a>"
+				"<a href='/shipping_line/{{shipping_line.id}}/view/'>View</a>"
 				{% endif %}]
 				{% if not forloop.last %} ,{% endif %}
 				{% endfor %}
@@ -75,7 +75,7 @@
 			{% if user.role == 'AD'%}
 			,
 			{
-				title: "Delete"
+				title: "View"
 			}{% endif %}];
 
 			var myTable;

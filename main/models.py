@@ -47,6 +47,7 @@ class Client(models.Model):
     notes = models.TextField(max_length=250, blank=True, null=True)
     issued_by = models.CharField(max_length=100, blank=True, null=True)
     authorized_by = models.CharField(max_length=100, blank=True, null=True)
+    extra_information = models.CharField(max_length=300, blank=True, null=True)
     class Meta:
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
@@ -107,6 +108,8 @@ class LCLCargoSales(models.Model):
 
 class ShippingLine(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
+    def __str__(self):
+        return self.name
 
 class IMOClass(models.Model):
     hazardous = models.CharField(max_length=200, blank=True, null=True)
@@ -360,6 +363,7 @@ class Offer(models.Model):
     sea_quotation = models.OneToOneField('main.SeaQuotation', related_name='offer', blank=True, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='S', null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    terms = models.TextField(blank=True, null=True)
     class Meta:
         verbose_name = 'Offer'
         verbose_name_plural = 'Offers'

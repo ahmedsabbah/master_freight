@@ -1,0 +1,108 @@
+{% extends './base.html' %}
+{% load staticfiles %}
+{% load static %}
+
+{% block extra_styling %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"/>
+
+<style>
+table.dataTable tbody>tr.selected,
+table.dataTable tbody>tr>.selected {
+	background-color: #A2D3F6;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+          Shipping Line
+          {% if user.role == 'AD' %}
+          <a href="/shipping_line/{{shipping_line.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Shipping Line </a>
+          {% endif %}
+        </div>
+				<div class="panel-body">
+
+					<form class="form-horizontal" role="form" method="post" action="/shipping_line/new/">
+						<fieldset>
+							<br>
+							<!-- Text input-->
+							{% csrf_token %}
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Company Name:</label>
+									<div class="col-sm-2">
+										<p> {{shipping_line.name}}</p>
+									</div>
+								</div>
+							</div>
+							<hr/>
+						</fieldset>
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">Orders</div>
+        <div class="panel-body">
+          <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example3">
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block extra_script %}
+
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="{% static 'js/dataTables.altEditor.free.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+	var dataSet = [
+		{% for offer in offers %}
+		["{{ offer.id }}", "{{ offer.type }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
+		{% endfor %}
+	];
+
+	var columnDefs = [{
+		title: "ID"
+	}, {
+		title: "Type"
+	}, {
+		title: "Sales Person"
+	}, {
+		title: "Status"
+	}, {
+		title: "Date"
+	}, {
+		title: "View"
+	}];
+
+	var myTable;
+
+	myTable = $('#example3').DataTable({
+		"sPaginationType": "full_numbers",
+		data: dataSet,
+		columns: columnDefs,
+		responsive: true
+	});
+
+});
+</script>
+{% endblock %}
