@@ -74,15 +74,20 @@
 													<hr/>
                           <h4 class="text-primary">Destination:</h4>
 
-                          <div class="form-group">
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.receipt_place }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                               	<p>{{ rate_request.destination.loading_location_type }}</p>
+                                <p>{{ rate_request.port_loading }}</p>
                               </div>
                             </div>
                           </div>
@@ -91,11 +96,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
                               <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2 control-label">
-	                            	<p>{{ rate_request.destination.discharge_location_type }}</p>
+                             		<p>{{ rate_request.port_discharge }}</p>
                               </div>
                             </div>
                           </div>
@@ -108,11 +109,57 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="commodity">Commodity</label>
                               <div class="col-sm-2">
-                                <input id="commodity" name="commodity" type="text" placeholder="" class="form-control">
+                             		<p>{{ rate_request.aif_cargo_details.commodity }}</p>
                               </div>
                             </div>
                           </div>
 
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Length</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.aif_cargo_details.length }}</p>
+                              </div>
+                            </div>
+                          </div>
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Width</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.aif_cargo_details.width }}</p>
+                              </div>
+                            </div>
+                          </div>
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Height</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.aif_cargo_details.height }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.aif_cargo_details.chargeable_weight }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="air_line">Preferred Air-Line</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.preferred_shipping_line }}</p>
+                              </div>
+															<label class="col-sm-2 control-label" for="air_line">Other Air-Line</label>
+                              <div class="col-sm-2">
+                             		<p>{{ rate_request.other_shipping_line }}</p>
+                              </div>
+                            </div>
+                          </div>
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="no_of_packages">Number of Packages</label>
@@ -127,33 +174,6 @@
                               <label class="col-sm-2 control-label" for="actual_weight">Actual Weight</label>
                               <div class="col-sm-2">
                                 <input id="actual_weight" name="actual_weight" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
-                              <div class="col-sm-2">
-                                <input id="chargeable_weight" name="chargeable_weight" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2">
-                                <input id="dimensions" name="dimensions" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="air_line">Air-Line</label>
-                              <div class="col-sm-2">
-                                <input id="air_line" name="air_line" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -217,7 +237,6 @@
                           <div class ="row">
                             <h4 class="text-primary col-sm-1">Quotation:</h4>
                             <label class="col-sm-2 control-label" for="">Net Cost</label>
-                            <label class="col-sm-2 control-label" for="">Selling</label>
                           </div>
 
                           <div class="form-group">
@@ -225,9 +244,6 @@
                               <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
                               <div class="col-sm-2">
                                 <input id="airfreight" name="airfreight_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="airfreight" name="airfreight_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -238,9 +254,6 @@
                               <div class="col-sm-2">
                                 <input id="fuel_suercharge" name="fuel_surcharge_net" type="text" placeholder="" class="form-control">
                               </div>
-                              <div class="col-sm-2">
-                                <input id="fuel_suercharge" name="fuel_surcharge_selling" type="text" placeholder="" class="form-control">
-                              </div>
                             </div>
                           </div>
 
@@ -249,9 +262,6 @@
                               <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
                               <div class="col-sm-2">
                                 <input id="security_fees" name="security_fees_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="security_fees" name="security_fees_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -262,9 +272,6 @@
                               <div class="col-sm-2">
                                 <input id="exw_charges" name="exw_charges_net" type="text" placeholder="" class="form-control">
                               </div>
-                              <div class="col-sm-2">
-                                <input id="exw_charges" name="exw_charges_selling" type="text" placeholder="" class="form-control">
-                              </div>
                             </div>
                           </div>
 
@@ -273,9 +280,6 @@
                               <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
                               <div class="col-sm-2">
                                 <input id="screening_fees" name="screening_fees_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="screening_fees" name="screening_fees_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -286,9 +290,6 @@
                               <div class="col-sm-2">
                                 <input id="storage" name="storage_net" type="text" placeholder="" class="form-control">
                               </div>
-                              <div class="col-sm-2">
-                                <input id="storage" name="storage_selling" type="text" placeholder="" class="form-control">
-                              </div>
                             </div>
                           </div>
 
@@ -297,9 +298,6 @@
                               <label class="col-sm-2 control-label" for="inland">INLAND</label>
                               <div class="col-sm-2">
                                 <input id="inland" name="inland_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="inland" name="inland_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -310,9 +308,6 @@
                               <div class="col-sm-2">
                                 <input id="packing" name="packing_net" type="text" placeholder="" class="form-control">
                               </div>
-                              <div class="col-sm-2">
-                                <input id="packing" name="packing_selling" type="text" placeholder="" class="form-control">
-                              </div>
                             </div>
                           </div>
 
@@ -321,9 +316,6 @@
                               <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
                               <div class="col-sm-2">
                                 <input id="taxes_n_duties" name="taxes_n_duties_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="taxes_n_duties" name="taxes_n_duties_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -334,9 +326,6 @@
                               <div class="col-sm-2">
                                 <input id="handling_fees" name="handling_fees_net" type="text" placeholder="" class="form-control">
                               </div>
-                              <div class="col-sm-2">
-                                <input id="handling_fees" name="handling_fees_selling" type="text" placeholder="" class="form-control">
-                              </div>
                             </div>
                           </div>
 
@@ -345,9 +334,6 @@
                               <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
                               <div class="col-sm-2">
                                 <input id="p_share" name="p_share_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="p_share" name="p_share_selling" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>

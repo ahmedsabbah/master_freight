@@ -84,14 +84,19 @@
 
 									<div class="form-group">
 										<div class="row">
+											<label class="col-sm-2 control-label" for="receipt_place">Place Of Receipt</label>
+											<div class="col-sm-2">
+												<input id="receipt_place" name="receipt_place" type="text" placeholder="" class="form-control">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="row">
 											<label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
 											<div class="col-sm-2">
 												<input id="port_of_loading" name="port_of_loading" type="text" placeholder="" class="form-control">
 											</div>
-											<!-- <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-											<div class="col-sm-2">
-												<input id="location_type_loading" name="location_type_loading" type="text" placeholder="" class="form-control">
-											</div> -->
 										</div>
 									</div>
 
@@ -101,20 +106,12 @@
 											<div class="col-sm-2">
 												<input id="port_of_discharge" name="port_of_discharge" type="text" placeholder="" class="form-control">
 											</div>
-											<label class="col-sm-2 control-label" for="location_type_discharge">Place Of Receipt</label>
-											<div class="col-sm-2">
-												<input id="location_type_discharge" name="location_type_discharge" type="text" placeholder="" class="form-control">
-											</div>
-											<!-- <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-											<div class="col-sm-2">
-												<input id="location_type_discharge" name="location_type_discharge" type="text" placeholder="" class="form-control">
-											</div> -->
 										</div>
 									</div>
 
 									<hr/>
 
-									<h4 class="text-primary">Final Delivery Destination:</h4>
+									<h4 class="text-primary">Place Of Delivery:</h4>
 
 									<div class="form-group">
 										<div class="row">
@@ -145,19 +142,6 @@
 
 									<hr/>
 
-									<h4 class="text-primary">Required Delivery Time:</h4>
-
-									<div class="form-group">
-										<div class="row">
-											<label class="col-sm-2 control-label" for="delivery_time">Within</label>
-											<div class="col-sm-2">
-												<input id="delivery_time" name="delivery_time" type="text" placeholder="" class="form-control">
-											</div>
-										</div>
-									</div>
-
-									<hr/>
-
 									<h4 class="text-primary">Cargo Details:</h4>
 
 									<div class="form-group">
@@ -177,7 +161,14 @@
 											</div>
 										</div>
 									</div>
-
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-2 control-label" for="weight_per_piece">Weight / Piece</label>
+											<div class="col-sm-2">
+												<input id="weight_per_piece" name="weight_per_piece" type="text" placeholder="" class="form-control">
+											</div>
+										</div>
+									</div>
 									<div class="form-group">
 										<div class="row">
 											<label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
@@ -189,9 +180,34 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
+											<label class="col-sm-2 control-label" for="length">Length</label>
 											<div class="col-sm-2">
-												<input id="net_weight" name="net_weight" type="text" placeholder="" class="form-control">
+												<input id="length" name="length" type="text" placeholder="" class="form-control">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-2 control-label" for="width">Width</label>
+											<div class="col-sm-2">
+												<input id="width" name="width" type="text" placeholder="" class="form-control">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-2 control-label" for="height">Height</label>
+											<div class="col-sm-2">
+												<input id="height" name="height" type="text" placeholder="" class="form-control">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
+											<div class="col-sm-2">
+												<input id="chargeable_weight" name="chargeable_weight" type="text" placeholder="" class="form-control">
 											</div>
 										</div>
 									</div>
@@ -207,25 +223,13 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="packing">Chargeable Weight</label>
+											<label class="col-sm-2 control-label" for="packing">Packing</label>
 											<div class="col-sm-2">
 												<input id="packing" name="packing" type="text" placeholder="" class="form-control">
 											</div>
-											<!-- <label class="col-sm-2 control-label" for="packing">Packing</label>
-											<div class="col-sm-2">
-												<input id="packing" name="packing" type="text" placeholder="" class="form-control">
-											</div> -->
 										</div>
 									</div>
 
-									<div class="form-group">
-										<div class="row">
-											<label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-											<div class="col-sm-2">
-												<input id="dimensions" name="dimensions" type="text" placeholder="" class="form-control">
-											</div>
-										</div>
-									</div>
 
 									<hr/>
 
@@ -277,14 +281,17 @@
 
 									<hr/>
 
-									<h4 class="text-primary">Shipment Term:</h4>
+									<h4 class="text-primary">Term of Shipment:</h4>
 									<div class="form-group">
 										<div class="row">
 											<label class="col-sm-2 control-label" for="client">Term</label>
 											<div class="col-sm-2">
 												<select id="shipment_term" name="shipment_term" class="form-control">
 													<option value="EX">Ex-Work</option>
-													<option value="FAS">F.A.S</option>
+													<option value="DAP">D.A.P</option>
+													<option value="DDU">D.D.U</option>
+													<option value="DDP">D.D.P</option>
+													<option value="FCA">F.C.A</option>
 													<option value="FOB">F.O.B</option>
 													<option value="CF">C & F</option>
 													<option value="CIF">C.I.F</option>
@@ -294,16 +301,23 @@
 										</div>
 									</div>
 
-									<hr/>
-
+									<h4 class="text-primary">Shipping Terms:</h4>
 									<div class="form-group">
 										<div class="row">
-											<label class="col-sm-2 control-label" for="payment_term">Payment Term</label>
+											<label class="col-sm-2 control-label" for="shipping_terms">Term</label>
 											<div class="col-sm-2">
-												<input id="payment_term" name="payment_term" type="text" placeholder="" class="form-control">
+												<select id="shipping_terms" name="shipping_terms" class="form-control">
+													<option value="FILO">FILO</option>
+													<option value="FIOS">FIOS</option>
+													<option value="FIFO">FIFO</option>
+													<option value="LIFO">LIFO</option>
+													<option value="FLT">FLT</option>
+												</select>
 											</div>
 										</div>
 									</div>
+
+									<hr/>
 
 									<div class="form-group">
 										<div class="row">

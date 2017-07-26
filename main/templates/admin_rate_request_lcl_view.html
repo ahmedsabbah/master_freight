@@ -20,6 +20,15 @@
                           {% csrf_token %}
                           <input type="hidden" name="type" value="LCL">
 
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="client_name">Date Created:</label>
+	                            <div class="col-sm-2">
+	                           	<p>{{ rate_request.created_date }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
+
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
@@ -71,33 +80,32 @@
                           </div>
 													<hr/>
                           <h4 class="text-primary">Destination:</h4>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.receipt_place }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                               	<p>{{ rate_request.destination.loading_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.port_loading }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2 control-label">
-	                            	<p>{{ rate_request.destination.discharge_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
-
+	                        <div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
+	                            <div class="col-sm-2">
+	                           		<p>{{ rate_request.port_discharge }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 													<hr/>
 
 													<h4 class="text-primary">Final Delivery Destination:</h4>
@@ -131,18 +139,6 @@
 
 													<hr/>
 
-                          <h4 class="text-primary">Required Delivery Time:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="delivery_time">Within</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ rate_request.required_delivery_time_within }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<hr/>
 
                           <h4 class="text-primary">Cargo Details:</h4>
 
@@ -164,23 +160,57 @@
                             </div>
                           </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
-                              <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.lcl_cargo_details.gross_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="weight_per_piece">Weight / Piece</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.lcl_cargo_details.weight_per_piece }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.lcl_cargo_details.net_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
+	                        <div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.lcl_cargo_details.gross_weight }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
+
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="net_weight">Length</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.lcl_cargo_details.length }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="net_weight">Width</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.lcl_cargo_details.width }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="net_weight">Height</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.lcl_cargo_details.height }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
+
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="pieces">Total Volume</label>
+	                            <div class="col-sm-2">
+	                            <p>{{ rate_request.lcl_cargo_details.total_volume }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
                           <div class="form-group">
                             <div class="row">

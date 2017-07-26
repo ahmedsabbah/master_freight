@@ -13,14 +13,14 @@
 										<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 										{% endif %}
 									{% endif %}
-									<!-- {% if offer_accepted %}
+									{% if offer_accepted %}
 			              {% if user.role == 'AD' %}
-										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Quotation</button>
 										{% endif %}
 										{% if user.role == 'OP' and quotation.operations_person.id == user.id %}
-			              <button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+			              <button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Quotation</button>
 			              {% endif %}
-									{% endif %} -->
+									{% endif %}
 								</div>
 								<div class="panel-body">
 									<div id="updateStatus" class="row">
@@ -67,6 +67,15 @@
                           <!-- Text input-->
                           {% csrf_token %}
                           <input type="hidden" name="type" value="AIF">
+
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="client_name">Date Created</label>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.created_date }}</p>
+                              </div>
+                            </div>
+                          </div>
 
                           <div class="form-group">
                             <div class="row">
@@ -130,16 +139,20 @@
 													<hr/>
 
                           <h4 class="text-primary">Destination:</h4>
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ quotation.rate_request.receipt_place }}</p>
+                              </div>
+                            </div>
+                          </div>
 
-                          <div class="form-group">
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ quotation.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.destination.loading_location_type }}</p>
+                                <p>{{ quotation.rate_request.port_loading }}</p>
                               </div>
                             </div>
                           </div>
@@ -148,11 +161,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ quotation.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                          			<p>{{ quotation.destination.discharge_location_type }}</p>
+                             		<p>{{ quotation.rate_request.port_discharge }}</p>
                               </div>
                             </div>
                           </div>
@@ -161,11 +170,58 @@
 
                           <h4 class="text-primary">Cargo Details:</h4>
 
-                          <div class="form-group">
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_cargo_details.commodity }}</p>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.aif_cargo_details.commodity }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Length</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.aif_cargo_details.length }}</p>
+                              </div>
+                            </div>
+                          </div>
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Width</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.aif_cargo_details.width }}</p>
+                              </div>
+                            </div>
+                          </div>
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="dimensions">Height</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.aif_cargo_details.height }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.aif_cargo_details.chargeable_weight }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="air_line">Preferred Air-Line</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.preferred_shipping_line }}</p>
+                              </div>
+															<label class="col-sm-2 control-label" for="air_line">Other Air-Line</label>
+                              <div class="col-sm-2">
+                             		<p>{{ quotation.rate_request.other_shipping_line }}</p>
                               </div>
                             </div>
                           </div>
@@ -184,33 +240,6 @@
                               <label class="col-sm-2 control-label" for="actual_weight">Actual Weight</label>
                               <div class="col-sm-2 control-label">
                                <p>{{ quotation.aif_cargo_details.actual_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="chargeable_weight">Chargeable Weight</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_cargo_details.chargeable_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="dimensions">Dimensions</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.aif_cargo_details.dimensions }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="air_line">Air-Line</label>
-                              <div class="col-sm-2 control-label">
-                               <p>{{ quotation.aif_cargo_details.air_line }}</p>
                               </div>
                             </div>
                           </div>
@@ -283,7 +312,6 @@
                           <div class ="row">
                             <h4 class="text-primary col-sm-1">Quotation:</h4>
                             <label class="col-sm-2 control-label" for="">Net Cost</label>
-                            <label class="col-sm-2 control-label" for="">Selling</label>
                           </div>
 
                           <div class="form-group">
@@ -291,9 +319,6 @@
                               <label class="col-sm-2 control-label" for="airfreight">AIRFREIGHT/KG</label>
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.air_freight_kg_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.air_freight_kg_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -304,9 +329,6 @@
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.fuel_sur_charge_kg_net }}</p>
                               </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.fuel_sur_charge_kg_selling }}</p>
-                              </div>
                             </div>
                           </div>
 
@@ -315,9 +337,6 @@
                               <label class="col-sm-2 control-label" for="security_fees">SECURITY FEES/KG</label>
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.security_fees_kg_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.security_fees_kg_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -328,9 +347,6 @@
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.exw_charges_net }}</p>
                               </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.exw_charges_selling }}</p>
-                              </div>
                             </div>
                           </div>
 
@@ -339,9 +355,6 @@
                               <label class="col-sm-2 control-label" for="screening_fees">SCREENING FEES</label>
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.screening_fees_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.screening_fees_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -352,9 +365,6 @@
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.storage_net }}</p>
                               </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.storage_selling }}</p>
-                              </div>
                             </div>
                           </div>
 
@@ -363,9 +373,6 @@
                               <label class="col-sm-2 control-label" for="inland">INLAND</label>
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.inland_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.inland_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -376,9 +383,6 @@
                               <div class="col-sm-2 control-label">
                               	<p>{{ quotation.aif_quotation.packing_net }}</p>
                               </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.packing_selling }}</p>
-                              </div>
                             </div>
                           </div>
 
@@ -387,9 +391,6 @@
                               <label class="col-sm-2 control-label" for="taxes_n_duties">TAXES & DUTIES</label>
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.taxes_duties_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.taxes_duties_selling }}</p>
                               </div>
                             </div>
                           </div>
@@ -400,9 +401,6 @@
                               <div class="col-sm-2 control-label">
                                 <p>{{ quotation.aif_quotation.handling_fees_net }}</p>
                               </div>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.aif_quotation.handling_fees_selling }}</p>
-                              </div>
                             </div>
                           </div>
 
@@ -411,9 +409,6 @@
                               <label class="col-sm-2 control-label" for="p_share">P/SHARE</label>
                               <div class="col-sm-2 control-label">
                        					<p>{{ quotation.aif_quotation.p_share_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                               	<p>{{ quotation.aif_quotation.p_share_selling }}</p>
                               </div>
                             </div>
                           </div>

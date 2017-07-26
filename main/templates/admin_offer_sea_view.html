@@ -156,7 +156,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
                           <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.transporation }}</p>
+                              <p>{{ offer.sea_quotation.transportation }}</p>
                           </div>
                         </div>
                       </div>
@@ -172,14 +172,21 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE</label>
+                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.D</label>
                           <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.clearance }}</p>
+                              <p>{{ offer.sea_quotation.clearance_pod_selling }}</p>
                           </div>
                         </div>
                       </div>
 
-
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.L</label>
+                          <div class="col-sm-2">
+                              <p>{{ offer.sea_quotation.clearance_pol_selling}}</p>
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="form-group">
                         <div class="row">
@@ -203,7 +210,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="free_time_destination">FREE TIME AT DESTINATION</label>
                           <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.free_time_at_destination }}</p>
+                              <p>{{ offer.quotation.extra_notes.free_time_at_destination }}</p>
                           </div>
                         </div>
                       </div>
@@ -212,7 +219,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="vessels">VESSELS</label>
                           <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.vessels }}</p>
+                              <p>{{ offer.quotation.extra_notes.vessels_available }}</p>
                           </div>
                         </div>
                       </div>
@@ -230,7 +237,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
                           <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.official_receipts }}</p>
+                              <p>{{ offer.quotation.lcl_quotation.official_receipts_net }}</p>
                           </div>
                         </div>
                       </div>
@@ -248,7 +255,7 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
                           <div class="col-sm-2">
-                             <p>{{ offer.sea_quotation.offer_validity }}</p>
+                             <p>{{ offer.quotation.extra_notes.offer_validity }}</p>
                           </div>
                         </div>
                       </div>

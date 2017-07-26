@@ -83,11 +83,20 @@
                       </div>
                       <hr/>
 
-                      <h4 class="text-primary">Offer Details:</h4>
+                      <div class ="row">
+                        <h4 class="text-primary col-sm-1">Offer Details:</h4>
+                        <label class="col-sm-2 control-label" for="">Net Cost</label>
+                        <label class="col-sm-2 control-label" for="">Selling</label>
+                      </div>
+
 
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
+                          <div class="col-sm-2">
+                            <input disabled id="airfreight" name="airfreight_net"
+                            type="text" value="{{quotation.lcl_cargo_details.shipping_line}}" class="form-control">
+                          </div>
                           <div class="col-sm-2">
                             <select class=" form-control" name="shipping_line">
                               {% for shipping_line in shipping_lines %}
@@ -102,6 +111,9 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
                           <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="ocean_freight_net" type="text" value="{{quotation.lcl_quotation.ocean_freight_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
                             <input id="ocean_freight" name="ocean_freight" type="text" placeholder="" class="form-control">
                           </div>
 
@@ -112,6 +124,9 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="thc">T.H.C</label>
                           <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="thc_net" type="text" value="{{quotation.lcl_quotation.thc_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
                             <input id="thc" name="thc" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
@@ -120,6 +135,9 @@
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
+                          <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="transportation_net" type="text" value="{{quotation.lcl_quotation.transportation_net}}" placeholder="" class="form-control">
+                          </div>
                           <div class="col-sm-2">
                             <input id="transportation" name="transportation" type="text" placeholder="" class="form-control">
                           </div>
@@ -130,6 +148,9 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
                           <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="transfer_net" type="text" value="{{quotation.lcl_quotation.transfer_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
                             <input id="transfer" name="transfer" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
@@ -137,18 +158,34 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="clearance">CLEARANCE</label>
+                          <label class="col-sm-2 control-label" for="clearance">CLEARANCE P.O.L</label>
                           <div class="col-sm-2">
-                            <input id="clearance_pol" name="clearance" type="text" placeholder="" class="form-control">
+                            <input disabled id="fuel_suercharge" name="clearance_pol_net" type="text" value="{{quotation.lcl_quotation.clearance_pol_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
+                            <input id="clearance_pol" name="clearance_pol_selling" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
                       </div>
 
-
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="clearance">CLEARANCE P.O.D</label>
+                          <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="clearance_pod_net" type="text" value="{{quotation.lcl_quotation.clearance_pod_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
+                            <input id="clearance_pol" name="clearance_pod_selling" type="text" placeholder="" class="form-control">
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="form-group">
                         <div class="row">
                           <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
+                          <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="bl_fees_net" type="text" value="{{quotation.lcl_quotation.bl_fees_net}}" placeholder="" class="form-control">
+                          </div>
                           <div class="col-sm-2">
                             <input id="bl_fees" name="bl_fees" type="text" placeholder="" class="form-control">
                           </div>
@@ -159,25 +196,78 @@
                         <div class="row">
                           <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
                           <div class="col-sm-2">
+                            <input disabled id="fuel_suercharge" name="telex_release_net" type="text" value="{{quotation.lcl_quotation.telex_release_net}}" placeholder="" class="form-control">
+                          </div>
+                          <div class="col-sm-2">
                             <input id="telex_release" name="telex_release" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
                       </div>
+                      <hr/>
+
+                      <h4 class="text-primary">Extra Notes:</h4>
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="free_time_at_destination">FREE TIME AT DESTINATION</label>
-                          <div class="col-sm-2">
-                            <input id="free_time_destination" name="free_time_at_destination" type="text" placeholder="" class="form-control">
+                          <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.lcl_quotation.official_receipts_net }}</p>
                           </div>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="vessels">VESSELS</label>
-                          <div class="col-sm-2">
-                            <input id="vessels" name="vessels" type="text" placeholder="" class="form-control">
+                          <label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.extra_notes.free_time_at_destination }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="vessels_available">Vessels Available</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.extra_notes.vessels_available }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="route">Route</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.extra_notes.route }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="transit_time">Transit Time</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.extra_notes.transit_time }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="offer_validity">Offer Validity</label>
+                          <div class="col-sm-2 control-label">
+                            <p>{{ quotation.extra_notes.offer_validity }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr/>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
+                          <div class="col-sm-4 control-label">
+                          <p>{{ quotation.special_instructions }}</p>
                           </div>
                         </div>
                       </div>
@@ -193,27 +283,9 @@
 
                       <div class="form-group">
                         <div class="row">
-                          <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
-                          <div class="col-sm-2">
-                            <input id="official_receipts" name="official_receipts" type="text" placeholder="" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
                           <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
                           <div class="col-sm-2">
                             <input id="other_notes" name="other_notes" type="text" placeholder="" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
-                          <div class="col-sm-2">
-                            <input id="offer_validity" name="offer_validity" type="text" placeholder="" class="form-control">
                           </div>
                         </div>
                       </div>
