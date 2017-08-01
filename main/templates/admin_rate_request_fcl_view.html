@@ -4,7 +4,7 @@
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<span>FCL Rate Request</span>
+									<span>{{type}} Rate Request</span>
 									<a href="/rate_request/{{rate_request.id}}/delete/" class="btn btn-danger pull-right"> Delete Rate Request </a>
 									{% if user.role == 'AD' or user.role == 'OP'%}
 									<a href="/rate_request/{{rate_request.id}}/quotation/fcl/new/"
@@ -71,32 +71,32 @@
 
 
                           <h4 class="text-primary">Destination:</h4>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.receipt_place }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2">
-                               <p>{{ rate_request.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2">
-                               <p>{{ rate_request.destination.loading_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
+	                            <div class="col-sm-2">
+	                             <p>{{ rate_request.port_loading }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2">
-                                <p>{{ rate_request.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2">
-                              <p>{{ rate_request.destination.discharge_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
+	                        <div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
+	                            <div class="col-sm-2">
+	                           		<p>{{ rate_request.port_discharge }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
                           <h4 class="text-primary">Final Delivery Destination:</h4>
 
@@ -127,27 +127,7 @@
                             </div>
                           </div>
 
-                          <h4 class="text-primary">Required Delivery Time:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="delivery_time">Within</label>
-                              <div class="col-sm-2">
-                                <p>{{ rate_request.required_delivery_time_within }}</p>
-                              </div>
-                            </div>
-                          </div>
-
                           <h4 class="text-primary">Cargo Details:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="container_type">Container Type</label>
-                              <div class="col-sm-2">
-                            <p>{{ rate_request.fcl_cargo_details.container_type }}</p>
-                              </div>
-                            </div>
-                          </div>
 
                           <div class="form-group">
                             <div class="row">
@@ -167,6 +147,25 @@
                             </div>
                           </div>
 
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="container_type">Container Type</label>
+                              <div class="col-sm-2">
+                            <p>{{ rate_request.fcl_cargo_details.container_type }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="container_type">Special Equipment</label>
+                              <div class="col-sm-2">
+                            <p>{{ rate_request.fcl_cargo_details.special_equipment }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+													{% if type == 'IFCL' %}
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
@@ -178,12 +177,13 @@
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
+                              <label class="col-sm-2 control-label" for="net_weight">Tare Weight</label>
                               <div class="col-sm-2">
-                              <p>{{ rate_request.fcl_cargo_details.net_weight }}</p>
+                              <p>{{ rate_request.fcl_cargo_details.tare_weight }}</p>
                               </div>
                             </div>
                           </div>
+													{% endif %}
 
 
 
@@ -227,33 +227,32 @@
                             </div>
                           </div>
 
-                          <h4 class="text-primary">Shipment Term:</h4>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="shipment_term">Shipment Term</label>
-                              <div class="col-sm-2">
-                              <p>{{ rate_request.shipment_term }}</p>
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="shipment_term">Term of Shipment</label>
+	                            <div class="col-sm-2">
+	                           <p>{{ rate_request.shipment_term }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
-                          <br><br>
+	                        <br><br>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="payment_term">Payment Term</label>
-                              <div class="col-sm-2">
-                          <p>{{ rate_request.payment_term }}</p>
-                              </div>
-                            </div>
-                          </div>
+	                        <div class="form-group">
+	                          <div class="row">
+	                            <label class="col-sm-2 control-label" for="payment_term">Shipping Terms</label>
+	                            <div class="col-sm-2">
+	                            <p>{{ rate_request.shipping_terms }}</p>
+	                            </div>
+	                          </div>
+	                        </div>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
                               <div class="col-sm-4">
-                               <p>{{ rate_request.payment_term }}</p>
+                               <p>{{ rate_request.special_instructions }}</p>
                               </div>
                             </div>
                           </div>

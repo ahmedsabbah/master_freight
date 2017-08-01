@@ -95,15 +95,25 @@ class AIFCargoSales(models.Model):
     packing = models.CharField(max_length=200, blank=True, null=True)
 
 class FCLCargoSales(models.Model):
-    container_type = models.CharField(max_length=200, blank=True, null=True)
+    CONTAINER_TYPE_CHOICES = (
+        ('20STD', '20 STD'),
+        ('40STD', '40 STD'),
+        ('40HC', '40 HC'),
+    )
+    EQUIPMENT_TYPE_CHOICES = (
+        ('20RF', '20 RF'),
+        ('40RF', '40 RF'),
+        ('20OT', '20 OT'),
+        ('40OT', '40 OT'),
+        ('20FR', '20 FR'),
+        ('40FR', '40 FR'),
+    )
+    container_type = models.CharField(max_length=5, default="20STD", choices=CONTAINER_TYPE_CHOICES)
+    special_equipment = models.CharField(max_length=4, default="20RF", choices=EQUIPMENT_TYPE_CHOICES)
     quantity = models.CharField(max_length=200, blank=True, null=True)
     commodity = models.CharField(max_length=200, blank=True, null=True)
     gross_weight = models.CharField(max_length=200, blank=True, null=True)
-    weight_per_piece = models.CharField(max_length=200, blank=True, null=True)
-    length = models.CharField(max_length=200, blank=True, null=True)
-    width = models.CharField(max_length=200, blank=True, null=True)
-    height = models.CharField(max_length=200, blank=True, null=True)
-    total_volume = models.CharField(max_length=200, blank=True, null=True)
+    tare_weight = models.CharField(max_length=200, blank=True, null=True)
 
 class LCLCargoSales(models.Model):
     quantity = models.CharField(max_length=200, blank=True, null=True)
@@ -129,7 +139,8 @@ class IMOClass(models.Model):
 class RateRequest(models.Model):
     TYPE_CHOICES = (
         ('AIF', 'AIF'),
-        ('FCL', 'FCL'),
+        ('IFCL', 'FCL IMPORT'),
+        ('XFCL', 'FCL EXPORT'),
         ('LCL', 'LCL')
     )
     STATUS_CHOICES = (
@@ -158,7 +169,7 @@ class RateRequest(models.Model):
         ('LIFO', 'LIFO'),
         ('FLT', 'FLT'),
     )
-    type = models.CharField(max_length=3, choices=TYPE_CHOICES)
+    type = models.CharField(max_length=4, choices=TYPE_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
     sales_person = models.ForeignKey('authentication.User', related_name='rate_requests', blank=True, null=True)
     client = models.ForeignKey('main.Client', related_name='rate_requests', blank=True, null=True)
@@ -196,11 +207,6 @@ class AIFCargoOperations(models.Model):
 class FCLCargoOperations(models.Model):
 
     shipping_line = models.ForeignKey('main.ShippingLine', related_name='fcl_cargos', null=True, blank=True)
-    container_type = models.CharField(max_length=200, blank=True, null=True)
-    quantity = models.CharField(max_length=200, blank=True, null=True)
-    commodity = models.CharField(max_length=200, blank=True, null=True)
-    gross_weight = models.CharField(max_length=200, blank=True, null=True)
-    net_weight = models.CharField(max_length=200, blank=True, null=True)
 
 class LCLCargoOperations(models.Model):
     shipping_line = models.ForeignKey('main.ShippingLine', related_name='lcl_cargos', null=True, blank=True)
@@ -221,26 +227,26 @@ class AIFQuotation(models.Model):
     p_share_net = models.CharField(max_length=200, blank=True, null=True)
 
 class FCLQuotation(models.Model):
-    ocean_freight_net = models.CharField(max_length=200, blank=True, null=True)
-    ocean_freight_selling = models.CharField(max_length=200, blank=True, null=True)
-    thc_net = models.CharField(max_length=200, blank=True, null=True)
-    thc_selling = models.CharField(max_length=200, blank=True, null=True)
-    transportation_net = models.CharField(max_length=200, blank=True, null=True)
-    transportation_selling = models.CharField(max_length=200, blank=True, null=True)
-    transfer_net = models.CharField(max_length=200, blank=True, null=True)
-    transfer_selling = models.CharField(max_length=200, blank=True, null=True)
-    clearance_pol_net = models.CharField(max_length=200, blank=True, null=True)
-    clearance_pol_selling = models.CharField(max_length=200, blank=True, null=True)
-    clearance_pod_net = models.CharField(max_length=200, blank=True, null=True)
-    clearance_pod_selling = models.CharField(max_length=200, blank=True, null=True)
-    bl_fees_net = models.CharField(max_length=200, blank=True, null=True)
-    bl_fees_selling = models.CharField(max_length=200, blank=True, null=True)
-    telex_release_net = models.CharField(max_length=200, blank=True, null=True)
-    telex_release_selling = models.CharField(max_length=200, blank=True, null=True)
-    ex_work_net = models.CharField(max_length=200, blank=True, null=True)
-    ex_work_selling = models.CharField(max_length=200, blank=True, null=True)
+    ocean_freight = models.CharField(max_length=200, blank=True, null=True)
+    pre_carriage = models.CharField(max_length=200, blank=True, null=True)
+    thc_origin = models.CharField(max_length=200, blank=True, null=True)
+    custom_clearance_origin = models.CharField(max_length=200, blank=True, null=True)
+    documentation_origin = models.CharField(max_length=200, blank=True, null=True)
+    xray = models.CharField(max_length=200, blank=True, null=True)
+    baf = models.CharField(max_length=200, blank=True, null=True)
+    caf = models.CharField(max_length=200, blank=True, null=True)
+    others_origin = models.CharField(max_length=200, blank=True, null=True)
+    documentation_destination = models.CharField(max_length=200, blank=True, null=True)
+    thc_destination = models.CharField(max_length=200, blank=True, null=True)
+    storage = models.CharField(max_length=200, blank=True, null=True)
+    demurrage = models.CharField(max_length=200, blank=True, null=True)
+    custom_clearance_destination = models.CharField(max_length=200, blank=True, null=True)
+    road_cartage = models.CharField(max_length=200, blank=True, null=True)
+    on_carriage = models.CharField(max_length=200, blank=True, null=True)
+    others_destination = models.CharField(max_length=200, blank=True, null=True)
+    container_fees = models.CharField(max_length=200, blank=True, null=True)
+    delay = models.CharField(max_length=200, blank=True, null=True)
     official_receipts_net = models.CharField(max_length=200, blank=True, null=True)
-    official_receipts_selling = models.CharField(max_length=200, blank=True, null=True)
 
 class LCLQuotation(models.Model):
     ocean_freight_net = models.CharField(max_length=200, blank=True, null=True)
@@ -264,7 +270,8 @@ class ExtraNotes(models.Model):
 class Quotation(models.Model):
     TYPE_CHOICES = (
         ('AIF', 'AIF'),
-        ('FCL', 'FCL'),
+        ('IFCL', 'FCL IMPORT'),
+        ('XFCL', 'FCL EXPORT'),
         ('LCL', 'LCL')
     )
     STATUS_CHOICES = (
@@ -275,7 +282,7 @@ class Quotation(models.Model):
         ('DO', 'Done')
     )
     rate_request = models.ForeignKey('main.RateRequest', related_name='quotations', blank=True, null=True)
-    type = models.CharField(max_length=3, choices=TYPE_CHOICES)
+    type = models.CharField(max_length=4, choices=TYPE_CHOICES)
     current_location = models.CharField(max_length=200, null=True, blank=True)
     departure_date = models.CharField(max_length=200, blank=True, null=True)
     arrival_date = models.CharField(max_length=200, blank=True, null=True)

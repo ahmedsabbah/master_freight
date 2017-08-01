@@ -38,8 +38,9 @@ urlpatterns = [
     url(r'^shipping_line/(?P<pk>[0-9]+)/delete/$', views.deleteShippingLine, name='deleteShippingLine'),
 
     url(r'^rate_request/aif/new/$', views.getAIFRateRequest, name='getAIFRateRequest'),
-    url(r'^rate_request/fcl/new/$', views.getFCLRateRequest, name='getFCLRateRequest'),
-    url(r'^rate_request/lcl/new/$', views.getLCLRateRequest, name='getLCLRateRequest'),
+    url(r'^rate_request/lcl/new/$', views.getLCLRateRequest, name='getFCLRateRequest'),
+    url(r'^rate_request/ifcl/new/$', views.getIFCLRateRequest, name='getIFCLRateRequest'),
+    url(r'^rate_request/xfcl/new/$', views.getXFCLRateRequest, name='getXFCLRateRequest'),
     url(r'^rate_request/new/$', views.postRateRequest, name='postRateRequest'),
 
     url(r'^rate_request/(?P<pk>[0-9]+)/edit/$', views.editRateRequest, name='editRateRequest'),

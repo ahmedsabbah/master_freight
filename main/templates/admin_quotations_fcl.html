@@ -11,7 +11,7 @@
                         <br>
                           <!-- Text input-->
                           {% csrf_token %}
-                          <input type="hidden" name="type" value="FCL">
+                          <input type="hidden" name="type" value="{{type}}">
 													<input type="hidden" name="rate_request" value="{{rate_request.id}}">
 
 													<div class="form-group">
@@ -73,17 +73,23 @@
                             </div>
                           </div>
 													<hr/>
+
                           <h4 class="text-primary">Destination:</h4>
 
-                          <div class="form-group">
+													<div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+                              <div class="col-sm-2 control-label">
+                                <p>{{ rate_request.receipt_place }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                               	<p>{{ rate_request.destination.loading_location_type }}</p>
+                                <p>{{ rate_request.port_loading }}</p>
                               </div>
                             </div>
                           </div>
@@ -92,11 +98,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
                               <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2 control-label">
-	                            	<p>{{ rate_request.destination.discharge_location_type }}</p>
+                             		<p>{{ rate_request.port_discharge }}</p>
                               </div>
                             </div>
                           </div>
@@ -115,6 +117,61 @@
                           <br><hr/>
 
                           <h4 class="text-primary">Cargo Details:</h4>
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="quantity">Quantity</label>
+															<div class="col-sm-2">
+															 <p>{{ rate_request.fcl_cargo_details.quantity }}</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="commodity">Commodity</label>
+															<div class="col-sm-2">
+															 <p>{{ rate_request.fcl_cargo_details.commodity }}</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="container_type">Container Type</label>
+															<div class="col-sm-2">
+														<p>{{ rate_request.fcl_cargo_details.container_type }}</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="container_type">Special Equipment</label>
+															<div class="col-sm-2">
+														<p>{{ rate_request.fcl_cargo_details.special_equipment }}</p>
+															</div>
+														</div>
+													</div>
+
+													{% if type == 'IFCL' %}
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
+															<div class="col-sm-2">
+																<p>{{ rate_request.fcl_cargo_details.gross_weight }}</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="net_weight">Tare Weight</label>
+															<div class="col-sm-2">
+															<p>{{ rate_request.fcl_cargo_details.tare_weight }}</p>
+															</div>
+														</div>
+													</div>
+													{% endif %}
 
 													<div class="form-group">
 														<div class="row">
@@ -147,67 +204,18 @@
                             </div>
                           </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="container_type">Container Type</label>
-                              <div class="col-sm-2">
-                                <input id="container_type" name="container_type" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="quantity">Quantity</label>
-                              <div class="col-sm-2">
-                                <input id="quantity" name="quantity" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2">
-                                <input id="commodity" name="commodity" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
-                              <div class="col-sm-2">
-                                <input id="gross_weight" name="gross_weight" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
-                              <div class="col-sm-2">
-                                <input id="net_weight" name="net_weight" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
-
                           <hr/>
 
                           <div class ="row">
-                            <h4 class="text-primary col-sm-1">Quotation:</h4>
+                            <h4 class="text-primary col-sm-1">Origin Charges:</h4>
                             <label class="col-sm-2 control-label" for="">Net Cost</label>
-                            <label class="col-sm-2 control-label" for="">Selling</label>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
                               <div class="col-sm-2">
-                                <input id="ocean_freight" name="ocean_freight_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="ocean_freight" name="ocean_freight_selling" type="text" placeholder="" class="form-control">
+                                <input id="ocean_freight" name="ocean_freight" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -218,107 +226,183 @@
                               <div class="col-sm-2">
                                 <input id="thc" name="thc_net" type="text" placeholder="" class="form-control">
                               </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="transportation">PRE-CARRIAGE</label>
                               <div class="col-sm-2">
-                                <input id="thc" name="thc_selling" type="text" placeholder="" class="form-control">
+                                <input id="transportation" name="pre_carriage" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
+                              <label class="col-sm-2 control-label" for="transfer">CUSTOM ClEARANCE</label>
                               <div class="col-sm-2">
-                                <input id="transportation" name="transportation_net" type="text" placeholder="" class="form-control">
+                                <input id="transfer" name="custom_clearance_origin" type="text" placeholder="" class="form-control">
                               </div>
+                            </div>
+                          </div>
+
+													{% if type == 'IFCL' %}
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="clearance_pol">DOCUMENTATION</label>
                               <div class="col-sm-2">
-                                <input id="transportation" name="transportation_selling" type="text" placeholder="" class="form-control">
+                                <input id="clearance_pol" name="documentation_origin" type="text" placeholder="" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+													{% endif %}
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-sm-2 control-label" for="clearance_pod">X-RAY</label>
+                              <div class="col-sm-2">
+                                <input id="clearance_pod" name="xray" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
+                              <label class="col-sm-2 control-label" for="bl_fees">BAF</label>
                               <div class="col-sm-2">
-                                <input id="transfer" name="transfer_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="transfer" name="transfer_selling" type="text" placeholder="" class="form-control">
+                                <input id="bl_fees" name="baf" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
-                          <div class="form-group">
+													<div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE/P.O.L</label>
+                              <label class="col-sm-2 control-label" for="telex_release">CAF</label>
                               <div class="col-sm-2">
-                                <input id="clearance_pol" name="clearance_pol_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="clearance_pol" name="clearance_pol_selling" type="text" placeholder="" class="form-control">
+                                <input id="telex_release" name="caf" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
+													{% if type == 'XFCL'%}
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="telex_release">CONTAINER ALLOCATION FEE</label>
+															<div class="col-sm-2">
+																<input id="telex_release" name="container_fees" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="telex_release">DELAY</label>
+															<div class="col-sm-2">
+																<input id="telex_release" name="delay" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+													{% endif %}
+
                           <div class="form-group">
                             <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pod">CLEARANCE/P.O.D</label>
+                              <label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
                               <div class="col-sm-2">
-                                <input id="clearance_pod" name="clearance_pod_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="clearance_pod" name="clearance_pod_selling" type="text" placeholder="" class="form-control">
+                                <input id="ex_work" name="others_origin" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
-                              <div class="col-sm-2">
-                                <input id="bl_fees" name="bl_fees_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="bl_fees" name="bl_fees_selling" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
-                              <div class="col-sm-2">
-                                <input id="telex_release" name="telex_release_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="telex_release" name="telex_release_selling" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class ="row">
+														<h4 class="text-primary col-sm-1">Destination Charges:</h4>
+														<label class="col-sm-2 control-label" for="">Net Cost</label>
+													</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="ex_work">EX-WORK</label>
-                              <div class="col-sm-2">
-                                <input id="ex_work" name="ex_work_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="ex_work" name="ex_work_selling" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="ocean_freight">T.H.C</label>
+															<div class="col-sm-2">
+																<input id="ocean_freight" name="thc_destination" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
-                              <div class="col-sm-2">
-                                <input id="official_receipts" name="official_receipts_net" type="text" placeholder="" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                <input id="official_receipts" name="official_receipts_selling" type="text" placeholder="" class="form-control">
-                              </div>
-                            </div>
-                          </div>
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="thc">DOCUMENTATION</label>
+															<div class="col-sm-2">
+																<input id="thc" name="documentation_destination" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="transportation">STORAGE</label>
+															<div class="col-sm-2">
+																<input id="transportation" name="storage" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="transfer">DEMURRAGE</label>
+															<div class="col-sm-2">
+																<input id="transfer" name="demurrage" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="clearance_pol">CUSTOM CLEARANCE</label>
+															<div class="col-sm-2">
+																<input id="clearance_pol" name="custom_clearance_destination" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													{% if type == 'IFCL' %}
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="clearance_pod">ROAD CARTAGE</label>
+															<div class="col-sm-2">
+																<input id="clearance_pod" name="road_cartage" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+													{% endif %}
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="bl_fees">ON CARRIAGE</label>
+															<div class="col-sm-2">
+																<input id="bl_fees" name="on_carriage" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
+															<div class="col-sm-2">
+																<input id="ex_work" name="others_destination" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group">
+														<div class="row">
+															<label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
+															<div class="col-sm-2">
+																<input id="official_receipts" name="official_receipts_net" type="text" placeholder="" class="form-control">
+															</div>
+														</div>
+													</div>
 
                           <hr/>
 

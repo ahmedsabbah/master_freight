@@ -429,7 +429,7 @@ def getAIFRateRequest(request):
     else:
         return redirect('/')
 
-def getFCLRateRequest(request):
+def getIFCLRateRequest(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
     # if request.user.role == 'SA':
@@ -438,7 +438,20 @@ def getFCLRateRequest(request):
         clients = Client.objects.all()
         shipping_lines = ShippingLine.objects.all()
         return render(request, 'admin_rate_request_fcl.html',{'clients': clients,
-        'shipping_lines': shipping_lines})
+        'shipping_lines': shipping_lines, 'type':'IFCL'})
+    else:
+        return redirect('/')
+
+def getXFCLRateRequest(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    # if request.user.role == 'SA':
+    #     return render(request, 'sales_rate_request_fcl.html')
+    if request.user.role == 'AD' or request.user.role == 'SA':
+        clients = Client.objects.all()
+        shipping_lines = ShippingLine.objects.all()
+        return render(request, 'admin_rate_request_fcl.html',{'clients': clients,
+        'shipping_lines': shipping_lines, 'type':'XFCL'})
     else:
         return redirect('/')
 
@@ -532,13 +545,15 @@ def postRateRequest(request):
         shipping_terms=shipping_terms)
         rate_request.save()
 
-    elif type == 'FCL':
+    elif type == 'IFCL':
         container_type = request.POST.get('container_type', None)
+        special_equipment = request.POST.get('special_equipment', None)
         quantity = request.POST.get('quantity', None)
         commodity = request.POST.get('commodity', None)
         gross_weight = request.POST.get('gross_weight', None)
-        net_weight = request.POST.get('net_weight', None)
-        fcl_cargo_details = FCLCargoSales(container_type=container_type, quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight)
+        tare_weight = request.POST.get('tare_weight', None)
+        fcl_cargo_details = FCLCargoSales(container_type=container_type, special_equipment=special_equipment,
+         quantity=quantity, commodity=commodity, gross_weight=gross_weight, tare_weight=tare_weight)
         fcl_cargo_details.save()
 
 
@@ -546,11 +561,33 @@ def postRateRequest(request):
         other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
 
         rate_request = RateRequest(sales_person=sales_person, type=type,
-         client=client, destination=destination, final_delivery_destination=final_delivery_destination,
-          required_delivery_time_within=required_delivery_time_within,
+         client=client,  port_loading = port_loading,
+         port_discharge = port_discharge, receipt_place=receipt_place, final_delivery_destination=final_delivery_destination,
           imo_class=imo_class,
           fcl_cargo_details=fcl_cargo_details, preferred_shipping_line=preferred_shipping_line,
-          other_shipping_line=other_shipping_line, payment_term=payment_term,
+          other_shipping_line=other_shipping_line, shipping_terms=shipping_terms,
+          special_instructions=special_instructions, shipment_term=shipment_term)
+        rate_request.save()
+
+    elif type == 'XFCL':
+        container_type = request.POST.get('container_type', None)
+        special_equipment = request.POST.get('special_equipment', None)
+        quantity = request.POST.get('quantity', None)
+        commodity = request.POST.get('commodity', None)
+        fcl_cargo_details = FCLCargoSales(container_type=container_type, special_equipment=special_equipment,
+         quantity=quantity, commodity=commodity)
+        fcl_cargo_details.save()
+
+
+        preferred_shipping_line = ShippingLine.objects.get(pk=request.POST.get('preferred_shipping_line', None))
+        other_shipping_line = ShippingLine.objects.get(pk=request.POST.get('other_shipping_line', None))
+
+        rate_request = RateRequest(sales_person=sales_person, type=type,
+         client=client,  port_loading = port_loading,
+         port_discharge = port_discharge, receipt_place=receipt_place,final_delivery_destination=final_delivery_destination,
+          imo_class=imo_class,
+          fcl_cargo_details=fcl_cargo_details, preferred_shipping_line=preferred_shipping_line,
+          other_shipping_line=other_shipping_line, shipping_terms=shipping_terms,
           special_instructions=special_instructions, shipment_term=shipment_term)
         rate_request.save()
 
@@ -611,8 +648,10 @@ def viewRateRequest(request, pk):
         if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role =='OP':
             if rate_request.type == 'AIF':
                 return render(request, 'admin_rate_request_aif_view.html', { 'rate_request': rate_request })
-            elif rate_request.type == 'FCL':
-                return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request })
+            elif rate_request.type == 'IFCL':
+                return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request, 'type': 'IFCL'})
+            elif rate_request.type == 'XFCL':
+                return render(request, 'admin_rate_request_fcl_view.html', { 'rate_request': rate_request, 'type': 'XFCL' })
             elif rate_request.type == 'LCL':
                 return render(request, 'admin_rate_request_lcl_view.html', { 'rate_request': rate_request })
         return redirect('/')
@@ -664,7 +703,7 @@ def getSeaOffer(request, pk):
         quotation = Quotation.objects.get(pk=pk)
         if request.user.role == 'AD' or 'SA':
             shipping_lines = ShippingLine.objects.all()
-            return render(request, 'admin_offer_sea.html', { 'quotation': quotation , 'shipping_lines': shipping_lines})
+            return render(request, 'admin_offer_sea.html', { 'quotation': quotation ,'shipping_lines': shipping_lines, 'type': quotation.rate_request.type})
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -927,7 +966,7 @@ def getFCLQuotation(request, pk):
         if request.user.role == 'AD' or request.user.role == 'OP':
             shipping_lines = ShippingLine.objects.all()
             return render(request, 'admin_quotations_fcl.html', { 'rate_request': rate_request,
-             'shipping_lines': shipping_lines })
+             'shipping_lines': shipping_lines, 'type': rate_request.type })
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -972,6 +1011,10 @@ def postQuotation(request):
     arrival_date = request.POST.get('arrival_date', None)
     departure_date = request.POST.get('departure_date', None)
 
+    if request.POST.get('shipping_line'):
+        shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
+    else:
+        shipping_line = None
 
 
     special_instructions = request.POST.get('special_instructions', None)
@@ -1021,38 +1064,110 @@ def postQuotation(request):
          aif_cargo_details=aif_cargo_details, aif_quotation=aif_quotation, special_instructions=special_instructions)
         quotation.save()
 
-    elif type == 'FCL':
+    elif type == 'IFCL':
         agent_details = request.POST.get('agent_details', None)
 
-        shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
-        container_type = request.POST.get('container_type', None)
-        quantity = request.POST.get('quantity', None)
-        commodity = request.POST.get('commodity', None)
-        gross_weight = request.POST.get('gross_weight', None)
-        net_weight = request.POST.get('net_weight', None)
-        fcl_cargo_details = FCLCargoOperations(shipping_line=shipping_line, container_type=container_type, quantity=quantity, commodity=commodity, gross_weight=gross_weight, net_weight=net_weight)
+        fcl_cargo_details = FCLCargoOperations(shipping_line=shipping_line)
         fcl_cargo_details.save()
 
-        ocean_freight_net = request.POST.get('ocean_freight_net', None)
-        ocean_freight_selling = request.POST.get('ocean_freight_selling', None)
-        thc_net = request.POST.get('thc_net', None)
-        thc_selling = request.POST.get('thc_selling', None)
-        transportation_net = request.POST.get('transportation_net', None)
-        transfer_net = request.POST.get('transfer_net', None)
-        transfer_selling = request.POST.get('transfer_selling', None)
-        clearance_pol_net = request.POST.get('clearance_pol_net', None)
-        clearance_pol_selling = request.POST.get('clearance_pol_selling', None)
-        clearance_pod_net = request.POST.get('clearance_pod_net', None)
-        clearance_pod_selling = request.POST.get('clearance_pod_selling', None)
-        bl_fees_net = request.POST.get('bl_fees_net', None)
-        bl_fees_selling = request.POST.get('bl_fees_selling', None)
-        telex_release_net = request.POST.get('telex_release_net', None)
-        telex_release_selling = request.POST.get('telex_release_selling', None)
-        ex_work_net = request.POST.get('ex_work_net', None)
-        ex_work_selling = request.POST.get('ex_work_selling', None)
+        ocean_freight = request.POST.get('ocean_freight', None)
+        thc_origin = request.POST.get('thc_origin', None)
+        pre_carriage = request.POST.get('pre_carriage', None)
+        custom_clearance_origin = request.POST.get('custom_clearance_origin', None)
+        documentation_origin = request.POST.get('documentation_origin', None)
+        baf = request.POST.get('baf', None)
+        caf = request.POST.get('caf', None)
+        others_origin = request.POST.get('others_origin', None)
+        xray = request.POST.get('xray', None)
+
+        documentation_destination = request.POST.get('documentation_destination', None)
+        thc_destination = request.POST.get('thc_destination', None)
+        storage = request.POST.get('storage', None)
+        demurrage = request.POST.get('demurrage', None)
+        custom_clearance_destination = request.POST.get('custom_clearance_destination', None)
+        road_cartage = request.POST.get('baf', None)
+        on_carriage = request.POST.get('caf', None)
+        others_destination = request.POST.get('others_destination', None)
+
         official_receipts_net = request.POST.get('official_receipts_net', None)
-        official_receipts_selling = request.POST.get('official_receipts_selling', None)
-        fcl_quotation = FCLQuotation(ocean_freight_net=ocean_freight_net, ocean_freight_selling=ocean_freight_selling, thc_net=thc_net, thc_selling=thc_selling, transportation_net=transportation_net, transportation_selling=transportation_selling, transfer_net=transfer_net, transfer_selling=transfer_selling, clearance_pol_net=clearance_pol_net, clearance_pol_selling=clearance_pol_selling, clearance_pod_net=clearance_pod_net, clearance_pod_selling=clearance_pod_selling, bl_fees_net=bl_fees_net, bl_fees_selling=bl_fees_selling, telex_release_net=telex_release_net, telex_release_selling=telex_release_selling, ex_work_net=ex_work_net, ex_work_selling=ex_work_selling, official_receipts_net=official_receipts_net, official_receipts_selling=official_receipts_selling)
+
+        fcl_quotation = FCLQuotation(
+        ocean_freight=ocean_freight,
+        pre_carriage=pre_carriage,
+        thc_origin=thc_origin, custom_clearance_origin=custom_clearance_origin,
+        documentation_origin=documentation_origin,
+        xray=xray,
+        baf=baf, caf=caf,
+        others_origin=others_origin,
+        documentation_destination=documentation_destination,
+        thc_destination=thc_destination,
+        storage=storage,
+        demurrage=demurrage,
+        custom_clearance_destination=custom_clearance_destination,
+        road_cartage=road_cartage,
+        on_carriage=on_carriage, others_destination=others_destination)
+        fcl_quotation.save()
+
+        free_time_at_destination = request.POST.get('free_time_at_destination', None)
+        vessels_available = request.POST.get('vessels_available', None)
+        route = request.POST.get('route', None)
+        transit_time = request.POST.get('transit_time', None)
+        offer_validity = request.POST.get('offer_validity', None)
+        extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination,
+        vessels_available=vessels_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
+        extra_notes.save()
+
+        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date,
+         rate_request=rate_request, sales_person=sales_person, operations_person=operations_person,
+          type=type, client=client, special_instructions=special_instructions,
+           agent_details=agent_details, fcl_cargo_details=fcl_cargo_details,
+            fcl_quotation=fcl_quotation, extra_notes=extra_notes)
+        quotation.save()
+    elif type == 'XFCL':
+        agent_details = request.POST.get('agent_details', None)
+        fcl_cargo_details = FCLCargoOperations(shipping_line=shipping_line)
+        fcl_cargo_details.save()
+
+
+        xray = request.POST.get('xray', None)
+        ocean_freight = request.POST.get('ocean_freight', None)
+        thc_origin = request.POST.get('thc_origin', None)
+        pre_carriage = request.POST.get('pre_carriage', None)
+        custom_clearance_origin = request.POST.get('custom_clearance_origin', None)
+        documentation_origin = request.POST.get('documentation_origin', None)
+        baf = request.POST.get('baf', None)
+        caf = request.POST.get('caf', None)
+        others_origin = request.POST.get('others_origin', None)
+        container_fees = request.POST.get('container_fees', None)
+        delay = request.POST.get('delay', None)
+        documentation_destination = request.POST.get('documentation_destination', None)
+        thc_destination = request.POST.get('thc_destination', None)
+        storage = request.POST.get('storage', None)
+        demurrage = request.POST.get('demurrage', None)
+        custom_clearance_destination = request.POST.get('custom_clearance_destination', None)
+        road_cartage = request.POST.get('baf', None)
+        on_carriage = request.POST.get('caf', None)
+        others_destination = request.POST.get('others_destination', None)
+
+        official_receipts_net = request.POST.get('official_receipts_net', None)
+
+        fcl_quotation = FCLQuotation(
+        ocean_freight=ocean_freight,
+        pre_carriage=pre_carriage,
+        thc_origin=thc_origin, custom_clearance_origin=custom_clearance_origin,
+        documentation_origin=documentation_origin,
+        xray=xray,
+        baf=baf, caf=caf,
+        others_origin=others_origin,
+        documentation_destination=documentation_destination,
+        thc_destination=thc_destination,
+        storage=storage,
+        demurrage=demurrage,
+        custom_clearance_destination=custom_clearance_destination,
+        road_cartage=road_cartage,
+        on_carriage=on_carriage, others_destination=others_destination,
+        container_fees=container_fees,
+        delay=delay)
         fcl_quotation.save()
 
         free_time_at_destination = request.POST.get('free_time_at_destination', None)
@@ -1063,16 +1178,15 @@ def postQuotation(request):
         extra_notes = ExtraNotes(free_time_at_destination=free_time_at_destination, vessels_available=vessels_available, route=route, transit_time=transit_time, offer_validity=offer_validity)
         extra_notes.save()
 
-        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date, rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type, client=client, destination=destination, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
+        quotation = Quotation(arrival_date=arrival_date, departure_date=departure_date,
+        rate_request=rate_request, sales_person=sales_person, operations_person=operations_person, type=type,
+        client=client, special_instructions=special_instructions, agent_details=agent_details, fcl_cargo_details=fcl_cargo_details, fcl_quotation=fcl_quotation, extra_notes=extra_notes)
         quotation.save()
 
     else:
         agent_details = request.POST.get('agent_details', None)
         co_loader = request.POST.get('co_loader', None)
-        if request.POST.get('shipping_line'):
-            shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
-        else:
-            shipping_line = None
+
         container_type = request.POST.get('container_type', None)
         num_of_packages = request.POST.get('number_of_packages', None)
         lcl_cargo_details = LCLCargoOperations(shipping_line=shipping_line,

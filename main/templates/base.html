@@ -109,9 +109,14 @@
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> LCL Rate Request
             </a>
           </li>
-          <li {% if request.path == '/rate_request/fcl/new/' %}class="active"{% endif %}>
-            <a class="" href="/rate_request/fcl/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> FCL Rate Request
+          <li {% if request.path == '/rate_request/ifcl/new/' %}class="active"{% endif %}>
+            <a class="" href="/rate_request/ifcl/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> IFCL Rate Request
+            </a>
+          </li>
+          <li {% if request.path == '/rate_request/xfcl/new/' %}class="active"{% endif %}>
+            <a class="" href="/rate_request/xfcl/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> XFCL Rate Request
             </a>
           </li>
           <!-- <li {% if request.path == '/rate_request/sales/new/' %}class="active"{% endif %}>
