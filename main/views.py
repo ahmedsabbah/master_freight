@@ -273,14 +273,13 @@ def createTrucker(request):
             acc_name = request.POST.get('acc_name', None)
             acc_phone = request.POST.get('acc_phone', None)
             acc_email = request.POST.get('acc_email', None)
-            payment_terms = request.POST.get('payment_terms', None)
             special_requirements = request.POST.get('special_requirements', None)
             other_notes = request.POST.get('other_notes', None)
 
             trucker = Trucker(company_name=company_name, address=address,
                 op_name=op_name, op_phone=op_phone,
                 op_email=op_email, acc_name=acc_name, acc_phone=acc_phone,
-                acc_email=acc_email, payment_terms=payment_terms,
+                acc_email=acc_email,
                 special_requirements= special_requirements, other_notes=other_notes)
             trucker.save()
         return render(request, 'trucker_add.html')
@@ -382,37 +381,105 @@ def deleteShippingLine(request, pk):
         response.status_code = 404
         return response
 
-####### Shipment Term ########
-#
-# def createShipmentTerm(request):
-#     if not request.user.is_authenticated():
-#         return redirect('/login/')
-#     if request.method == 'POST':
-#         title = request.POST.get('title', None)
-#         ex_work = request.POST.get('ex_work', None)
-#         fas = request.POST.get('fas', None)
-#         fob = request.POST.get('fob', None)
-#         cf = request.POST.get('cnf', None)
-#         cif = request.POST.get('cif', None)
-#         others = request.POST.get('others', None)
-#         shipment_term = ShipmentTerm(title=title,ex_work=ex_work, fas=fas, fob=fob, cf=cf, cif=cif, others=others)
-#         shipment_term.save()
-#
-#     return render(request, 'shipment_term_add.html')
-#
-# def listShipmentTerm(request):
-#     if not request.user.is_authenticated():
-#         return redirect('/login/')
-#
-#     shipment_terms = ShipmentTerm.objects.all()
-#     return render(request, 'shipment_term_list.html', {'shipment_terms': shipment_terms})
-#
-#
-# def getShipmentTerm(request, pk):
-#     if not request.user.is_authenticated():
-#         return redirect('/login/')
-#     shipment_term = ShipmentTerm.objects.get(pk=pk)
-#     return render(request, 'shipment_term_detail.html', {'shipment_term': shipment_term})
+####### PORT ########
+def createPort(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role == 'AD':
+        if request.method == 'POST':
+            name = request.POST.get('name', None)
+
+            port = Port(name=name)
+            port.save()
+
+        return render(request, 'port_add.html')
+    else:
+        return redirect('/')
+
+def listPort(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    ports = Port.objects.all()
+    return render(request, 'port_list.html', {'ports': ports})
+
+def getPort(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    port = Port.objects.get(pk=pk)
+    return render(request, 'port_detail.html', {'port': port})
+
+def deletePort(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        if request.user.role == 'AD':
+            port = Port.objects.get(pk=pk)
+            port.delete()
+            return HttpResponseRedirect('/port/list/')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except Port.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
+
+####### TRUCKER OFFER ########
+def createTruckerOffer(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    if request.user.role == 'AD':
+        ports = Port.objects.all()
+        truckers = Trucker.objects.all()
+        if request.method == 'POST':
+            port_1 = Port.objects.get(pk=request.POST.get('port_1', None))
+            port_2 = Port.objects.get(pk=request.POST.get('port_2', None))
+            trucker = Trucker.objects.get(pk=request.POST.get('trucker', None))
+            special_requirements = request.POST.get('special_requirements', None)
+            other_notes = request.POST.get('other_notes', None)
+            price = request.POST.get('price', None)
+
+            trucker_offer = TruckerOffer(port_1=port_1, port_2=port_2, trucker=trucker,
+            special_requirements=special_requirements, other_notes=other_notes, price=price)
+            trucker_offer.save()
+
+        return render(request, 'trucker_offer_add.html', {'ports': ports, 'truckers': truckers})
+    else:
+        return redirect('/')
+
+def listTruckerOffer(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    trucker_offers = TruckerOffer.objects.all()
+    return render(request, 'trucker_offer_list.html', {'trucker_offers': trucker_offers})
+
+def getTruckerOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+
+    trucker_offer = TruckerOffer.objects.get(pk=pk)
+    return render(request, 'trucker_offer_detail.html', {'trucker_offer': trucker_offer})
+
+def deleteTruckerOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        if request.user.role == 'AD':
+            trucker_offer = TruckerOffer.objects.get(pk=pk)
+            trucker_offer.delete()
+            return HttpResponseRedirect('/trucker_offers/list/')
+        else:
+            response = HttpResponse(content_type='application/json')
+            response.status_code = 401
+            return response
+    except TruckerOffer.DoesNotExist:
+        response = HttpResponse(content_type='application/json')
+        response.status_code = 404
+        return response
 
 ####### Rate Request #########
 
@@ -709,6 +776,19 @@ def getSeaOffer(request, pk):
     except RateRequest.DoesNotExist:
         return redirect('/404/')
 
+def getFCLOffer(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    try:
+        quotation = Quotation.objects.get(pk=pk)
+        if request.user.role == 'AD' or 'SA':
+            shipping_lines = ShippingLine.objects.all()
+            return render(request, 'admin_offer_fcl.html', { 'quotation': quotation ,'shipping_lines': shipping_lines, 'type': quotation.rate_request.type})
+        else:
+            return redirect('/')
+    except RateRequest.DoesNotExist:
+        return redirect('/404/')
+
 
 def postOffer(request):
     if not request.user.is_authenticated():
@@ -778,7 +858,7 @@ def postOffer(request):
             fail_silently=False,
         )
 
-    else:
+    elif type == 'S':
         shipping_line = ShippingLine.objects.get(pk=request.POST.get('shipping_line', None))
         ocean_freight = request.POST.get('ocean_freight', None)
         thc = request.POST.get('thc', None)
@@ -817,6 +897,79 @@ def postOffer(request):
             html_message=msg_html,
             fail_silently=False,
         )
+    else:
+        ocean_freight = request.POST.get('ocean_freight', None)
+        pre_carriage = request.POST.get('pre_carriage', None)
+        thc_origin = request.POST.get('thc_origin', None)
+        custom_clearance_origin = request.POST.get('custom_clearance_origin', None)
+        documentation_origin = request.POST.get('documentation_origin', None)
+        xray = request.POST.get('xray', None)
+        baf = request.POST.get('baf', None)
+        caf = request.POST.get('caf', None)
+        others_origin = request.POST.get('others_origin', None)
+        documentation_destination = request.POST.get('documentation_destination', None)
+        thc_destination = request.POST.get('thc_destination', None)
+        storage = request.POST.get('storage', None)
+        demurrage = request.POST.get('demurrage', None)
+        custom_clearance_destination = request.POST.get('custom_clearance_destination', None)
+        on_carriage = request.POST.get('on_carriage', None)
+        others_destination = request.POST.get('others_destination', None)
+        official_receipts_selling = request.POST.get('official_receipts_selling', None)
+        if type == 'IFCL':
+            road_cartage = request.POST.get('road_cartage', None)
+            documentation_origin = request.POST.get('documentation_origin', None)
+
+            fcl_sea_quotation = FCLSeaQuotation(
+            ocean_freight=ocean_freight,
+            pre_carriage=pre_carriage,
+            thc_origin=thc_origin, custom_clearance_origin=custom_clearance_origin,
+            documentation_origin=documentation_origin,
+            xray=xray,
+            baf=baf, caf=caf,
+            others_origin=others_origin,
+            documentation_destination=documentation_destination,
+            thc_destination=thc_destination,
+            storage=storage,
+            demurrage=demurrage,
+            custom_clearance_destination=custom_clearance_destination,
+            road_cartage=road_cartage,
+            official_receipts_selling=official_receipts_selling,
+            on_carriage=on_carriage, others_destination=others_destination)
+        elif type == 'XFCL':
+            container_fees = request.POST.get('container_fees', None)
+            delay = request.POST.get('delay', None)
+            fcl_sea_quotation = FCLSeaQuotation(
+            ocean_freight=ocean_freight,
+            pre_carriage=pre_carriage,
+            thc_origin=thc_origin, custom_clearance_origin=custom_clearance_origin,
+            xray=xray,
+            baf=baf, caf=caf,
+            others_origin=others_origin,
+            documentation_destination=documentation_destination,
+            thc_destination=thc_destination,
+            storage=storage,
+            demurrage=demurrage,
+            custom_clearance_destination=custom_clearance_destination,
+            official_receipts_selling=official_receipts_selling,
+            on_carriage=on_carriage, others_destination=others_destination,
+            container_fees=container_fees, delay=delay)
+
+        fcl_sea_quotation.save()
+        offer = Offer(quotation=quotation, type='S', sales_person=sales_person,
+         client=client, fcl_quotation=fcl_sea_quotation, terms=terms)
+        offer.save()
+
+        # msg_plain = render_to_string('./offerFCLSeaEmail.txt', {'offer': offer})
+        # msg_html = render_to_string('./offerFCLSeaEmail.html', {'offer': offer})
+        # send_mail(
+        #     "Master Freight Offer",
+        #     msg_plain,
+        #     request.user.email,
+        #     email_list,
+        #     html_message=msg_html,
+        #     fail_silently=False,
+        # )
+    # elif type == 'XFCL':
 
     if offer:
         quotation.status = 'OC'
@@ -877,14 +1030,19 @@ def viewOffer(request, pk):
             if offer.type == 'A':
                 return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
-                return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
+                if offer.quotation.type == 'IFCL' or offer.quotation.type == 'XFCL':
+                    return render(request, 'admin_offer_fcl_view.html', { 'offer': offer , 'eligible': eligible})
+                else:
+                    return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
         elif request.user.role == 'AC' and offer.status == 'A':
             eligible = False
             if offer.type == 'A':
                 return render(request, 'admin_offer_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
-                return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
-
+                if offer.quotation.type == 'IFCL' or offer.quotation.type == 'XFCL':
+                    return render(request, 'admin_offer_fcl_view.html', { 'offer': offer , 'eligible': eligible})
+                else:
+                    return render(request, 'admin_offer_sea_view.html', { 'offer': offer , 'eligible': eligible})
         else:
             return redirect('/')
     except Offer.DoesNotExist:
@@ -901,7 +1059,10 @@ def viewOfferClientFormat(request, pk):
             if offer.type == 'A':
                 return render(request, 'admin_offer_client_air_view.html', { 'offer': offer,  'eligible': eligible })
             elif offer.type == 'S':
-                return render(request, 'admin_offer_client_sea_view.html', { 'offer': offer , 'eligible': eligible})
+                if offer.quotation.type == 'IFCL' or offer.quotation.type == 'XFCL':
+                    return render(request, 'admin_offer_client_fcl_view.html', { 'offer': offer , 'eligible': eligible})
+                else:
+                    return render(request, 'admin_offer_client_sea_view.html', { 'offer': offer , 'eligible': eligible})
 
         else:
             return redirect('/')
@@ -942,7 +1103,23 @@ def trackOffer(request, pk):
     except Offer.DoesNotExist:
         return redirect('/404/')
 ##################################
+def portSelectHandler(request):
+    port_id = request.GET["id"]
+    port = Port.objects.get(pk=port_id)
+    trucker_offers_port1 = TruckerOffer.objects.filter(port_1=port)
+    trucker_offers_port2 = TruckerOffer.objects.filter(port_2=port)
+    trucker_offers = list(trucker_offers_port1) + list(trucker_offers_port2)
+    formated_offers = []
+    for trucker_offer in trucker_offers:
+        data = {'id' : trucker_offer.pk, 'port_1': trucker_offer.port_1.name, 'port_2': trucker_offer.port_2.name, 'trucker': trucker_offer.trucker.company_name, 'price': trucker_offer.price}
+        formated_offers.append(data)
+    print formated_offers
+    return JsonResponse(formated_offers, safe=False)
 
+def truckerOfferSelectHandler(request):
+   offer_id = request.GET["id"]
+   trucker_offer = TruckerOffer.objects.get(pk=offer_id)
+   return JsonResponse({'trucker_offer_id': trucker_offer.id, 'trucker_offer_price': trucker_offer.price})
 ######### Quotation ##############
 
 def getAIFQuotation(request, pk):
@@ -950,8 +1127,9 @@ def getAIFQuotation(request, pk):
         return redirect('/login/')
     try:
         rate_request = RateRequest.objects.get(pk=pk)
+        ports = Port.objects.all()
         if request.user.role == 'OP' or request.user.role == 'AD':
-            return render(request, 'admin_quotations_aif.html', { 'rate_request': rate_request })
+            return render(request, 'admin_quotations_aif.html', { 'rate_request': rate_request, 'ports': ports })
         else:
             return redirect('/')
     except RateRequest.DoesNotExist:
@@ -1039,7 +1217,7 @@ def postQuotation(request):
         exw_charges_net = request.POST.get('exw_charges_net', None)
         screening_fees_net = request.POST.get('screening_fees_net', None)
         storage_net = request.POST.get('storage_net', None)
-        inland_net = request.POST.get('inland_net', None)
+        inland_net = TruckerOffer.objects.get(pk=request.POST.get('inland_net', None))
         packing_net = request.POST.get('packing_net', None)
         taxes_duties_net = request.POST.get('taxes_n_duties_net', None)
         handling_fees_net = request.POST.get('handling_fees_net', None)
@@ -1105,6 +1283,7 @@ def postQuotation(request):
         demurrage=demurrage,
         custom_clearance_destination=custom_clearance_destination,
         road_cartage=road_cartage,
+        official_receipts_net=official_receipts_net,
         on_carriage=on_carriage, others_destination=others_destination)
         fcl_quotation.save()
 
@@ -1166,6 +1345,7 @@ def postQuotation(request):
         custom_clearance_destination=custom_clearance_destination,
         road_cartage=road_cartage,
         on_carriage=on_carriage, others_destination=others_destination,
+        official_receipts=official_receipts,
         container_fees=container_fees,
         delay=delay)
         fcl_quotation.save()
@@ -1274,7 +1454,7 @@ def viewQuotation(request, pk):
         if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role == 'OP' or (request.user.role == 'AC' and quotation.offers.first().status == 'A'):
             if quotation.type == 'AIF':
                 return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
-            elif quotation.type == 'FCL':
+            elif quotation.type == 'IFCL' or quotation.type == 'XFCL':
                 return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
             elif quotation.type == 'LCL':
                 return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })

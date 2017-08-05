@@ -165,28 +165,18 @@
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Truckers
             </a>
           </li>
-
+          <li {% if request.path == '/trucker_offer/new/' %}class="active"{% endif %}>
+            <a class="" href="/trucker_offer/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Trucker Offer
+            </a>
+          </li>
+          <li {% if request.path == '/trucker_offer/list/' %}class="active"{% endif %}>
+            <a class="" href="/trucker_offer/list/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Trucker Offers
+            </a>
+          </li>
         </ul>
       </li>
-      <!-- <li class="parent">
-        <a data-toggle="expand" href="#sub-item-2">
-        <svg class="glyph stroked dashboard notepad"><use xlink:href="#stroked-notepad"></use></svg> Shipment Term <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
-        </a>
-        <ul class="children expand" id="sub-item-2">
-          {% if user.role == 'AD'%}
-          <li {% if request.path == '/shipment_term/new/' %}class="active"{% endif %}>
-            <a class="" href="/shipment_term/new/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Term
-            </a>
-          </li>
-          {% endif %}
-          <li {% if request.path == '/shipment_term/list/' %}class="active"{% endif %}>
-            <a class="" href="/shipment_term/list/">
-              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Terms
-            </a>
-          </li>
-        </ul>
-      </li> -->
       <li class="parent">
         <a data-toggle="expand" href="#sub-item-2">
         <svg class="glyph stroked dashboard notepad"><use xlink:href="#stroked-notepad"></use></svg> Shipping Line <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
@@ -202,6 +192,25 @@
           <li {% if request.path == '/shipping_line/list/' %}class="active"{% endif %}>
             <a class="" href="/shipping_line/list/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Lines
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="parent">
+        <a data-toggle="expand" href="#sub-item-2">
+        <svg class="glyph stroked dashboard notepad"><use xlink:href="#stroked-notepad"></use></svg> Ports <span class="pull-right"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>
+        </a>
+        <ul class="children expand" id="sub-item-2">
+          {% if user.role == 'AD'%}
+          <li {% if request.path == '/port/new/' %}class="active"{% endif %}>
+            <a class="" href="/port/new/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Port
+            </a>
+          </li>
+          {% endif %}
+          <li {% if request.path == '/port/list/' %}class="active"{% endif %}>
+            <a class="" href="/port/list/">
+              <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Ports
             </a>
           </li>
         </ul>

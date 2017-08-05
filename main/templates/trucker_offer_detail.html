@@ -1,0 +1,76 @@
+{% extends './base.html' %}
+{% load staticfiles %}
+{% load static %}
+
+{% block content %}
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+          Trucker Offer
+          {% if user.role == 'AD' %}
+          <a href="/trucker_offer/{{trucker_offer.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Trucker Offer </a>
+          {% endif %}
+        </div>
+				<div class="panel-body">
+
+					<form class="form-horizontal" role="form" method="post" action="/trucker_offer/new/">
+						<fieldset>
+							<br>
+							<!-- Text input-->
+							{% csrf_token %}
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Port 1:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.port_1}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Port 2:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.port_2}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Trucker:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.trucker}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Price:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.price}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Special Requirements:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.special_requirements}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-2 control-label" for="name">Other Notes:</label>
+									<div class="col-sm-2">
+										<p> {{trucker_offer.other_notes}}</p>
+									</div>
+								</div>
+							</div>
+							<hr/>
+						</fieldset>
+					</form>
+
+				</div>
+			</div>
+		</div>
+{% endblock %}

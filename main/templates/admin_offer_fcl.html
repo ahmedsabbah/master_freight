@@ -3,22 +3,22 @@
 {% block content %}
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">Quotation-{{type}}</div>
+								<div class="panel-heading">Offer-{{type}}</div>
 								<div class="panel-body">
-                    <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
+                    <form class="form-horizontal" role="form" method="post" action="/offer/new/">
                       <fieldset>
 
                         <br>
                           <!-- Text input-->
                           {% csrf_token %}
                           <input type="hidden" name="type" value="{{type}}">
-													<input type="hidden" name="rate_request" value="{{rate_request.id}}">
+													<input type="hidden" name="quotation" value="{{quotation.id}}">
 
 													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="client_name">Client Name</label>
                               <div class="col-sm-2 control-label">
-                            		<p>{{ rate_request.client.client_name }}</p>
+                            		<p>{{ quotation.rate_request.client.client_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -31,7 +31,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="company_name">Company Name</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.client.client_name }}</p>
+                                <p>{{ quotation.rate_request.client.client_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -41,7 +41,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="contact">Contact</label>
                               <div class="col-sm-2 control-label">
-                               <p>{{ rate_request.client.client_name }}</p>
+                               <p>{{ quotation.rate_request.client.client_name }}</p>
                               </div>
                             </div>
                           </div>
@@ -50,7 +50,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="phone">Phone</label>
                               <div class="col-sm-2 control-label">
-                         				<p>{{ rate_request.client.business_phone }}</p>
+                         				<p>{{ quotation.rate_request.client.business_phone }}</p>
                               </div>
                             </div>
                           </div>
@@ -59,7 +59,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="email">E-mail</label>
                               <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.client.email }}</p>
+                             		<p>{{ quotation.rate_request.client.email }}</p>
                               </div>
                             </div>
                           </div>
@@ -68,7 +68,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.client.extra_information }}</p>
+                                <p>{{ quotation.rate_request.client.extra_information }}</p>
                               </div>
                             </div>
                           </div>
@@ -80,7 +80,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.receipt_place }}</p>
+                                <p>{{ quotation.rate_request.receipt_place }}</p>
                               </div>
                             </div>
                           </div>
@@ -89,7 +89,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
                               <div class="col-sm-2 control-label">
-                                <p>{{ rate_request.port_loading }}</p>
+                                <p>{{ quotation.rate_request.port_loading }}</p>
                               </div>
                             </div>
                           </div>
@@ -98,7 +98,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
                               <div class="col-sm-2 control-label">
-                             		<p>{{ rate_request.port_discharge }}</p>
+                             		<p>{{ quotation.rate_request.port_discharge }}</p>
                               </div>
                             </div>
                           </div>
@@ -109,7 +109,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="agent_details">Agent Details</label>
                               <div class="col-sm-2">
-                                <input id="agent_details" name="agent_details" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.agent_details}}
+																</p>
                               </div>
                             </div>
                           </div>
@@ -121,7 +123,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="quantity">Quantity</label>
 															<div class="col-sm-2">
-															 <p>{{ rate_request.fcl_cargo_details.quantity }}</p>
+															 <p>{{ quotation.rate_request.fcl_cargo_details.quantity }}</p>
 															</div>
 														</div>
 													</div>
@@ -130,7 +132,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="commodity">Commodity</label>
 															<div class="col-sm-2">
-															 <p>{{ rate_request.fcl_cargo_details.commodity }}</p>
+															 <p>{{ quotation.rate_request.fcl_cargo_details.commodity }}</p>
 															</div>
 														</div>
 													</div>
@@ -139,7 +141,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="container_type">Container Type</label>
 															<div class="col-sm-2">
-														<p>{{ rate_request.fcl_cargo_details.container_type }}</p>
+														<p>{{ quotation.rate_request.fcl_cargo_details.container_type }}</p>
 															</div>
 														</div>
 													</div>
@@ -148,7 +150,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="container_type">Special Equipment</label>
 															<div class="col-sm-2">
-														<p>{{ rate_request.fcl_cargo_details.special_equipment }}</p>
+														<p>{{ quotation.rate_request.fcl_cargo_details.special_equipment }}</p>
 															</div>
 														</div>
 													</div>
@@ -158,7 +160,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
 															<div class="col-sm-2">
-																<p>{{ rate_request.fcl_cargo_details.gross_weight }}</p>
+																<p>{{ quotation.rate_request.fcl_cargo_details.gross_weight }}</p>
 															</div>
 														</div>
 													</div>
@@ -167,7 +169,7 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="net_weight">Tare Weight</label>
 															<div class="col-sm-2">
-															<p>{{ rate_request.fcl_cargo_details.tare_weight }}</p>
+															<p>{{ quotation.rate_request.fcl_cargo_details.tare_weight }}</p>
 															</div>
 														</div>
 													</div>
@@ -177,7 +179,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
 															<div class="col-sm-2">
-																<input id="departure_date" name="departure_date" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.departure_date}}
+																</p>
 															</div>
 														</div>
 													</div>
@@ -186,7 +190,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
 															<div class="col-sm-2">
-																<input id="arrival_date" name="arrival_date" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.arrival_date}}
+																</p>
 															</div>
 														</div>
 													</div>
@@ -195,11 +201,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
                               <div class="col-sm-2">
-																<select class=" form-control" name="shipping_line">
-																	{% for shipping_line in shipping_lines %}
-																	<option value="{{ shipping_line.id }}">{{ shipping_line.name }}</option>
-																	{% endfor %}
-																</select>
+																<p>
+																	{{quotation.fcl_cargo_details.shipping_line}}
+																</p>
 															</div>
                             </div>
                           </div>
@@ -207,15 +211,19 @@
                           <hr/>
 
                           <div class ="row">
-                            <h4 class="text-primary col-sm-1">Origin Charges:</h4>
+                            <h4 class="text-primary col-sm-2">Origin Charges:</h4>
                             <label class="col-sm-2 control-label" for="">Net Cost</label>
+                            <label class="col-sm-2 control-label" for="">Selling Cost</label>
                           </div>
 
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
                               <div class="col-sm-2">
-                                <input id="ocean_freight" name="ocean_freight" type="text" placeholder="" class="form-control">
+																<input id="ocean_freight" disabled value="{{quotation.fcl_quotation.ocean_freight}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
+																<input id="ocean_freight" name="ocean_freight" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -224,7 +232,10 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="thc">T.H.C</label>
                               <div class="col-sm-2">
-                                <input id="thc" name="thc_origin" type="text" placeholder="" class="form-control">
+																<input id="thc" disabled value="{{quotation.fcl_quotation.thc_origin}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
+																<input id="thc" name="thc_origin" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
                           </div>
@@ -232,7 +243,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="transportation">PRE-CARRIAGE</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="transportation" disabled value="{{quotation.fcl_quotation.pre_carriage}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="transportation" name="pre_carriage" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -241,7 +255,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="transfer">CUSTOM ClEARANCE</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="transfer" disabled value="{{quotation.fcl_quotation.custom_clearance_origin}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="transfer" name="custom_clearance_origin" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -251,7 +268,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="clearance_pol">DOCUMENTATION</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="clearance_pol" disabled value="{{quotation.fcl_quotation.documentation_origin}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="clearance_pol" name="documentation_origin" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -260,7 +280,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="clearance_pod">X-RAY</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="clearance_pod" disabled value="{{quotation.fcl_quotation.xray}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="clearance_pod" name="xray" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -269,7 +292,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="bl_fees">BAF</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="bl_fees" disabled value="{{quotation.fcl_quotation.baf}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="bl_fees" name="baf" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -278,7 +304,10 @@
 													<div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="telex_release">CAF</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="telex_release" disabled value="{{quotation.fcl_quotation.caf}}" type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="telex_release" name="caf" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -289,6 +318,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="telex_release">CONTAINER ALLOCATION FEE</label>
 															<div class="col-sm-2">
+																<input id="telex_release" disabled value="{{quotation.fcl_quotation.container_fees}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
 																<input id="telex_release" name="container_fees" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
@@ -297,6 +329,9 @@
 													<div class="form-group">
 														<div class="row">
 															<label class="col-sm-2 control-label" for="telex_release">DELAY</label>
+															<div class="col-sm-2">
+																<input id="telex_release" disabled value="{{quotation.fcl_quotation.delay}}"  type="text" placeholder="" class="form-control">
+															</div>
 															<div class="col-sm-2">
 																<input id="telex_release" name="delay" type="text" placeholder="" class="form-control">
 															</div>
@@ -307,7 +342,10 @@
                           <div class="form-group">
                             <div class="row">
                               <label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
-                              <div class="col-sm-2">
+															<div class="col-sm-2">
+                                <input id="ex_work" disabled value="{{quotation.fcl_quotation.others_origin}}"  type="text" placeholder="" class="form-control">
+                              </div>
+															<div class="col-sm-2">
                                 <input id="ex_work" name="others_origin" type="text" placeholder="" class="form-control">
                               </div>
                             </div>
@@ -315,13 +353,17 @@
 
 
 													<div class ="row">
-														<h4 class="text-primary col-sm-1">Destination Charges:</h4>
+														<h4 class="text-primary col-sm-2">Destination Charges:</h4>
 														<label class="col-sm-2 control-label" for="">Net Cost</label>
+														<label class="col-sm-2 control-label" for="">Selling Cost</label>
 													</div>
 
 													<div class="form-group">
 														<div class="row">
 															<label class="col-sm-2 control-label" for="ocean_freight">T.H.C</label>
+															<div class="col-sm-2">
+																<input id="ocean_freight" disabled value="{{quotation.fcl_quotation.thc_destination}}" type="text" placeholder="" class="form-control">
+															</div>
 															<div class="col-sm-2">
 																<input id="ocean_freight" name="thc_destination" type="text" placeholder="" class="form-control">
 															</div>
@@ -332,6 +374,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="thc">DOCUMENTATION</label>
 															<div class="col-sm-2">
+																<input id="thc" disabled value="{{quotation.fcl_quotation.documentation_destination}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
 																<input id="thc" name="documentation_destination" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
@@ -340,6 +385,9 @@
 													<div class="form-group">
 														<div class="row">
 															<label class="col-sm-2 control-label" for="transportation">STORAGE</label>
+															<div class="col-sm-2">
+																<input id="transportation" disabled value="{{quotation.fcl_quotation.storage}}" type="text" placeholder="" class="form-control">
+															</div>
 															<div class="col-sm-2">
 																<input id="transportation" name="storage" type="text" placeholder="" class="form-control">
 															</div>
@@ -350,6 +398,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="transfer">DEMURRAGE</label>
 															<div class="col-sm-2">
+																<input id="transfer" disabled value="{{quotation.fcl_quotation.demurrage}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
 																<input id="transfer" name="demurrage" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
@@ -358,6 +409,9 @@
 													<div class="form-group">
 														<div class="row">
 															<label class="col-sm-2 control-label" for="clearance_pol">CUSTOM CLEARANCE</label>
+															<div class="col-sm-2">
+																<input id="clearance_pol" disabled value="{{quotation.fcl_quotation.custom_clearance_destination}}" type="text" placeholder="" class="form-control">
+															</div>
 															<div class="col-sm-2">
 																<input id="clearance_pol" name="custom_clearance_destination" type="text" placeholder="" class="form-control">
 															</div>
@@ -369,6 +423,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="clearance_pod">ROAD CARTAGE</label>
 															<div class="col-sm-2">
+																<input id="clearance_pod" disabled value="{{quotation.fcl_quotation.road_cartage}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
 																<input id="clearance_pod" name="road_cartage" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
@@ -379,6 +436,9 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="bl_fees">ON CARRIAGE</label>
 															<div class="col-sm-2">
+																<input id="bl_fees" disabled value="{{quotation.fcl_quotation.on_carriage}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
 																<input id="bl_fees" name="on_carriage" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
@@ -387,6 +447,9 @@
 													<div class="form-group">
 														<div class="row">
 															<label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
+															<div class="col-sm-2">
+																<input id="ex_work" disabled value="{{quotation.fcl_quotation.others_destination}}" type="text" placeholder="" class="form-control">
+															</div>
 															<div class="col-sm-2">
 																<input id="ex_work" name="others_destination" type="text" placeholder="" class="form-control">
 															</div>
@@ -399,7 +462,10 @@
 														<div class="row">
 															<label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
 															<div class="col-sm-2">
-																<input id="official_receipts" name="official_receipts_net" type="text" placeholder="" class="form-control">
+																<input id="official_receipts" disabled value="{{quotation.fcl_quotation.official_receipts_net}}" type="text" placeholder="" class="form-control">
+															</div>
+															<div class="col-sm-2">
+																<input id="official_receipts" name="official_receipts_selling" type="text" placeholder="" class="form-control">
 															</div>
 														</div>
 													</div>
@@ -412,7 +478,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
                               <div class="col-sm-2">
-                                <input id="free_time_destination" name="free_time_at_destination" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.extra_notes.free_time_at_destination}}
+																</p>
                               </div>
                             </div>
                           </div>
@@ -421,7 +489,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="vessels_available">Vessels Available</label>
                               <div class="col-sm-2">
-                                <input id="vessels_available" name="vessels_available" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.extra_notes.vessels_available}}
+																</p>
                               </div>
                             </div>
                           </div>
@@ -430,7 +500,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="route">Route</label>
                               <div class="col-sm-2">
-                                <input id="route" name="route" type="text" placeholder="" class="form-control">
+																{{quotation.extra_notes.route}}
                               </div>
                             </div>
                           </div>
@@ -439,7 +509,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="transit_time">Transit Time</label>
                               <div class="col-sm-2">
-                                <input id="transit_time" name="transit_time" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.extra_notes.transit_time}}
+																</p>
                               </div>
                             </div>
                           </div>
@@ -448,7 +520,9 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="offer_validity">Offer Validity</label>
                               <div class="col-sm-2">
-                                <input id="offer_validity" name="offer_validity" type="text" placeholder="" class="form-control">
+																<p>
+																	{{quotation.extra_notes.offer_validity}}
+																</p>
                               </div>
                             </div>
                           </div>
@@ -459,10 +533,22 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
                               <div class="col-sm-4">
-                                <textarea class="form-control" id="special_instructions" name="special_instructions"></textarea>
+																<p>
+																	{{quotation.special_instructions}}
+																</p>
                               </div>
                             </div>
                           </div>
+
+													<br>
+		                      <div class="form-group">
+		                        <div class="row">
+		                          <label class="col-sm-2 control-label" for="extra_info">TERMS</label>
+		                          <div class="col-sm-4 control-label">
+		                            <textarea id="terms" name="terms" type="text" placeholder="" class="form-control"></textarea>
+		                          </div>
+		                        </div>
+		                      </div>
 
                           <hr/>
 

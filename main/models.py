@@ -62,7 +62,6 @@ class Trucker(models.Model):
     acc_name = models.CharField(max_length=200, blank=True, null=True)
     acc_phone = models.CharField(max_length=200, blank=True, null=True)
     acc_email = models.CharField(max_length=200, blank=True, null=True)
-    payment_terms = models.CharField(max_length=200, blank=True, null=True)
     special_requirements = models.CharField(max_length=200, blank=True, null=True)
     other_notes = models.CharField(max_length=200, blank=True, null=True)
     class Meta:
@@ -71,11 +70,21 @@ class Trucker(models.Model):
     def __str__(self):
         return str(self.company_name)
 
-class Destination(models.Model):
-    port_of_loading = models.CharField(max_length=200, blank=True, null=True)
-    loading_location_type = models.CharField(max_length=200, blank=True, null=True)
-    port_of_discharge = models.CharField(max_length=200, blank=True, null=True)
-    discharge_location_type = models.CharField(max_length=200, blank=True, null=True)
+class Port(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
+    def __str__(self):
+        return str(self.name)
+
+class TruckerOffer(models.Model):
+    port_1 = models.ForeignKey('Port', related_name='trucker_offers_port1', blank=True, null=True)
+    port_2 = models.ForeignKey('Port', related_name='trucker_offers_port2', blank=True, null=True)
+    trucker = models.ForeignKey('Trucker', related_name='trucker_offers', blank=True, null=True)
+    special_requirements = models.CharField(max_length=200, blank=True, null=True)
+    other_notes = models.CharField(max_length=200, blank=True, null=True)
+    price = models.CharField(max_length=200, blank=True, null=True)
+    def __str__(self):
+        return '%s %s' % (self.trucker, self.price)
+
 
 class FinalDeliveryDestination(models.Model):
     address = models.CharField(max_length=200, blank=True, null=True)
@@ -292,7 +301,6 @@ class Quotation(models.Model):
     client = models.ForeignKey('main.Client', related_name='quotations', blank=True, null=True)
     agent_details = models.CharField(max_length=200, blank=True, null=True)
     co_loader = models.CharField(max_length=200, blank=True, null=True)
-    destination = models.ForeignKey('main.Destination', related_name='quotations', blank=True, null=True)
     aif_cargo_details = models.OneToOneField('main.AIFCargoOperations', related_name='quotation', blank=True, null=True)
     fcl_cargo_details = models.OneToOneField('main.FCLCargoOperations', related_name='quotation', blank=True, null=True)
     lcl_cargo_details = models.OneToOneField('main.LCLCargoOperations', related_name='quotation', blank=True, null=True)
@@ -328,7 +336,6 @@ class AirQuotation(models.Model):
     offer_validity = models.CharField(max_length=200, blank=True, null=True)
 
 class SeaQuotation(models.Model):
-
     shipping_line = models.ForeignKey('main.ShippingLine', related_name='sea_rate_requests', null=True, blank=True)
     ocean_freight = models.CharField(max_length=200, blank=True, null=True)
     thc = models.CharField(max_length=200, blank=True, null=True)
@@ -344,6 +351,30 @@ class SeaQuotation(models.Model):
     # official_receipts = models.CharField(max_length=200, blank=True, null=True)
     other_notes = models.CharField(max_length=200, blank=True, null=True)
     # offer_validity = models.CharField(max_length=200, blank=True, null=True)
+
+class FCLSeaQuotation(models.Model):
+    """docstring for """
+
+    ocean_freight = models.CharField(max_length=200, blank=True, null=True)
+    pre_carriage = models.CharField(max_length=200, blank=True, null=True)
+    thc_origin = models.CharField(max_length=200, blank=True, null=True)
+    custom_clearance_origin = models.CharField(max_length=200, blank=True, null=True)
+    documentation_origin = models.CharField(max_length=200, blank=True, null=True)
+    xray = models.CharField(max_length=200, blank=True, null=True)
+    baf = models.CharField(max_length=200, blank=True, null=True)
+    caf = models.CharField(max_length=200, blank=True, null=True)
+    others_origin = models.CharField(max_length=200, blank=True, null=True)
+    documentation_destination = models.CharField(max_length=200, blank=True, null=True)
+    thc_destination = models.CharField(max_length=200, blank=True, null=True)
+    storage = models.CharField(max_length=200, blank=True, null=True)
+    demurrage = models.CharField(max_length=200, blank=True, null=True)
+    custom_clearance_destination = models.CharField(max_length=200, blank=True, null=True)
+    road_cartage = models.CharField(max_length=200, blank=True, null=True)
+    on_carriage = models.CharField(max_length=200, blank=True, null=True)
+    others_destination = models.CharField(max_length=200, blank=True, null=True)
+    container_fees = models.CharField(max_length=200, blank=True, null=True)
+    delay = models.CharField(max_length=200, blank=True, null=True)
+    official_receipts_selling = models.CharField(max_length=200, blank=True, null=True)
 
 class Offer(models.Model):
     TYPE_CHOICES = (
@@ -363,6 +394,7 @@ class Offer(models.Model):
     client = models.ForeignKey('main.Client', related_name='offers', blank=True, null=True)
     air_quotation = models.OneToOneField('main.AirQuotation', related_name='offer', blank=True, null=True)
     sea_quotation = models.OneToOneField('main.SeaQuotation', related_name='offer', blank=True, null=True)
+    fcl_quotation = models.OneToOneField('main.FCLSeaQuotation', related_name='offer', blank=True, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='S', null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     terms = models.TextField(blank=True, null=True)

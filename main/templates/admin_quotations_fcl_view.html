@@ -5,24 +5,24 @@
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<span>Quotations-FCL</span>
+									<span>Quotations-{{quotation.type}}</span>
 									{% if user.role == 'AD' or user == quotation.operations_person%}
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
 									{% endif %}
 									{% if user.role == 'AD' or user.role == 'SA' %}
 										{% if not offer_accepted %}
-										<a href="/quotation/{{quotation.id}}/offer/sea/new/"
+										<a href="/quotation/{{quotation.id}}/offer/fcl/new/"
 										class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 										{% endif %}
 									{% endif %}
-									<!-- {% if offer_accepted %}
+									{% if offer_accepted %}
 										{% if user.role == 'AD' %}
-										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Quotation</button>
 										{% endif %}
 										{% if user.role == 'OP' and quotation.operations_person.id == user.id %}
-										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Offer</button>
+										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Quotation</button>
 										{% endif %}
-									{% endif %} -->
+									{% endif %}
 								</div>
 								<div class="panel-body">
 									<div id="updateStatus" class="row">
@@ -57,394 +57,479 @@
 											</div>
 										</div><!-- /.col-->
 									</div><!-- /.row -->
+									<form class="form-horizontal" role="form" method="post" action="/quotation/new/">
+										<fieldset>
 
-                    <form class="form-horizontal" role="form" method="post" action="/quotation/new/">
-                      <fieldset>
+											<br>
+												<!-- Text input-->
+												{% csrf_token %}
+												<input type="hidden" name="type" value="{{quotation.type}}">
+												<input type="hidden" name="rate_request" value="{{rate_request.id}}">
 
-                        <br>
-                          <!-- Text input-->
-                          {% csrf_token %}
-                          <input type="hidden" name="type" value="FCL">
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.client.client_name }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<hr/>
-
-                          <h4 class="text-primary">Details:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.client.client_name }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="contact">Contact</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.client.client_name }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="phone">Phone</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.client.business_phone }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="email">E-mail</label>
-                              <div class="col-sm-2 control-label">
-                            		<p>{{ quotation.client.email }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                              <div class="col-sm-2 control-label">
-                                <p style="color:red">{{ quotation.client.extra_information }}??? does the client have extra info???</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<hr/>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="agent_details">Agent Details</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.agent_details }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<hr/>
-
-                          <h4 class="text-primary">Destination:</h4>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.destination.port_of_loading }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_loading">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.destination.loading_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.destination.port_of_discharge }}</p>
-                              </div>
-                              <label class="col-sm-2 control-label" for="location_type_discharge">Location Type</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.destination.discharge_location_type }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<hr/>
-
-                          <h4 class="text-primary">Cargo Details:</h4>
-
-													<div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
-                              <div class="col-sm-2 control-label">
-                            		<p>{{ quotation.departure_date }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.arrival_date }}</p>
-                              </div>
-                            </div>
-                          </div>
-
-													<div class="form-group">
-														<div class="row">
-															<label class="col-sm-2 control-label" for="arrival_date">Current Location</label>
-															<div class="col-sm-2 control-label">
-																<p>{{ quotation.current_location }}</p>
-															</div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="client_name">Client Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.client_name }}</p>
 														</div>
 													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
-                              <div class="col-sm-2 control-label">
-                              <p>{{ quotation.fcl_cargo_details.shipping_line.name }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<hr/>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="container_type">Container Type</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_cargo_details.container_type }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<h4 class="text-primary">Details:</h4>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="quantity">Quantity</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_cargo_details.quantity }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="company_name">Company Name</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="commodity">Commodity</label>
-                              <div class="col-sm-2 control-label">
-	                            	<p>{{ quotation.fcl_cargo_details.commodity }}</p>
-                              </div>
-                            </div>
-                          </div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_cargo_details.gross_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="contact">Contact</label>
+														<div class="col-sm-2 control-label">
+														 <p>{{ quotation.rate_request.client.client_name }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="net_weight">Net Weight</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_cargo_details.net_weight }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="phone">Phone</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.business_phone }}</p>
+														</div>
+													</div>
+												</div>
 
-													<hr/>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="email">E-mail</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.email }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class ="row">
-                            <h4 class="text-primary col-sm-1">Quotation:</h4>
-                            <label class="col-sm-2 control-label" for="">Net Cost</label>
-                            <label class="col-sm-2 control-label" for="">Selling</label>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.client.extra_information }}</p>
+														</div>
+													</div>
+												</div>
+												<hr/>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.ocean_freight_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.ocean_freight_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<h4 class="text-primary">Destination:</h4>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="thc">T.H.C</label>
-                              <div class="col-sm-2 control-label">
-                             		<p>{{ quotation.fcl_quotation.thc_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.thc_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="port_of_loading">Place of Receipt</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.receipt_place }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.transportation_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.transportation_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="port_of_loading">Port of Loading</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.port_loading }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.transfer_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-	                            	<p>{{ quotation.fcl_quotation.transfer_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="port_of_discharge">Port of Discharge</label>
+														<div class="col-sm-2 control-label">
+															<p>{{ quotation.rate_request.port_discharge }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE/P.O.L</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.clearance_pol_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.clearance_pol_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<hr/><br/>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="clearance_pod">CLEARANCE/P.O.D</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.clearance_pod_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.clearance_pod_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="agent_details">Agent Details</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.agent_details }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.fcl_quotation.bl_fees_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                            		<p>{{ quotation.fcl_quotation.bl_fees_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<br><hr/>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.fcl_quotation.telex_release_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                        				<p>{{ quotation.fcl_quotation.telex_release_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<h4 class="text-primary">Cargo Details:</h4>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="quantity">Quantity</label>
+														<div class="col-sm-2">
+														 <p>{{ quotation.rate_request.fcl_cargo_details.quantity }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="ex_work">EX-WORK</label>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.ex_work_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                              	<p>{{ quotation.fcl_quotation.ex_work_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="commodity">Commodity</label>
+														<div class="col-sm-2">
+														 <p>{{ quotation.rate_request.fcl_cargo_details.commodity }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
-                              <div class="col-sm-2 control-label">
-                             		<p>{{ quotation.fcl_quotation.official_receipts_net }}</p>
-                              </div>
-                              <div class="col-sm-2 control-label">
-                            		<p>{{ quotation.fcl_quotation.official_receipts_selling }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="container_type">Container Type</label>
+														<div class="col-sm-2">
+													<p>{{ quotation.rate_request.fcl_cargo_details.container_type }}</p>
+														</div>
+													</div>
+												</div>
 
-													<hr/>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="container_type">Special Equipment</label>
+														<div class="col-sm-2">
+													<p>{{ quotation.rate_request.fcl_cargo_details.special_equipment }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <h4 class="text-primary">Extra Notes:</h4>
+												{% if type == 'IFCL' %}
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="gross_weight">Gross Weight</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.rate_request.fcl_cargo_details.gross_weight }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.extra_notes.free_time_at_destination }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="net_weight">Tare Weight</label>
+														<div class="col-sm-2">
+														<p>{{ quotation.rate_request.fcl_cargo_details.tare_weight }}</p>
+														</div>
+													</div>
+												</div>
+												{% endif %}
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="vessels_available">Vessels Available</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.extra_notes.vessels_available }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="departure_date">Departure Date</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.departure_date }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="route">Route</label>
-                              <div class="col-sm-2 control-label">
-                           			<p>{{ quotation.extra_notes.route }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="arrival_date">Arrival Date</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.arrival_date }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="transit_time">Transit Time</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.extra_notes.transit_time }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="shipping_line">Shipping Line</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_cargo_details.shipping_line.name }}</p>
+														</div>
+													</div>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="offer_validity">Offer Validity</label>
-                              <div class="col-sm-2 control-label">
-                                <p>{{ quotation.extra_notes.offer_validity }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<hr/>
 
-													<hr/>
+												<div class ="row">
+													<h4 class="text-primary col-sm-1">Origin Charges:</h4>
+													<label class="col-sm-2 control-label" for="">Net Cost</label>
+												</div>
 
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
-                              <div class="col-sm-4 control-label">
-                              	<p>{{ quotation.special_instructions }}</p>
-                              </div>
-                            </div>
-                          </div>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.ocean_freight }}</p>
+														</div>
+													</div>
+												</div>
 
-													<hr/>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="thc">T.H.C</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.thc_origin }}</p>
+														</div>
+													</div>
+												</div>
 
-                        </fieldset>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="transportation">PRE-CARRIAGE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.pre_carriage }}</p>
+														</div>
+													</div>
+												</div>
 
-                      </form>
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="transfer">CUSTOM ClEARANCE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.custom_clearance_origin }}</p>
+														</div>
+													</div>
+												</div>
+
+												{% if type == 'IFCL' %}
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="clearance_pol">DOCUMENTATION</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.documentation_origin }}</p>
+														</div>
+													</div>
+												</div>
+												{% endif %}
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="clearance_pod">X-RAY</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.xray }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="bl_fees">BAF</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.baf }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="telex_release">CAF</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.caf }}</p>
+														</div>
+													</div>
+												</div>
+
+												{% if type == 'XFCL'%}
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="telex_release">CONTAINER ALLOCATION FEE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.container_fees }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="telex_release">DELAY</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.delay }}</p>
+														</div>
+													</div>
+												</div>
+												{% endif %}
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.others_origin }}</p>
+														</div>
+													</div>
+												</div>
+
+
+												<div class ="row">
+													<h4 class="text-primary col-sm-1">Destination Charges:</h4>
+													<label class="col-sm-2 control-label" for="">Net Cost</label>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="ocean_freight">T.H.C</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.thc_destination }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="thc">DOCUMENTATION</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.documentation_destination }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="transportation">STORAGE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.storage }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="transfer">DEMURRAGE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.demurrage }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="clearance_pol">CUSTOM CLEARANCE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.custom_clearance_destination }}</p>
+														</div>
+													</div>
+												</div>
+
+												{% if type == 'IFCL' %}
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="clearance_pod">ROAD CARTAGE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.road_cartage }}</p>
+														</div>
+													</div>
+												</div>
+												{% endif %}
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="bl_fees">ON CARRIAGE</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.on_carriage }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="ex_work">OTHERS</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.others_destination }}</p>
+														</div>
+													</div>
+												</div>
+
+												<hr>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.fcl_quotation.official_receipts_net }}</p>
+														</div>
+													</div>
+												</div>
+
+												<hr/>
+
+												<h4 class="text-primary">Extra Notes:</h4>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="free_time_destination">Free Time at Destination</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.extra_notes.free_time_at_destination }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="vessels_available">Vessels Available</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.extra_notes.vessels_available }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="route">Route</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.extra_notes.route }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="transit_time">Transit Time</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.extra_notes.transit_time }}</p>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="offer_validity">Offer Validity</label>
+														<div class="col-sm-2">
+															<p>{{ quotation.extra_notes.offer_validity }}</p>
+														</div>
+													</div>
+												</div>
+
+												<hr/>
+
+												<div class="form-group">
+													<div class="row">
+														<label class="col-sm-2 control-label" for="special_instructions">Special Instructions</label>
+														<div class="col-sm-4">
+															<p>{{ quotation.special_instructions }}</p>
+														</div>
+													</div>
+												</div>
+
+												<hr/>
+
+											</fieldset>
+										</form>
 
                 </div>
               </div>
             </div>
     {% endblock %}
+		{% block extra_script %}
+			<script>
+
+			$('#updateStatus').hide();
+
+
+			$("#editOffer").click(function(){
+
+				$("#updateStatus").show('1000');
+			});
+			</script>
+		{% endblock %}

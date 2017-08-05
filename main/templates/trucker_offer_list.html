@@ -1,0 +1,102 @@
+{% extends './base.html' %}
+{% load staticfiles %}
+{% load static %}
+
+{% block extra_styling %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"/>
+
+
+<style>
+	table.dataTable tbody>tr.selected,
+	table.dataTable tbody>tr>.selected {
+		background-color: #A2D3F6;
+	}
+</style>
+{% endblock %}
+{% block content%}
+
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Trucker Offers</div>
+						<div class="panel-body">
+							<!-- <div class="container"> -->
+
+							<table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example">
+
+							</table>
+							<!-- </div> -->
+						</div>
+					</div>
+				</div>
+{% endblock %}
+
+{% block extra_script %}
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="{% static 'js/dataTables.altEditor.free.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+<script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+				$(this).find('em:first').toggleClass("glyphicon-minus");
+			});
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+		$(document).ready(function() {
+
+			var dataSet = [
+				{% for trucker_offer in trucker_offers %}
+				["{{trucker_offer.id}}", "{{trucker_offer.port_1}}", "{{trucker_offer.port_2}}", "{{trucker_offer.trucker}}",
+				 "{{trucker_offer.price}}",
+				{% if user.role == 'AD'%}
+				"<a href='/trucker_offer/{{trucker_offer.id}}/view/'>View</a>"
+				{% endif %}]
+				{% if not forloop.last %} ,{% endif %}
+				{% endfor %}
+			];
+
+			var columnDefs = [{
+				title: "ID"
+			},
+			{
+				title: "Port 1"
+			},
+			{
+				title: "Port 2"
+			},
+			{
+				title: "Trucker"
+			},
+			{
+				title: "Price"
+			}
+			{% if user.role == 'AD'%}
+			,
+			{
+				title: "View"
+			}{% endif %}];
+
+			var myTable;
+
+			myTable = $('#example').DataTable({
+				"sPaginationType": "full_numbers",
+				data: dataSet,
+				columns: columnDefs,
+				responsive: true
+			});
+
+		});
+	</script>
+{% endblock %}

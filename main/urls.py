@@ -27,11 +27,19 @@ urlpatterns = [
     url(r'^trucker/list/$', views.listTrucker, name='listTrucker'),
     url(r'^trucker/(?P<pk>[0-9]+)/view/$', views.getTrucker, name='getTrucker'),
     url(r'^trucker/(?P<pk>[0-9]+)/delete/$', views.deleteTrucker, name='deleteTrucker'),
+    url(r'^trucker_offer/new/$', views.createTruckerOffer, name='createTruckerOffer'),
+    url(r'^trucker_offer/list/', views.listTruckerOffer, name='listTruckerOffer'),
+    url(r'^trucker_offer/(?P<pk>[0-9]+)/view/$', views.getTruckerOffer, name='getTruckerOffer'),
+    url(r'^trucker_offer/(?P<pk>[0-9]+)/delete/$', views.deleteTruckerOffer, name='deleteTruckerOffer'),
 
-    # url(r'^shipment_term/new/$', views.createShipmentTerm, name='createShipmentTerm'),
-    # url(r'^shipment_term/list/$', views.listShipmentTerm, name='listTShipmentTerm'),
-    # url(r'^shipment_term/(?P<pk>[0-9]+)/view/$', views.getShipmentTerm, name='getShipmentTerm'),
-    #
+    url(r'^portSelectHandler/$', views.portSelectHandler, name='portSelect'),
+    url(r'^truckerOfferSelectHandler/$', views.truckerOfferSelectHandler, name='truckerOfferSelect'),
+
+    url(r'^port/new/$', views.createPort, name='createPort'),
+    url(r'^port/list/$', views.listPort, name='listPort'),
+    url(r'^port/(?P<pk>[0-9]+)/view/$', views.getPort, name='getPort'),
+    url(r'^port/(?P<pk>[0-9]+)/delete/$', views.deletePort, name='deletePort'),
+
     url(r'^shipping_line/new/$', views.createShippingLine, name='createShippingLine'),
     url(r'^shipping_line/list/$', views.listShippingLine, name='listShippingLine'),
     url(r'^shipping_line/(?P<pk>[0-9]+)/view/$', views.getShippingLine, name='getShippingLine'),
@@ -62,6 +70,7 @@ urlpatterns = [
 
     url(r'^quotation/(?P<pk>[0-9]+)/offer/air/new/$', views.getAirOffer, name='getAirOffer'),
     url(r'^quotation/(?P<pk>[0-9]+)/offer/sea/new/$', views.getSeaOffer, name='getSeaOffer'),
+    url(r'^quotation/(?P<pk>[0-9]+)/offer/fcl/new/$', views.getFCLOffer, name='getFCLOffer'),
     url(r'^offer/new/$', views.postOffer, name='postOffer'),
 
     url(r'^offer/(?P<pk>[0-9]+)/edit/$', views.editOffer, name='editOffer'),
