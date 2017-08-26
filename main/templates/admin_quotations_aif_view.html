@@ -8,12 +8,13 @@
 									{% if user.role == 'AD' or user == quotation.operations_person%}
 									<a href="/quotation/{{quotation.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Quotation </a>
 									{% endif %}
-									{% if user.role == 'AD' or user.role == 'SA' and quotation.offer == None%}
-										{% if not offer_accepted %}
+									{% if user.role == 'AD' or user.role == 'SA' %}
+										{% if not has_offer%}
 										<a href="/quotation/{{quotation.id}}/offer/air/new/" class="btn btn-default pull-right" style="margin-right:5px;">Create Offer</a>
 										{% endif %}
 									{% endif %}
 									{% if offer_accepted %}
+									{{offer_accepted}}
 			              {% if user.role == 'AD' %}
 										<button id="editOffer" class="btn btn-default pull-right" style="margin-right:5px;">Edit Quotation</button>
 										{% endif %}

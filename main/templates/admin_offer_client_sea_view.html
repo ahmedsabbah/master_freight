@@ -1,297 +1,278 @@
-{% extends './base.html' %}
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Offer Preview</title>
+  <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
 
-{% block content %}
+  <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "css/styles.css" %}" rel="stylesheet">
+  <link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylsheet">
 
-        <div class="col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">Offer to Client Sea - Client Preview Template - Reference Number <a href="/track_offer/{{offer.reference}}">{{offer.reference}}</a>
-            </div>
-            <div class="panel-body">
-              <div id="updateStatus" class="row">
-                <div class="col-lg-12">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <form id="#statuform" class="form-horizontal" role="form" method="post" action="/offer/{{offer.id}}/edit/">
-                        <fieldset>
-                          {% csrf_token %}
-                          <div class="form-group">
-                            <div class="row">
-                              <label class="col-sm-2 control-label" for="status">Status</label>
-                              <div class="col-sm-2">
-                                <select id="status" name="status" class="form-control">
-                                  <option value="S">Sent To Client</option>
-                                  <option value="A">Accepted</option>
-                                  <option value="R">Rejected</option>
-                                  <option value="D">Done</option>
-                                </select>
-                              </div>
-
-                              <div class="col-md-2">
-                                <button id="updateStatus" name="updateStatus" class="btn btn-info">Update Status</button>
-                              </div>
-                            </div>
-                          </div>
-
-
-                        </fieldset>
-                      </form>
-                    </div>
-                  </div>
-                </div><!-- /.col-->
-              </div><!-- /.row -->
-
-                <form class="form-horizontal" role="form" method="post" action="/offer/new/">
-                  <fieldset>
-              <!-- <h1 style="color:orange">Offer to Client <b>Sea</b></h1> -->
-                    <br>
-                      <!-- Text input-->
-                      {% csrf_token %}
-                      <input type="hidden" name="type" value="S">
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="client_name">Status</label>
-                          <div class="col-sm-2">
-                          <p>{{ offer.status }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="client_name">Client Name</label>
-                          <div class="col-sm-2">
-                          <p>{{ offer.quotation.rate_request.client.client_name }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="company_name">Company Name</label>
-                          <div class="col-sm-2">
-                           <p>{{ offer.quotation.rate_request.client.client_name }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="contact">Contact</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.quotation.rate_request.client.client_name }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="phone">Phone</label>
-                          <div class="col-sm-2">
-                            <p>{{ offer.quotation.rate_request.client.business_phone }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="email">E-mail</label>
-                          <div class="col-sm-2">
-                             <p>{{ offer.quotation.rate_request.client.email }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.quotation.rate_request.client.extra_info }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <br><br>
-
-
-                      <h4 class="text-primary">Offer Details:</h4>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="shipping_line">SHIPPING LINE</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.shipping_line }}</p>
-                          </div>
-
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.ocean_freight }}</p>
-                          </div>
-
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="thc">T.H.C</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.thc }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.transportation }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.transfer }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.D</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.clearance_pod_selling }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.L</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.clearance_pol_selling }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.bl_fees }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.sea_quotation.telex_release }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="vessels">VESSELS</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.quotation.extra_notes.vessels_available }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="payment_credit">PAYMENT CREDIT</label>
-                          <div class="col-sm-2">
-                             <p>{{ offer.sea_quotation.payment_credit }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
-                          <div class="col-sm-2">
-                              <p>{{ offer.quotation.lcl_quotation.official_receipts_net }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
-                          <div class="col-sm-2">
-                            <p>{{ offer.sea_quotation.other_notes }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
-                          <div class="col-sm-2">
-                             <p>{{ offer.quotation.extra_notes.offer_validity }}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <br><br>
-                      <div class="form-group">
-                        <div class="row">
-                          <label class="col-sm-2 control-label" for="offer_validity">TERMS</label>
-                          <div class="col-sm-4">
-                             <p>{{ offer.terms }}</p>
-                          </div>
-                        </div>
-                      </div>
-                        <!-- <b>TERMS:-</b>
-                      <br><br>
-
-                    <p>*   Freight Payable in Egypt and based on port to port basis. <br>
-                        *  Surcharges mentioned are current and any additional surcharges shall be applicable at actual if any at the time of trade.  <br>
-
-
-              * Port Storage/Line demurrage/BL surrender fee shall be applicable at actual if any. <br>
-
-              * Subject to Space & Equipment availability. <br>
-
-              *  Booking is subject to commodity acceptance <br>
-
-              * Please advise 05 days prior to the shipment to arrange accordingly.  <br>
-
-              * Above rates shall be applicable on Prepaid basis Only.  <br>
-
-              * Transportation rates are not valid under areas where road restrictions and toll. <br>
-
-              *  Transportation  depends on pick up location- (----) hrs free time for stuffing after that charges applicable <br>
-
-              * PAYMENT TERMS:    As per agreement if any <br><br>
-              Hope the above meets your requirement and waiting for your positive reply.
-                 </p> -->
-                    </fieldset>
-                  </form>
-              </div>
-        </div>
+</head>
+<style media="screen">
+  body {
+    background-color: #fff;
+  }
+  .panel-heading{
+    height: auto;
+  }
+</style>
+<body>
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Offer to {{ offer.quotation.rate_request.client.client_name }} - Ref #
+        <!-- href="/track_offer/{{offer.reference}}" -->
+        <a >{{offer.reference}}</a>
       </div>
-{% endblock %}
-{% block extra_script %}
-<script>
+      <div class="panel-body">
 
-$('#updateStatus').hide();
+        <form class="form-horizontal" role="form" method="post" action="/offer/new/">
+          <fieldset>
+            <!-- <h1 style="color:orange">Offer to Client <b>Sea</b></h1> -->
+            <br>
+            <!-- Text input-->
+            {% csrf_token %}
+            <input type="hidden" name="type" value="S">
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="client_name">Status</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.status }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="client_name">Client Name</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.client_name }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="company_name">Company Name</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.client_name }}</p>
+                </div>
+              </div>
+            </div>
 
 
-$("#editOffer").click(function(){
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="contact">Contact</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.client_name }}</p>
+                </div>
+              </div>
+            </div>
 
-	$("#updateStatus").show('1000');
-});
-</script>
-{% endblock %}
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="phone">Phone</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.business_phone }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="email">E-mail</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.email }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.rate_request.client.extra_info }}</p>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+
+            <h4 class="text-primary">Offer Details:</h4>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="shipping_line">SHIPPING LINE</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.shipping_line }}</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="ocean_freight">OCEAN FREIGHT</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.ocean_freight }}</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="thc">T.H.C</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.thc }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="transportation">TRANSPORTATION</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.transportation }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="transfer">TRANSFER</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.transfer }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.D</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.clearance_pod_selling }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="clearance_pol">CLEARANCE P.O.L</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.clearance_pol_selling }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="bl_fees">B/L FEES</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.bl_fees }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="telex_release">TELEX RELEASE</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.telex_release }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="vessels">VESSELS</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.extra_notes.vessels_available }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="payment_credit">PAYMENT CREDIT</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.payment_credit }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="official_receipts">OFFICIAL RECEIPTS</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.lcl_quotation.official_receipts_net }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.sea_quotation.other_notes }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="offer_validity">OFFER VALIDITY</label>
+                <div class="col-sm-2">
+                  <p>{{ offer.quotation.extra_notes.offer_validity }}</p>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 control-label" for="offer_validity">TERMS</label>
+                <div class="col-sm-4">
+                  <p>{{ offer.terms }}</p>
+                </div>
+              </div>
+            </div>
+            <!-- <b>TERMS:-</b>
+            <br><br>
+
+            <p>*   Freight Payable in Egypt and based on port to port basis. <br>
+            *  Surcharges mentioned are current and any additional surcharges shall be applicable at actual if any at the time of trade.  <br>
+
+
+            * Port Storage/Line demurrage/BL surrender fee shall be applicable at actual if any. <br>
+
+            * Subject to Space & Equipment availability. <br>
+
+            *  Booking is subject to commodity acceptance <br>
+
+            * Please advise 05 days prior to the shipment to arrange accordingly.  <br>
+
+            * Above rates shall be applicable on Prepaid basis Only.  <br>
+
+            * Transportation rates are not valid under areas where road restrictions and toll. <br>
+
+            *  Transportation  depends on pick up location- (----) hrs free time for stuffing after that charges applicable <br>
+
+            * PAYMENT TERMS:    As per agreement if any <br><br>
+            Hope the above meets your requirement and waiting for your positive reply.
+          </p> -->
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+<html>

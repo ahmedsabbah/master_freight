@@ -376,7 +376,7 @@
 		 {% block extra_script%}
 		 <script type="text/javascript">
 
-		 	$("select:not(#client_select)").prepend("<option value=''>N/A</option>").val('');
+		 	$("select:not(#trucker_offer_select, #port_select)").prepend("<option value=''>N/A</option>").val('');
 			$("#port_select").change(function () {
 				 var optionSelected = $(this).find("option:selected");
 				 var valueSelected  = optionSelected.val();

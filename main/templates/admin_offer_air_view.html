@@ -6,7 +6,7 @@
 							<div class="panel-heading">Offer to Client Air
 	            {% if user.role != 'AC' %}
 							<a href="/offer/{{offer.id}}/delete/" id="show" class="btn btn-danger pull-right"> Delete Offer </a>
-              <a href="/offer/{{offer.id}}/view_client_format/" id="show" class="btn pull-right"> View Client Format </a>
+              <a href="/offer/{{offer.id}}/view_client_format/" id="show" class="btn pull-right" target="_blank"> View Client Format </a>
 							{% endif %}
 							{% if eligible %}
               <button id="editOffer" class="btn btn-default">Edit Offer</button>

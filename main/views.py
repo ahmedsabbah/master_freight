@@ -1446,18 +1446,24 @@ def viewQuotation(request, pk):
     try:
         quotation = Quotation.objects.get(pk=pk)
         offer_accepted = False;
+        has_offer = False;
+        if quotation.offers.all():
+            has_offer = True
+
+        print quotation.offers.all()
+        print has_offer
         for offer in quotation.offers.all():
-            if offer.status == 'A' or quotation.status == 'OC':
+            if offer.status == 'A':
                 offer_accepted = offer_accepted or True
             else:
                 offer_accepted = offer_accepted or False
         if request.user.role == 'AD' or request.user.role == 'SA' or request.user.role == 'OP' or (request.user.role == 'AC' and quotation.offers.first().status == 'A'):
             if quotation.type == 'AIF':
-                return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
+                return render(request, 'admin_quotations_aif_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted, 'has_offer': has_offer })
             elif quotation.type == 'IFCL' or quotation.type == 'XFCL':
-                return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
+                return render(request, 'admin_quotations_fcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted, 'has_offer': has_offer })
             elif quotation.type == 'LCL':
-                return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted })
+                return render(request, 'admin_quotations_lcl_view.html', { 'quotation': quotation, 'offer_accepted': offer_accepted, 'has_offer': has_offer})
         return redirect('/')
     except Quotation.DoesNotExist:
         return redirect('/404/')
