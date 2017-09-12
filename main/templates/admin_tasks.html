@@ -176,7 +176,7 @@ $(document).ready(function() {
 
 	var dataSet = [
 		{% for offer in offers %}
-		["{{ offer.id }}", "{{ offer.type }}",  "{{ offer.client.client_name }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
+		["{{ offer.id }}", "{{ offer.quotation.type }}",  "{{ offer.client.client_name }}", "{{ offer.sales_person.first_name }} {{ offer.sales_person.last_name }}", "{{ offer.get_status_display }}", "{{ offer.created_date }}", "<a href='/offer/{{offer.id}}/view/'>View</a>"] {% if not forloop.last %},{% endif %}
 		{% endfor %}
 	];
 

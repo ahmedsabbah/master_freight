@@ -82,14 +82,19 @@ def getAdminEmployees(request):
         password = request.POST.get('password', None)
 
         if email and role and first_name and last_name and role:
+            print email
+            print role
             user = User(email=email, role=role, first_name=first_name, last_name=last_name)
+            print user
             user.set_password(password)
             user.save()
         # else:
         #     response = HttpResponse(content_type='application/json')
         #     response.status_code = 400
         #     return response
-    users = User.objects.all().exclude(role='AD')
+
+            # .exclude(role='AD')
+    users = User.objects.all()
     return render(request, 'admin_employees.html', {'users': users})
 
 def getAdminCharts(request):
@@ -756,8 +761,8 @@ def getAirOffer(request, pk):
     try:
         quotation = Quotation.objects.get(pk=pk)
         if request.user.role == 'AD' or 'SA':
-            truckers = Trucker.objects.all()
-            return render(request, 'admin_offer_air.html', { 'quotation': quotation, 'truckers': truckers })
+            ports = Port.objects.all()
+            return render(request, 'admin_offer_air.html', { 'quotation': quotation, 'ports': ports })
         else:
             return redirect('/')
     except Quotation.DoesNotExist:
@@ -827,8 +832,8 @@ def postOffer(request):
         screening_fees = request.POST.get('screening_fees', None)
         storage = request.POST.get('storage', None)
 
-        if request.POST.get('inland'):
-            inland = Trucker.objects.get(pk=request.POST.get('inland', None))
+        if request.POST.get('inland_selling'):
+            inland = TruckerOffer.objects.get(pk=request.POST.get('inland_selling', None))
         else:
             inland = None
 
@@ -1345,7 +1350,7 @@ def postQuotation(request):
         custom_clearance_destination=custom_clearance_destination,
         road_cartage=road_cartage,
         on_carriage=on_carriage, others_destination=others_destination,
-        official_receipts=official_receipts,
+        official_receipts_net=official_receipts_net,
         container_fees=container_fees,
         delay=delay)
         fcl_quotation.save()

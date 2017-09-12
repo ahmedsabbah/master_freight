@@ -78,7 +78,7 @@
 													<div class="row">
 														<label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
 														<div class="col-sm-2 control-label">
-															<p style="color:red">{{ quotation.rate_request.client.extra_information }} </p>
+															<p>{{ quotation.rate_request.client.extra_information }} </p>
 														</div>
 													</div>
 												</div>
@@ -168,13 +168,23 @@
                             <div class="col-sm-2">
                               <input disabled id="inland" name="inland_net" type="text" placeholder="" value="{{quotation.aif_quotation.inland_net}}" class="form-control">
                             </div>
-														<div class="col-sm-2">
-															<select class=" form-control" name="inland">
-																{% for trucker in truckers %}
-																<option value="{{ trucker.id }}">{{ trucker.company_name }}</option>
-																{% endfor %}
-															</select>
-														</div>
+                            <div class="col-sm-2">
+                              <select id="port_select" class=" form-control" name="port">
+                                {% for port in ports %}
+                                <option value="{{ port.id }}">{{ port }}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            <div class="col-sm-2">
+                              <select id="trucker_offer_select" class=" form-control" name="inland_selling">
+                                <option>Choose Trucker Offer</option>
+                              </select>
+                            </div>
+                            <div class="col-sm-2">
+                              <label class="col-sm-6" for="">Price:</label>
+                              <p class="trucker_offer_price col-sm-6">
+                              </p>
+                            </div>
                           </div>
                         </div>
 
@@ -300,6 +310,40 @@
  {% block extra_script%}
  <script type="text/javascript">
 
-  $("select:not(#status)").prepend("<option value=''>N/A</option>").val('');
+  $("select:not(#trucker_offer_select, #port_select , #status)").prepend("<option value=''>N/A</option>").val('');
+  $("#port_select").change(function () {
+     var optionSelected = $(this).find("option:selected");
+     var valueSelected  = optionSelected.val();
+     var textSelected   = optionSelected.text();
+     $.ajax({
+       url : "/portSelectHandler/",
+       type : "GET",
+       data : {"id" : valueSelected},
+       dataType : "json",
+       success : function(trucker_offers){
+         $.each(trucker_offers, function (i, trucker_offer) {
+            $('#trucker_offer_select').append($('<option>', {
+                value: trucker_offer.id,
+                text : trucker_offer.port_1 + ' - ' + trucker_offer.port_2 + ' - ' + trucker_offer.trucker + ' - ' + trucker_offer.price
+            }));
+        });
+       }
+     });
+  });
+  $("#trucker_offer_select").change(function () {
+     var optionSelected = $(this).find("option:selected");
+     var valueSelected  = optionSelected.val();
+     var textSelected   = optionSelected.text();
+     $.ajax({
+       url : "/truckerOfferSelectHandler/",
+       type : "GET",
+       data : {"id" : valueSelected},
+       dataType : "json",
+       success : function(trucker_offer){
+        $('.trucker_offer_price').empty();
+        $('.trucker_offer_price').append(trucker_offer.trucker_offer_price)
+       }
+     });
+  });
  </script>
  {% endblock %}

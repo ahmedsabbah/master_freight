@@ -67,7 +67,7 @@
                             <div class="row">
                               <label class="col-sm-2 control-label" for="extra_info">Extra Information</label>
                               <div class="col-sm-2 control-label">
-                                <p style="color:red">{{ rate_request.client.extra_information }} </p>
+                                <p>{{ rate_request.client.extra_information }} </p>
                               </div>
                             </div>
                           </div>
@@ -406,7 +406,7 @@
 					 data : {"id" : valueSelected},
 					 dataType : "json",
 					 success : function(trucker_offer){
-						 console.log(trucker_offer);
+						$('.trucker_offer_price').empty();
 						$('.trucker_offer_price').append(trucker_offer.trucker_offer_price)
 					 }
 				 });

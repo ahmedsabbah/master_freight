@@ -83,7 +83,7 @@ class TruckerOffer(models.Model):
     other_notes = models.CharField(max_length=200, blank=True, null=True)
     price = models.CharField(max_length=200, blank=True, null=True)
     def __str__(self):
-        return '%s %s' % (self.trucker, self.price)
+        return 'from %s to %s with %s - %s' % (self.port_1, self.port_2, self.trucker, self.price)
 
 
 class FinalDeliveryDestination(models.Model):
@@ -229,7 +229,7 @@ class AIFQuotation(models.Model):
     exw_charges_net = models.CharField(max_length=200, blank=True, null=True)
     screening_fees_net = models.CharField(max_length=200, blank=True, null=True)
     storage_net = models.CharField(max_length=200, blank=True, null=True)
-    inland_net = models.CharField(max_length=200, blank=True, null=True)
+    inland_net = models.ForeignKey('main.TruckerOffer', related_name='aif_quotations', null=True, blank=True)
     packing_net = models.CharField(max_length=200, blank=True, null=True)
     taxes_duties_net = models.CharField(max_length=200, blank=True, null=True)
     handling_fees_net = models.CharField(max_length=200, blank=True, null=True)
@@ -326,7 +326,7 @@ class AirQuotation(models.Model):
     exw_charges = models.CharField(max_length=200, blank=True, null=True)
     screening_fees = models.CharField(max_length=200, blank=True, null=True)
     storage = models.CharField(max_length=200, blank=True, null=True)
-    inland = models.ForeignKey('main.Trucker', related_name='quotations', blank=True, null=True)
+    inland = models.ForeignKey('main.TruckerOffer', related_name='aif_offers', null=True, blank=True)
     packing = models.CharField(max_length=200, blank=True, null=True)
     taxes_duties = models.CharField(max_length=200, blank=True, null=True)
     handling_fees = models.CharField(max_length=200, blank=True, null=True)
