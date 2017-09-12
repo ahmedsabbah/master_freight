@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from authentication.models import User, Token
 from django.core.mail import send_mail
+from django.http.response import HttpResponse ,HttpResponseRedirect
 
 def loginUser(request):
     if request.user.is_authenticated():
@@ -29,12 +30,14 @@ def logoutUser(request):
     return redirect('/login/')
 
 def resetPassword(request, token):
+    print 'ha7awel a reset asln'
     try:
         token = Token.objects.get(token=token)
         if (request.method == 'POST'):
             new_password = request.POST.get('password')
             confirm_password = request.POST.get('confirm_password')
             if new_password and confirm_password and (new_password==confirm_password):
+                print 'aywa equal'
                 user = token.user
                 user.set_password(new_password)
                 user.save()
@@ -46,6 +49,22 @@ def resetPassword(request, token):
     except Token.DoesNotExist:
         return redirect('/')
 
+def adminResetPassword(request,pk):
+    if request.user.role == 'AD':
+        print 'aywa admin'
+        employee = User.objects.get(id=pk)
+        print employee
+        try:
+            token = Token.objects.get(user=employee)
+        except Token.DoesNotExist:
+            token = Token(user=employee)
+            token.save()
+        print token
+        return resetPassword(request, token.token)
+    else:
+        return redirect('/')
+
+
 def forgotPassword(request):
     if request.method == 'POST':
         try:
@@ -55,23 +74,23 @@ def forgotPassword(request):
                 message = 'An email was sent to you.'
                 try:
                     token = Token.objects.get(user=user)
-                    # send_mail(
-                    #     'Master Freight Password Reset',
-                    #     'Click on the following link to reset your password http://localhost:8000/password_reset/%s' % token.token,
-                    #     'info@isparkegypt.com',
-                    #     ['%s' % user.email],
-                    #     fail_silently=False,
-                    # )
+                    send_mail(
+                        'Master Freight Password Reset',
+                        'Click on the following link to reset your password http://localhost:8000/reset_password/%s' % token.token,
+                        'info@masterfreight.com',
+                        ['%s' % user.email],
+                        fail_silently=False,
+                    )
                 except Token.DoesNotExist:
                     token = Token(user=user)
                     token.save()
-                    # send_mail(
-                    #     'Master Freight Password Reset',
-                    #     'Click on the following link to reset your password http://localhost:8000/password_reset/%s' % token.token,
-                    #     'info@isparkegypt.com',
-                    #     ['%s' % user.email],
-                    #     fail_silently=False,
-                    # )
+                    send_mail(
+                        'Master Freight Password Reset',
+                        'Click on the following link to reset your password http://localhost:8000/reset_password/%s' % token.token,
+                        'info@masterfreight.com',
+                        ['%s' % user.email],
+                        fail_silently=False,
+                    )
             else:
                 message = 'Enter a valid email.'
         except User.DoesNotExist:

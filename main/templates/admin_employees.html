@@ -140,7 +140,8 @@ $(document).ready(function() {
 	var dataSet = [
 		{% for user in users %}
 		["{{ user.email }}", "{{ user.role }}", "{{ user.first_name }} {{ user.last_name }}",
-		 "{{ user.date_joined }}","<a class='btn-sm btn-danger' href='/user/{{user.id}}/remove/'>Delete</a>"] {% if not forloop.last %},{% endif %}
+		 "{{ user.date_joined }}","<a class='btn-sm btn-danger' href='/user/{{user.id}}/remove/'>Delete</a>",
+		 "<a class='btn-sm' href='/admin_reset_password/{{user.id}}'>Reset Password</a>"] {% if not forloop.last %},{% endif %}
 		{% endfor %}
 	];
 
@@ -155,6 +156,8 @@ $(document).ready(function() {
 		title: "Date Joined"
 	},{
 		title: "Delete"
+	},{
+		title: "Reset Password"
 	}];
 
 	var myTable;
