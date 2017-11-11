@@ -55,7 +55,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/admin/"><span>Master Freight </span> <span class="small" style="color:white">
+        <a class="navbar-brand" href="/admin/"><span>Master Logistics </span> <span class="small" style="color:white">
           {% if user.role == 'AD' %}
                   ADMIN
                 {% elif user.role == 'SA' %}
@@ -165,11 +165,13 @@
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Truckers
             </a>
           </li>
+          {% if user.role == 'AD' %}
           <li {% if request.path == '/trucker_offer/new/' %}class="active"{% endif %}>
             <a class="" href="/trucker_offer/new/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> New Trucker Offer
             </a>
           </li>
+          {% endif %}
           <li {% if request.path == '/trucker_offer/list/' %}class="active"{% endif %}>
             <a class="" href="/trucker_offer/list/">
               <svg class="glyph stroked chevron-right"><use xlink:href=""></use></svg> View Trucker Offers

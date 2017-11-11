@@ -169,21 +169,7 @@
                               <input disabled id="inland" name="inland_net" type="text" placeholder="" value="{{quotation.aif_quotation.inland_net}}" class="form-control">
                             </div>
                             <div class="col-sm-2">
-                              <select id="port_select" class=" form-control" name="port">
-                                {% for port in ports %}
-                                <option value="{{ port.id }}">{{ port }}</option>
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-sm-2">
-                              <select id="trucker_offer_select" class=" form-control" name="inland_selling">
-                                <option>Choose Trucker Offer</option>
-                              </select>
-                            </div>
-                            <div class="col-sm-2">
-                              <label class="col-sm-6" for="">Price:</label>
-                              <p class="trucker_offer_price col-sm-6">
-                              </p>
+                              <input id="inland_selling" name="inland_selling" type="text" placeholder="" class="form-control">
                             </div>
                           </div>
                         </div>
@@ -250,7 +236,8 @@
                           <div class="row">
                             <label class="col-sm-2 control-label" for="other_notes">OTHER NOTES</label>
                             <div class="col-sm-4">
-                              <input id="other_notes" name="other_notes" type="text" placeholder="" class="form-control">
+                              <textarea id="other_notes" name="other_notes" type="text" placeholder="" class="form-control">
+                              </textarea>
                             </div>
                           </div>
                         </div>

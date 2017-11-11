@@ -1,5 +1,5 @@
 
-  Master Freight Proposed Offer
+  Master Logistics Proposed Offer
 
      Client Name:
      {{offer.quotation.rate_request.client.client_name}}

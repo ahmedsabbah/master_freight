@@ -134,7 +134,13 @@ def getAdminCharts(request):
         offers_done.append(Offer.objects.filter(created_date__month=month, status="D").count())
 
     for trucker in Trucker.objects.all():
-        trucker_numbers.append(trucker.quotations.count())
+        done_quotations = 0
+        for trucker_offer in trucker.trucker_offers.all():
+            for quotation in trucker_offer.aif_quotations.all():
+                if quotation:
+                    qots = Quotation.objects.filter(aif_quotation=quotation, status="DO").count()
+                    done_quotations += qots
+        trucker_numbers.append(done_quotations)
         trucker_names.append(trucker.company_name)
 
 
@@ -831,12 +837,7 @@ def postOffer(request):
         exw_charges = request.POST.get('exw_charges', None)
         screening_fees = request.POST.get('screening_fees', None)
         storage = request.POST.get('storage', None)
-
-        if request.POST.get('inland_selling'):
-            inland = TruckerOffer.objects.get(pk=request.POST.get('inland_selling', None))
-        else:
-            inland = None
-
+        inland = request.POST.get('inland_selling', None)
         packing = request.POST.get('packing', None)
         taxes_duties = request.POST.get('taxes_duties', None)
         handling_fees = request.POST.get('handling_fees', None)
@@ -1222,7 +1223,10 @@ def postQuotation(request):
         exw_charges_net = request.POST.get('exw_charges_net', None)
         screening_fees_net = request.POST.get('screening_fees_net', None)
         storage_net = request.POST.get('storage_net', None)
-        inland_net = TruckerOffer.objects.get(pk=request.POST.get('inland_net', None))
+        if request.POST.get('inland_net'):
+            inland_net = TruckerOffer.objects.get(pk=request.POST.get('inland_net', None))
+        else:
+            inland_net = None
         packing_net = request.POST.get('packing_net', None)
         taxes_duties_net = request.POST.get('taxes_n_duties_net', None)
         handling_fees_net = request.POST.get('handling_fees_net', None)
