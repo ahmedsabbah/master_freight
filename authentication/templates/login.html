@@ -19,7 +19,7 @@
     <form id="loginform" method="post" class="login-form" action="/login/">
       <div class="form">
         <div class="thumbnail" style="background-color:white;"><img src="{% static 'images/logo.png' %}"/></div>
-        <h1 style="font-color:black; margin-top: -1.5cm;">Master Frieght</h1>
+        <h1 style="font-color:black; margin-top: -1.5cm;">Master Logistics</h1>
         <form class="login-form">
           {% csrf_token %}
           <input type="text" name="email" id="email" placeholder="email" {% if email %}value="{{email}}"{% endif %}/>

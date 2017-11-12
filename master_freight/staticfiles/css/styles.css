@@ -20,7 +20,7 @@ p {
 }
 
 a, a:hover, a:focus {
-	color: #E15626;
+	color: #2089A9;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,7 +50,7 @@ h3, h4 {
 }
 
 .color-gray { color: #5f6468; }
-.color-blue { color: #E15626; }
+.color-blue { color: #2089A9; }
 .color-teal { color: #1ebfae; }
 .color-orange { color: #ffb53e; }
 .color-red { color: #ff0000; }
@@ -85,9 +85,9 @@ h3, h4 {
 }
 
 .form-control:focus {
-	border: 1px solid #E15626;
+	border: 1px solid #2089A9;
 	outline: 0;
-	box-shadow: inset 0px 0px 0px 1px #E15626;
+	box-shadow: inset 0px 0px 0px 1px #2089A9;
 }
 
 .navbar-header .navbar-brand {
@@ -99,7 +99,7 @@ h3, h4 {
 }
 
 .navbar-header .navbar-brand span {
-	color: #E15626;
+	color: #2089A9;
 }
 
 /*Buttons*/
@@ -165,8 +165,8 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-	background-color: #E15626;
-	border-color: #E15626;
+	background-color: #2089A9;
+	border-color: #2089A9;
 }
 
 .btn-success,
@@ -265,10 +265,10 @@ a.bg-success:hover {
 }
 .bg-info {
 	color: #fff;
-	background-color: #E15626;
+	background-color: #2089A9;
 }
 a.bg-info:hover {
-	background-color: #E15626;
+	background-color: #2089A9;
 }
 .bg-info a {
 	color: rgba(255, 255, 255, .75);
@@ -350,7 +350,7 @@ a.bg-danger:hover {
 	text-decoration: none;
 }
 
-.panel-blue { background: #E15626; color: #fff; }
+.panel-blue { background: #2089A9; color: #fff; }
 .panel-teal { background: #1ebfae; color: #fff; }
 .panel-orange { background: #ffb53e; color: #fff; }
 .panel-red { background: #ff0000; color: #fff; }
@@ -431,7 +431,7 @@ a.bg-danger:hover {
 	color: #5f6468;
 }
 
-.panel-blue .widget-left { background: #E15626; color: #fff; }
+.panel-blue .widget-left { background: #2089A9; color: #fff; }
 .panel-teal .widget-left { background: #1ebfae; color: #fff; }
 .panel-orange .widget-left { background: #ffb53e; color: #fff; }
 .panel-red .widget-left { background: #ff0000; color: #fff; }
@@ -487,7 +487,7 @@ a.bg-danger:hover {
 
 .nav-pills li.active a,
 .nav-pills li.active a:hover {
-	background: #E15626;
+	background: #2089A9;
 }
 
 .tab-content {
@@ -510,9 +510,9 @@ a.bg-danger:hover {
 .navbar input:focus {
 	color: #fff;
 	background: #555;
-	border: 1px solid #E15626;
+	border: 1px solid #2089A9;
 	outline: 0;
-	box-shadow: inset 0px 0px 0px 1px #E15626;
+	box-shadow: inset 0px 0px 0px 1px #2089A9;
 }
 .nav>li>a {
 	padding: 10px 10px
@@ -580,7 +580,7 @@ a.bg-danger:hover {
 .sidebar ul.nav .active > a:hover, .sidebar ul.nav li.parent a.active:hover,
 .sidebar ul.nav .active > a:focus, .sidebar ul.nav li.parent a.active:focus {
 	color: #fff;
-	background-color: #E15626;
+	background-color: #2089A9;
 }*/
 
 .sidebar ul.nav ul,
@@ -599,18 +599,18 @@ a.bg-danger:hover {
 .sidebar ul.nav ul.children li a {
 	height: 40px;
 	background: #f9f9f9;
-	color: #E15626!important;
+	color: #2089A9!important;
 }
 
 .sidebar ul.nav ul.children li.active a {
 	height: 40px;
-	background: #E15626;
+	background: #2089A9;
 	color: #f9f9f9!important;
 }
 
 
 .sidebar ul.nav li.current a {
-	background-color: #E15626;
+	background-color: #2089A9;
 	color: #fff!important;
 }
 
@@ -695,7 +695,7 @@ h1.page-header {
 	width: 120px;
 }
 
-#easypiechart-blue .percent { color: #E15626;}
+#easypiechart-blue .percent { color: #2089A9;}
 #easypiechart-teal .percent { color: #1ebfae;}
 #easypiechart-orange .percent { color: #ffb53e;}
 #easypiechart-red .percent { color: #ef4040;}
